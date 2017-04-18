@@ -87,14 +87,17 @@
 
 
 
+<meta name="description" content="零、写在前面写博客的动力：在准备找实习面试的过程中写了很多md文件，里面一直都是比较零散的总结，分类和条理都不够好。最近准备一边回顾梳理一边放到博客上来，一来可以鞭策自己把技术总结写得条理更清晰一些，以及督促自己养成经常总结和温习的习惯，二来顺便记录自己在技术方面的进步过程。">
 <meta name="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="first article for test">
 <meta property="og:url" content="http://yoursite.com/2017/04/11/first-article-for-test/index.html">
 <meta property="og:site_name" content="ZhangXinyu's Blog">
-<meta property="og:updated_time" content="2017-04-11T02:02:20.000Z">
+<meta property="og:description" content="零、写在前面写博客的动力：在准备找实习面试的过程中写了很多md文件，里面一直都是比较零散的总结，分类和条理都不够好。最近准备一边回顾梳理一边放到博客上来，一来可以鞭策自己把技术总结写得条理更清晰一些，以及督促自己养成经常总结和温习的习惯，二来顺便记录自己在技术方面的进步过程。">
+<meta property="og:updated_time" content="2017-04-18T07:09:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="first article for test">
+<meta name="twitter:description" content="零、写在前面写博客的动力：在准备找实习面试的过程中写了很多md文件，里面一直都是比较零散的总结，分类和条理都不够好。最近准备一边回顾梳理一边放到博客上来，一来可以鞭策自己把技术总结写得条理更清晰一些，以及督促自己养成经常总结和温习的习惯，二来顺便记录自己在技术方面的进步过程。">
 
 
 
@@ -319,7 +322,14 @@
       
 
       
-        
+        <h2 id="零、写在前面"><a href="#零、写在前面" class="headerlink" title="零、写在前面"></a>零、写在前面</h2><p>写博客的动力：在准备找实习面试的过程中写了很多md文件，里面一直都是比较零散的总结，分类和条理都不够好。最近准备一边回顾梳理一边放到博客上来，一来可以鞭策自己把技术总结写得条理更清晰一些，以及督促自己养成经常总结和温习的习惯，二来顺便记录自己在技术方面的进步过程。</p>
+<a id="more"></a>
+<h2 id="一、hexo相关"><a href="#一、hexo相关" class="headerlink" title="一、hexo相关"></a>一、hexo相关</h2><p>用hexo+github搭建这个博客主要参考了<a href="https://hexo.io/" target="_blank" rel="external">hexo官网</a>和网上的三篇教程：<br><a href="http://www.jianshu.com/p/e99ed60390a8" target="_blank" rel="external">blog1</a> <a href="http://ibruce.info/2013/11/22/hexo-your-blog/?utm_source=tuicool" target="_blank" rel="external">blog2</a> <a href="http://www.jianshu.com/p/465830080ea9" target="_blank" rel="external">blog3</a></p>
+<h3 id="1、更新部署"><a href="#1、更新部署" class="headerlink" title="1、更新部署"></a>1、更新部署</h3><p>在本地启动<code>hexo server</code>后，每次更新会自动更新页面；<br>如果像部署到github pages， 要用下面的命令：<br><code>$ hexo clean</code><br><code>$ hexo generate</code><br><code>$ hexo deploy</code></p>
+<h3 id="2、修改为next主题，一系列配置"><a href="#2、修改为next主题，一系列配置" class="headerlink" title="2、修改为next主题，一系列配置"></a>2、修改为next主题，一系列配置</h3><p><a href="http://theme-next.iissnan.com/" target="_blank" rel="external">next官方文档</a></p>
+<h4 id="修改首页背景"><a href="#修改首页背景" class="headerlink" title="修改首页背景"></a>修改首页背景</h4><p>背景颜色修改：在<code>hexozxy/themes/next/source/css/_custom.style</code>为<code>body</code>添加样式<br>背景动画删除：？</p>
+<h4 id="设置“阅读全文”功能"><a href="#设置“阅读全文”功能" class="headerlink" title="设置“阅读全文”功能"></a>设置“阅读全文”功能</h4><p><a href="http://www.jianshu.com/p/78c218f9d1e7" target="_blank" rel="external">参考文章</a></p>
+
       
     </div>
 
@@ -354,6 +364,10 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/18/Data-Structure-JS/" rel="next" title="Data Structure(JS)">
+                <i class="fa fa-chevron-left"></i> Data Structure(JS)
+              </a>
             
           </div>
 
@@ -410,8 +424,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -426,7 +449,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -434,6 +457,15 @@
 
           
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
           
 
         </nav>
@@ -455,6 +487,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#零、写在前面"><span class="nav-number">1.</span> <span class="nav-text">零、写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、hexo相关"><span class="nav-number">2.</span> <span class="nav-text">一、hexo相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、更新部署"><span class="nav-number">2.1.</span> <span class="nav-text">1、更新部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、修改为next主题，一系列配置"><span class="nav-number">2.2.</span> <span class="nav-text">2、修改为next主题，一系列配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改首页背景"><span class="nav-number">2.2.1.</span> <span class="nav-text">修改首页背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置“阅读全文”功能"><span class="nav-number">2.2.2.</span> <span class="nav-text">设置“阅读全文”功能</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

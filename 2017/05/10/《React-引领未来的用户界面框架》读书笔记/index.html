@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/10/《React-引领未来的用户界面框架》读书笔记/index.html">
 <meta property="og:site_name" content="ZhangXinyu's Blog">
 <meta property="og:description" content="一、JSX1 JSX定义及优点 JavaScript XML 每个JSX节点都对应一个js函数 JSX好处：语义化，抽象化（React版本更新时代码改动得少），关注点分离（逻辑+标签封装在组件中）">
-<meta property="og:updated_time" content="2017-05-10T02:36:32.000Z">
+<meta property="og:updated_time" content="2017-05-12T03:12:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《React:引领未来的用户界面框架》读书笔记">
 <meta name="twitter:description" content="一、JSX1 JSX定义及优点 JavaScript XML 每个JSX节点都对应一个js函数 JSX好处：语义化，抽象化（React版本更新时代码改动得少），关注点分离（逻辑+标签封装在组件中）">
@@ -373,7 +373,53 @@
 <li><p>样式</p>
 </li>
 </ol>
-<h3 id="4-没有JSX的React"><a href="#4-没有JSX的React" class="headerlink" title="4 没有JSX的React"></a>4 没有JSX的React</h3><h2 id="二、组件生命周期"><a href="#二、组件生命周期" class="headerlink" title="二、组件生命周期"></a>二、组件生命周期</h2>
+<h3 id="4-没有JSX的React"><a href="#4-没有JSX的React" class="headerlink" title="4 没有JSX的React"></a>4 没有JSX的React</h3><h2 id="二、组件生命周期"><a href="#二、组件生命周期" class="headerlink" title="二、组件生命周期"></a>二、组件生命周期</h2><ul>
+<li>生命周期API </li>
+<li>是钩子函数</li>
+<li>组件是个状态机：对于特定的输入总会返回一致的输出</li>
+<li>组件的整个生命周期中，其<code>props</code>或<code>state</code>改变了则DOM表现也有相应变化</li>
+</ul>
+<h3 id="1-实例化"><a href="#1-实例化" class="headerlink" title="1 实例化"></a>1 实例化</h3><p>当一个组件第一次实例化时依次调用：<br>(1) <code>getDefaultProps</code></p>
+<ul>
+<li>一个组件类只会调用一次。</li>
+<li>没有被父组件指定<code>props</code>属性的新建实例会通过这个方法返回的对象设置默认的<code>props</code>值。</li>
+<li>对象和数组，会在所有实例中共享，而不是拷贝。</li>
+</ul>
+<p>(2) <code>getInitialState</code></p>
+<ul>
+<li>组件类的每个实例有且只有一次调用</li>
+<li>在这个方法里可以访问到<code>this.props</code></li>
+</ul>
+<p>(3) <code>componentWillMount</code></p>
+<ul>
+<li>在首次渲染完成前被调用</li>
+<li><code>render</code>前最后一次修改组件<code>state</code>的机会</li>
+</ul>
+<p>(4) <code>render</code></p>
+<ul>
+<li>创建一个虚拟DOM，表示组件的输出</li>
+<li>组件唯一一个必需的方法</li>
+<li>只能通过<code>this.props</code>和<code>this.state</code>访问数据</li>
+<li>可以返回<code>null</code>,<code>false</code>或任何React组件</li>
+<li>只能出现一个顶级组件（所以经常用<code>&lt;div&gt;</code>包裹返回的一组元素）</li>
+<li>不能改变组件的状态，不能修改DOM的输出 =&gt; “纯净”</li>
+</ul>
+<p>(5) <code>componentDidMount</code><br>真实的DOM被渲染后，可在该方法内部通过<code>this.getDOMNode()</code>访问到真实DOM</p>
+<p>注意：该组件类后续所有应用将不会调用<code>getDefaultProos</code>方法，而是依次调用上面第2到5个方法。</p>
+<h3 id="2-存在期"><a href="#2-存在期" class="headerlink" title="2 存在期"></a>2 存在期</h3><p>组件已经渲染完成，用户可以与它交互（通过鼠标键盘等触发事件处理器）。用户会改变组件或整个应用的<code>state</code>，新的<code>state</code>会流入组件树。依次调用：<br>(1) <code>componentWillReceiveProps</code><br>组件的<code>props</code>随时可以通过父辈组件来更改。在该方法中可以更改<code>props</code>对象和更新<code>state</code>(使用<code>setState()</code>)。</p>
+<p>(2) <code>shouldComponentUpdate</code><br>大部分时间没必要使用，准确测量出性能瓶颈后用于性能调优：</p>
+<ul>
+<li>如果组件不需要渲染新的<code>props</code>或<code>state</code>，该方法返回<code>false</code>: React会跳过<code>render</code>前后的钩子函数<code>componentWillUpdate</code>和<code>componentDidUpdate</code></li>
+<li>会调用该方法的React插件：<code>PureRenderMixin</code>，用于组件及其子组件均为“纯净的”（对于相同的<code>props</code>和<code>state</code>，总是渲染出相同的DOM）。它比较当前和接下来的<code>props</code>和<code>state</code>，相同则返回<code>false</code>。但只是浅比较对象，仅用于<code>props</code>和<code>state</code>为简单数据结构时。如果包含复杂数据结构，应使用<code>forceUpdate()</code></li>
+</ul>
+<p>(3) <code>componentWillUpdate</code><br>和<code>componentWillMount</code>类似。组件接收到新的<code>props</code>或<code>state</code>，渲染之前调用。该方法中不可以更新<code>props</code>或<code>state</code></p>
+<p>(4) <code>render</code></p>
+<p>(5) <code>componentDidUpdate</code><br>和<code>componentDidMount</code>类似。可以更新已经渲染好的DOM</p>
+<h3 id="3-销毁-amp-清理期"><a href="#3-销毁-amp-清理期" class="headerlink" title="3 销毁&amp;清理期"></a>3 销毁&amp;清理期</h3><p>当组件被使用完成后，调用<code>componentWillUnmount</code>方法清理该实例。在<code>componentDidMount</code>中添加的定时器、事件监听器等，需要在该方法中撤销。</p>
+<h3 id="4-不能把计算后的值赋给state"><a href="#4-不能把计算后的值赋给state" class="headerlink" title="4 不能把计算后的值赋给state"></a>4 不能把计算后的值赋给state</h3><p>在<code>getInitialState</code>中不能通过<code>this.props</code>来创建<code>state</code>。如果要通过<code>props</code>计算值赋给<code>state</code>，则应该放在<code>render</code>中执行。这样才能保证计算后的值不会与派生出它的<code>props</code>值不同步。<br>React优势：专注于维护数据的单一来源。</p>
+<h2 id="三、数据流"><a href="#三、数据流" class="headerlink" title="三、数据流"></a>三、数据流</h2><p>React单向数据流：父节点 -&gt; 子节点<br>组件只需从父节点获取<code>props</code>渲染即可。顶层组件的<code>props</code>如果改变，React会递归向下遍历整棵组件树，重新渲染所有使用这个属性的组件。<br>React组件 =&gt; 函数：参数为<code>props</code>和<code>state</code>，返回结果为一个虚拟DOM</p>
+<h3 id="props"><a href="#props" class="headerlink" title="props"></a>props</h3><p>可以为任意数据结构。<br>设置属性的方法：挂载到组件上；调用组件实例的<code>setProps</code>方法（很少用）。<br>不能通过<code>setProps</code>或<code>this.props</code>修改！</p>
+<h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3>
       
     </div>
 
@@ -551,7 +597,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、JSX"><span class="nav-text">一、JSX</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-JSX定义及优点"><span class="nav-text">1 JSX定义及优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用组件"><span class="nav-text">2 使用组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-JSX不同于HTML的地方："><span class="nav-text">3 JSX不同于HTML的地方：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-没有JSX的React"><span class="nav-text">4 没有JSX的React</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、组件生命周期"><span class="nav-text">二、组件生命周期</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、JSX"><span class="nav-text">一、JSX</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-JSX定义及优点"><span class="nav-text">1 JSX定义及优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用组件"><span class="nav-text">2 使用组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-JSX不同于HTML的地方："><span class="nav-text">3 JSX不同于HTML的地方：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-没有JSX的React"><span class="nav-text">4 没有JSX的React</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、组件生命周期"><span class="nav-text">二、组件生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-实例化"><span class="nav-text">1 实例化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-存在期"><span class="nav-text">2 存在期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-销毁-amp-清理期"><span class="nav-text">3 销毁&清理期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-不能把计算后的值赋给state"><span class="nav-text">4 不能把计算后的值赋给state</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、数据流"><span class="nav-text">三、数据流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#props"><span class="nav-text">props</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#state"><span class="nav-text">state</span></a></li></ol></li></ol></div>
             
 
           </div>

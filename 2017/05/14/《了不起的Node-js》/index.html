@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="Node.js快速高效的优点得益于：事件轮询（event loop）技术；以及其构建与V8之上（V8是Google为Chrome Web浏览器设计的JavaScript解释器和虚拟机，它运行js非常快）。">
+<meta name="description" content="Node.js快速高效的优点得益于：事件轮询（event loop）技术；以及其构建与V8之上（V8是Google为Chrome Web浏览器设计的JavaScript解释器和虚拟机，它运行JS非常快）。">
 <meta name="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《了不起的Node.js》读书笔记">
 <meta property="og:url" content="http://yoursite.com/2017/05/14/《了不起的Node-js》/index.html">
 <meta property="og:site_name" content="ZhangXinyu's Blog">
-<meta property="og:description" content="Node.js快速高效的优点得益于：事件轮询（event loop）技术；以及其构建与V8之上（V8是Google为Chrome Web浏览器设计的JavaScript解释器和虚拟机，它运行js非常快）。">
-<meta property="og:updated_time" content="2017-05-14T04:17:37.000Z">
+<meta property="og:description" content="Node.js快速高效的优点得益于：事件轮询（event loop）技术；以及其构建与V8之上（V8是Google为Chrome Web浏览器设计的JavaScript解释器和虚拟机，它运行JS非常快）。">
+<meta property="og:updated_time" content="2017-05-16T09:08:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《了不起的Node.js》读书笔记">
-<meta name="twitter:description" content="Node.js快速高效的优点得益于：事件轮询（event loop）技术；以及其构建与V8之上（V8是Google为Chrome Web浏览器设计的JavaScript解释器和虚拟机，它运行js非常快）。">
+<meta name="twitter:description" content="Node.js快速高效的优点得益于：事件轮询（event loop）技术；以及其构建与V8之上（V8是Google为Chrome Web浏览器设计的JavaScript解释器和虚拟机，它运行JS非常快）。">
 
 
 
@@ -333,9 +333,91 @@
       
 
       
-        <p>Node.js快速高效的优点得益于：事件轮询（event loop）技术；以及其构建与V8之上（V8是Google为Chrome Web浏览器设计的JavaScript解释器和虚拟机，它运行js非常快）。</p>
+        <p>Node.js快速高效的优点得益于：事件轮询（event loop）技术；以及其构建与V8之上（V8是Google为Chrome Web浏览器设计的JavaScript解释器和虚拟机，它运行JS非常快）。</p>
 <a id="more"></a>
-
+<h2 id="Part-1-基础"><a href="#Part-1-基础" class="headerlink" title="Part 1 基础"></a>Part 1 基础</h2><h3 id="JavaScript概览"><a href="#JavaScript概览" class="headerlink" title="JavaScript概览"></a>JavaScript概览</h3><p>这章总结了可能会用到的js基础知识，还蛮精要的。</p>
+<ol>
+<li>基本类型：访问值，<code>number, boolean, string, null, undefined</code><br>复杂类型：访问引用，<code>array, function, object</code></li>
+<li>基本类型变量可以通过直接赋值创建或调用构造器创建，通过<code>typeof</code>和<code>instanceof</code>判断基本类型时，会有很大差异，所以最好始终通过直观方式定义，避免使用<code>new</code>构造器。</li>
+<li>注意：在条件表达式中，这些特定值会被判定为<code>false</code>：<code>null, undefined, &#39; &#39;, 0</code></li>
+<li>注意：<code>typeof</code>不会把<code>null</code>识别类型为<code>null</code>，也不会把数组识别类型为数组，即使是通过直观方式定义的：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typeof</span> <span class="literal">null</span> == <span class="string">'object'</span>; <span class="comment">//true</span></div><div class="line"><span class="keyword">typeof</span> [] == <span class="string">'object'</span>; <span class="comment">//true</span></div><div class="line"><span class="comment">// 判断数组的hack方式 ==&gt; </span></div><div class="line"><span class="built_in">Object</span>.prototype.toString.call([]) == <span class="string">'[object Array]'</span>;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>V8提供了判定是否为数组类型的方式，让我们免于使用hack（to be continued）</p>
+<ol>
+<li>函数的<code>length</code>属性：函数声明时可接收的参数数量</li>
+<li>用函数定义类，定义在类的<code>prototype</code>上的函数中的<code>this</code>，并不像普通函数那样指向<code>global</code>对象而是指向通过该类创建的实例对象。</li>
+<li>一种比较好的继承实现：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//父类 Animal</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line">Animal.prototype.eat = <span class="function"><span class="keyword">function</span>(<span class="params">food</span>) </span>&#123;&#125;</div><div class="line"><span class="comment">//子类 Ferret</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Ferret</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"><span class="comment">//实现继承</span></div><div class="line">Ferret.prototype = <span class="keyword">new</span> Animal(); <span class="comment">//这里后面有改进</span></div><div class="line"><span class="comment">//为所有子类实例定义属性或方法</span></div><div class="line">Ferret.prototype.type = <span class="string">'domestic'</span>;</div><div class="line"><span class="comment">//通过prototype重写和调用父类函数</span></div><div class="line">Ferret.prototype.eat = <span class="function"><span class="keyword">function</span> (<span class="params">food</span>) </span>&#123;</div><div class="line">    Animal.prototype.eat.call(<span class="keyword">this</span>, food);</div><div class="line">    <span class="comment">//ferret特有的逻辑写在这里</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>最大的不足：声明继承时总要初始化一个对象。两种改进方案：<br>（1）构造器中加判断条件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span> (<span class="params">a</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="literal">false</span> !=== a) <span class="keyword">return</span>;</div><div class="line">    <span class="comment">//initiate</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>（2）定义一个新的空构造器，重写其原型<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">//constructor stuff</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">f.prototype = Animal.prototype;</div><div class="line">Ferret.prototype = <span class="keyword">new</span> f;</div></pre></td></tr></table></figure></p>
+<p>（3）V8提供了更简洁的方案（<code>__proto__</code>）</p>
+<ol>
+<li>如果不使用<code>try{} catch()</code>捕获异常，则抛出异常时代码会停止执行</li>
+</ol>
+<h3 id="V8中的JavaScript"><a href="#V8中的JavaScript" class="headerlink" title="V8中的JavaScript"></a>V8中的JavaScript</h3><ol>
+<li>迭代对象的键<br><code>for...in</code>会将通过<code>prototype</code>扩展的属性也迭代到<br><code>for...in</code>中加判断：<code>hasOwnProperty</code>，可避免迭代<code>prototype</code>扩展的属性，只获取对象的所有自有键<br><code>Object.keys()</code>：V8用法，只获取对象的所有自有键</li>
+<li>判断是否为数组：<code>Array.isArray(arr);</code></li>
+<li>常用数组方法：<code>forEach, filter, map</code></li>
+<li>字符串<code>trim()</code>，JSON<code>JSON.stringify, JSON.parse</code></li>
+<li>对函数使用<code>.bind()</code>改变<code>this</code>的指向</li>
+<li><p>函数声明时最好写明函数名，有利于抛出错误时V8内部的堆栈追踪：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="function"><span class="keyword">function</span> <span class="title">woot</span>(<span class="params"></span>)</span>&#123;&#125; <span class="comment">//函数名为woot</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>用<code>__proto__</code>继承，免去中间构造器</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span> (<span class="params"></span>) </span>&#123;&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Ferret</span> (<span class="params"></span>) </span>&#123;&#125;</div><div class="line">Ferret.prototype.__proto__ = Animal.prototype;</div></pre></td></tr></table></figure>
+</li>
+<li><p>属性存取器</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//自定义新属性</span></div><div class="line"><span class="built_in">Date</span>.prototype.__defineGetter__(<span class="string">'ago'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> diff = ((<span class="keyword">new</span> <span class="built_in">Date</span>()).getTime() - <span class="keyword">this</span>.getTime()) / <span class="number">1000</span>, <span class="comment">//seconds</span></div><div class="line">        day_diff = <span class="built_in">Math</span>.floor(diff / <span class="number">86400</span>); <span class="comment">//days</span></div><div class="line">    <span class="keyword">return</span> day_diff == <span class="number">0</span> &amp;&amp; (</div><div class="line">        diff &lt; <span class="number">60</span> &amp;&amp; <span class="string">"just now"</span> ||</div><div class="line">        diff &lt; <span class="number">120</span> &amp;&amp; <span class="string">"1 minute ago"</span> ||</div><div class="line">        diff &lt; <span class="number">3600</span> &amp;&amp; <span class="built_in">Math</span>.floor( diff / <span class="number">60</span> ) + <span class="string">" minutes ago"</span> ||</div><div class="line">        diff &lt; <span class="number">7200</span> &amp;&amp; <span class="string">"1 hour ago"</span> ||</div><div class="line">        diff &lt; <span class="number">86400</span> &amp;&amp; <span class="built_in">Math</span>.floor( diff / <span class="number">3600</span> ) + <span class="string">" hours ago"</span> ) ||</div><div class="line">        day_diff == <span class="number">1</span> &amp;&amp; <span class="string">"Yesterday"</span> ||</div><div class="line">        day_diff &lt; <span class="number">7</span> &amp;&amp; day_diff + <span class="string">" days ago"</span> ||</div><div class="line">        <span class="built_in">Math</span>.ceil( day_diff / <span class="number">7</span> ) + <span class="string">" weeks ago"</span></div><div class="line">&#125;);</div><div class="line"><span class="comment">//新属性的使用</span></div><div class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">'12/12/1990'</span>); </div><div class="line"><span class="built_in">console</span>.log(a.ago);  <span class="comment">//1379 weeks ago</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="阻塞与非阻塞IO"><a href="#阻塞与非阻塞IO" class="headerlink" title="阻塞与非阻塞IO"></a>阻塞与非阻塞IO</h3><h4 id="非阻塞，事件轮询"><a href="#非阻塞，事件轮询" class="headerlink" title="非阻塞，事件轮询"></a>非阻塞，事件轮询</h4><ol>
+<li>Node与PHP基础架构上的区别：Node采用一个长期运行的进程，Apache会产出多个PHP线程（每个请求一个线程），每个PHP请求线程的解释器都会运行，刷新状态。 –&gt; 返回请求的函数中。修改状态，则PHP和Node分别运行的效果不同。 </li>
+<li>阻塞与非阻塞：PHP的<code>sleep()</code>是同步的，会阻塞线程的执行；Node.js使用<strong>事件轮询</strong>机制，<code>setTimeout</code>是异步、非阻塞的。Node仅仅是注册一个回调函数，随后不停地询问内核这些事件是否已经分发。当事件分发时，对应的回调函数被触发，如果没有事件触发，则继续执行其他代码，直到有新事件时再去执行相应回调函数。</li>
+<li>除了<code>setTimeout</code>，<code>http, net</code>中的IO部分也采用了事件轮询，触发文件描述符相关的消息通知。</li>
+<li>JS中的timeout并不能严格遵守时钟设置，因为回调函数可能需要执行很长时间，阻塞了事件轮询。<h4 id="单线程-却-高并发"><a href="#单线程-却-高并发" class="headerlink" title="单线程 却 高并发"></a>单线程 却 高并发</h4></li>
+</ol>
+<ul>
+<li>关于单线程：当V8首次调用一个函数时，创建一个调用堆栈。由于Node运行于单线程环境中，当调用堆栈展开时，Node无法处理其他客户端或HTTP请求。</li>
+<li>关于V8 + 非阻塞IO的搭配： V8执行JS非常快，同一时刻不需要处理多个请求；非阻塞IO确保了单线程执行时不会有数据库访问或者硬盘访问等操作而导致被挂起。运用非阻塞IO的例子：亚马逊云（AWS）的硬件租用，搜索文件非阻塞；从数据库中读取数据非阻塞-读取数据并不阻塞Node处理其他事情，当读取数据库完毕后会有消息通知。<h4 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h4>Node应用依托在一个拥有大量共享状态的进程中，如果某个回调函数发生错误未被捕获，整个进程都会遭殃。需要进行错误处理：</li>
+<li><p>可添加<code>uncaughtException</code>处理器</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">process.on(<span class="string">'uncaughtException'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(err);</div><div class="line">    process.exit(<span class="number">1</span>); <span class="comment">//手动退出</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>许多像<code>http, net</code>这样的原生模块都会分发error事件，如果未处理，就会抛出未捕获的异常。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> net = <span class="built_in">require</span>(<span class="string">'net'</span>);</div><div class="line"></div><div class="line">net.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">connection</span>)</span>&#123;</div><div class="line">    connection.on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</div><div class="line">        <span class="comment">//对错误对象err进行处理</span></div><div class="line">    &#125;);</div><div class="line">&#125;).listen(<span class="number">400</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>大部分Node异步API接收的回调函数，第一个参数都是错误对象或<code>null</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"></div><div class="line">fs.readFile(<span class="string">'etc/passwd'</span>, functon(err, data)&#123;</div><div class="line">    <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="built_in">console</span>.error(err); <span class="comment">//处理错误对象</span></div><div class="line">    <span class="built_in">console</span>.log(data);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="堆栈追踪"><a href="#堆栈追踪" class="headerlink" title="堆栈追踪"></a>堆栈追踪</h4><ul>
+<li>当错误发生时，在错误信息中可以看到一系列的函数调用。</li>
+<li>如果引入事件轮询，在<code>setTimout</code>函数中抛出错误，则堆栈信息会丢失很多有意义的调用信息，而是从事件轮询开始显示。</li>
+<li>无法捕获未来才会执行到的函数所抛出的错误，这会直接抛出未捕获的异常，且<code>catch</code>代码块永远不会执行：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'here'</span>);</div><div class="line">    &#125;, <span class="number">10</span>);</div><div class="line">&#125; <span class="keyword">catch</span> (e) &#123;&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>所以Node.js中每步都要正确进行错误处理。</p>
+<h3 id="Node中的JavaScript"><a href="#Node中的JavaScript" class="headerlink" title="Node中的JavaScript"></a>Node中的JavaScript</h3><h4 id="1-global对象"><a href="#1-global对象" class="headerlink" title="1 global对象"></a>1 global对象</h4><ul>
+<li><code>global</code>对象：全局对象，其属性可以全局访问到</li>
+<li><code>process</code>对象：其中包含所有全局执行上下文中的内容。<code>window.name</code>对应浏览器中窗口的名字，<code>process.name</code>对应Node中进程的名字。</li>
+<li>对<code>process.nextTick</code>的理解：通过异步的方法在最近的将来调用该函数，或视作<code>setTimeout(fn, 1)</code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</div><div class="line">process.nextTick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(<span class="number">2</span>);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上述执行结果为1，2，3</p>
+<h4 id="2-模块系统"><a href="#2-模块系统" class="headerlink" title="2 模块系统"></a>2 模块系统</h4><ul>
+<li>JS原生引入第三方模块时，第三方模块暴露一个或多个全局变量，然后引入JS全局空间。- - - Node模块系统有三个核心的全局对象：<code>require</code>,<code>module</code>, <code>exports</code>.</li>
+<li>绝对模块：通过npm安装的，可以在其内部<code>node_modules</code>目录中查找到的模块或Node内置的模块。绝对模块可以直接通过模块名字来<code>require</code>。</li>
+<li>相对模块：定义在相对工作目录下的JS文件，需要通过相对路径<code>require</code>。</li>
+<li>暴露API：如果模块暴露了API，则可以通过调用<code>require</code>将其赋值给一个变量。<br>两种方式：直接将要暴露的变量和方法写作<code>exports</code>对象的属性和方法；直接重写<code>module.exports</code>对象</li>
+</ul>
+<h4 id="3-事件"><a href="#3-事件" class="headerlink" title="3 事件"></a>3 事件</h4><ul>
+<li><code>EventEmitter</code>API：提供了<code>on, emit, removeListener</code>方法<br>可以将这个API添加到自己的类中：<code>MyClass.prototype.__proto__ = EventEmitter.prototype;</code></li>
+<li>事件是Node非阻塞设计的重要体现。Node通常不会直接返回数据，否则可能在等待某个资源时发生线程阻塞，而是采用分发事件来传递数据。例如，HTTP服务器，当请求到达时，数据可能没有全部到达，Node调用回调函数，监听<code>data</code>和<code>end</code>事件。</li>
+<li><code>a.once()</code>：某个事件可能触发多次而回调函数只执行一次</li>
+</ul>
+<h4 id="4-buffer"><a href="#4-buffer" class="headerlink" title="4 buffer"></a>4 buffer</h4><p>buffer是一个表示固定内存分配的全局对象。放到buffer中的字节数需提前确定。<br>处理二进制数据。eg. 可以进行数据编码转换：将base64编码表示的图片（仅用ASCII字符书写二进制数据）转为二进制PNG图片存起来：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mybuffer = <span class="keyword">new</span> Buffer(<span class="string">'==iij2i3h1i23h'</span>, <span class="string">'base64'</span>);</div><div class="line"><span class="built_in">console</span>.log(mybuffer);</div><div class="line"><span class="built_in">require</span>(<span class="string">'fs'</span>).writeFile(<span class="string">'logo.png'</span>, mybuffer);</div></pre></td></tr></table></figure></p>
+<h2 id="Part-2-Node重要的API"><a href="#Part-2-Node重要的API" class="headerlink" title="Part 2 Node重要的API"></a>Part 2 Node重要的API</h2>
       
     </div>
 
@@ -426,8 +508,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/upload/image/zxy.jpeg"
@@ -494,6 +585,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-1-基础"><span class="nav-text">Part 1 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript概览"><span class="nav-text">JavaScript概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#V8中的JavaScript"><span class="nav-text">V8中的JavaScript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞与非阻塞IO"><span class="nav-text">阻塞与非阻塞IO</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#非阻塞，事件轮询"><span class="nav-text">非阻塞，事件轮询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单线程-却-高并发"><span class="nav-text">单线程 却 高并发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#错误处理"><span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆栈追踪"><span class="nav-text">堆栈追踪</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node中的JavaScript"><span class="nav-text">Node中的JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-global对象"><span class="nav-text">1 global对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-模块系统"><span class="nav-text">2 模块系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-事件"><span class="nav-text">3 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-buffer"><span class="nav-text">4 buffer</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-2-Node重要的API"><span class="nav-text">Part 2 Node重要的API</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/11/first-article-for-test/index.html">
 <meta property="og:site_name" content="ZhangXinyu's Blog">
 <meta property="og:description" content="零、写在前面写博客的动力：在准备找实习面试的过程中写了很多md文件，里面一直都是比较零散的总结，分类和条理都不够好。最近准备一边回顾梳理一边放到博客上来，一来可以鞭策自己把技术总结写得条理更清晰一些，以及督促自己养成经常总结和温习的习惯，二来顺便记录自己在技术方面的进步过程。">
-<meta property="og:updated_time" content="2017-05-29T07:24:22.000Z">
+<meta property="og:updated_time" content="2017-05-29T08:12:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="first article for test">
 <meta name="twitter:description" content="零、写在前面写博客的动力：在准备找实习面试的过程中写了很多md文件，里面一直都是比较零散的总结，分类和条理都不够好。最近准备一边回顾梳理一边放到博客上来，一来可以鞭策自己把技术总结写得条理更清晰一些，以及督促自己养成经常总结和温习的习惯，二来顺便记录自己在技术方面的进步过程。">
@@ -327,6 +327,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
 
@@ -358,11 +363,12 @@
 <h4 id="添加社交分享"><a href="#添加社交分享" class="headerlink" title="添加社交分享"></a>添加社交分享</h4><p>Mob Shared SDK<br>参考文章：<br><a href="http://blog.magicer.xyz/2016/04/add-sharesdk/" target="_blank" rel="external">Magicer’s Blog</a></p>
 <h4 id="添加博客评论"><a href="#添加博客评论" class="headerlink" title="添加博客评论"></a>添加博客评论</h4><p>尝试了几种现有第三方评论插件：</p>
 <ul>
+<li>多说停止维护</li>
 <li>搜狐的畅言changyan，需要备案；</li>
 <li>友言 uyan：因其不支持https，用不了</li>
 <li>disqus: 配置超级方便，在官网注册账号后直接把<code>short_name</code>写到主题配置文件相应位置即可，并且Disqus官网会在你账号里记录这个账号的评论内容。可以点赞推荐。最大缺点就是评论者需要登录账号才能评论，而且登录账号是Disqus, facebook, twitter,google+等。很不方便。</li>
 <li>Hypercomments: 跟disqus差不多，也需要同样的方式登录后才能评论和点赞。</li>
-<li>网易云跟帖 gentie:</li>
+<li>网易云跟帖 gentie: 在<code>localhost</code>中显示不了，应该<code>deploy</code>之后测试。需要登录，可以用weibo,网易账号等登录。</li>
 </ul>
 
       
@@ -458,17 +464,6 @@
   <div class="comments" id="comments">
     
       <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
-<script>
-var cloudTieConfig = {
-  url: document.location.href, 
-  sourceId: "",
-  productKey: "b2e1b88c083a42509d36899dc89eb8d9",
-  target: "cloud-tie-wrapper"
-};
-var yunManualLoad = true;
-Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
-</script>
     
   </div>
 
@@ -622,6 +617,26 @@ Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true)
 
 
         
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
         
       </div>

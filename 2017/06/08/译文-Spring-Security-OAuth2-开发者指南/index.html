@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/08/译文-Spring-Security-OAuth2-开发者指南/index.html">
 <meta property="og:site_name" content="ZhangXinyu's Blog">
 <meta property="og:description" content="因为最近在做毕设，涉及到给现有项目添加Spring Security OAuth2功能，参考了网上的几个两个项目，然而并不能达到预期的效果。参考项目1参考项目2这个是官方的项目。所以想通过官方文档来解决。这里是官网原文 一、介绍该用户指南分为两部分，分别供OAuth 2.0 的提供者(Provider)和客户端(Client)参考。">
-<meta property="og:updated_time" content="2017-06-08T12:16:40.000Z">
+<meta property="og:updated_time" content="2017-06-09T01:41:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[译文]Spring Security OAuth2 开发者指南">
 <meta name="twitter:description" content="因为最近在做毕设，涉及到给现有项目添加Spring Security OAuth2功能，参考了网上的几个两个项目，然而并不能达到预期的效果。参考项目1参考项目2这个是官方的项目。所以想通过官方文档来解决。这里是官网原文 一、介绍该用户指南分为两部分，分别供OAuth 2.0 的提供者(Provider)和客户端(Client)参考。">
@@ -322,8 +322,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-06-08T20:16:40+08:00">
-                2017-06-08
+              <time title="更新于" itemprop="dateModified" datetime="2017-06-09T09:41:39+08:00">
+                2017-06-09
               </time>
             
           </span>
@@ -407,15 +407,18 @@
 <a id="more"></a>
 <h2 id="二、OAuth-2-0-提供者"><a href="#二、OAuth-2-0-提供者" class="headerlink" title="二、OAuth 2.0 提供者"></a>二、OAuth 2.0 提供者</h2><p>OAuth 2.0提供者机制负责暴露OAuth 2.0的受保护的资源。相应的配置包括：创建能以用户身份独立访问受保护资源的OAuth 2.0客户端。提供者通过管理和验证用来访问受保护资源的OAuth 2.0令牌来实现该功能。考虑到适用性，提供方还需要提供一个接口给用户，让用户确认客户端是否能被授予访问受保护资源的权限（也即确认页面）。</p>
 <h2 id="三、OAuth-2-0-提供者的实现"><a href="#三、OAuth-2-0-提供者的实现" class="headerlink" title="三、OAuth 2.0 提供者的实现"></a>三、OAuth 2.0 提供者的实现</h2><p>OAuth 2.0中的提供者角色实际上分为授权服务和资源服务，尽管二者有时混合存在于同一个应用，通过Spring Security OAuth，你可以选择将它们分放在两个应用中，或是让多个资源服务共享同一个授权服务。令牌请求是被Spring MVC controller的endpoints处理的，对受保护资源的访问是被标准的Spring Security请求过滤器处理的。为了实现OAuth 2.0授权服务器，需要在Spring Security过滤器链中包含以下endpoints：</p>
-<pre><code>- **AuthorizationEndpoint**用于授权的服务请求。默认URL：`/oauth/authorize`.
-- **TokenEndpoint**用于令牌的服务请求。默认URL：`/oauth/token`.
-</code></pre><p>为了实现OAuth 2.0资源服务器，需要以下过滤器：</p>
-<pre><code>- **OAuth2AuthenticationProcessingFilter**用于为获得授权访问令牌的请求加载授权。
-</code></pre><p>所有OAuth 2.0提供者，都通过特殊的Spring OAuth <code>@Configuration</code> adapters简化了配置。还有一个XML命名空间也用于OAuth配置，相应的schema位于 <a href="http://www.springframework.org/schema/security/spring-security-oauth2.xsd" target="_blank" rel="external">http://www.springframework.org/schema/security/spring-security-oauth2.xsd</a>. 命名空间是<code>http://www.springframework.org/schema/security/oauth2</code>.</p>
-<h2 id="四、授权服务器配置"><a href="#四、授权服务器配置" class="headerlink" title="四、授权服务器配置"></a>四、授权服务器配置</h2><p>当你配置授权服务器时，你需要考虑客户端将会使用的grant type，用于客户端从终端用户（如：授权码，用户账号user credentials，更新令牌）获取访问令牌。这个配置用于提供客户端细节服务和令牌服务的实现，以及用于全局激活或禁用该机制的某些层面。然而，需要注意的是，每个客户端都可以特殊配置，只要有使用某些授权机制和授予访问的许可就行。也即，仅仅因为你的提供者被配置为支持“client credentials”的grant type，并不意味着一个具体的客户端被授权使用那种grant type. ？？？</p>
-<p>注解<code>@EnableAuthorizationServer</code>和任何实现了<code>AuthorizationServerConfigurer</code>（有一种简便的实现办法就是使用空的方法）的<code>@Beans</code>一起，被用于配置OAuth 2.0授权服务器机制。以下特性被分派于将Spring产生配置项分开，并传进<code>AuthorizationServerConfigurer</code>:</p>
 <ul>
-<li><code>ClientDetailsServiceConfigurer</code>: 定义了用户细节服务的配置项。用户细节可以被初始化，或指定为一个已存在的store.</li>
+<li><strong>AuthorizationEndpoint</strong> 用于授权的服务请求。默认URL：<code>/oauth/authorize</code>.</li>
+<li><strong>TokenEndpoint</strong> 用于令牌的服务请求。默认URL：<code>/oauth/token</code>.</li>
+</ul>
+<p>为了实现OAuth 2.0资源服务器，需要以下过滤器：</p>
+<ul>
+<li><strong>OAuth2AuthenticationProcessingFilter</strong> 用于为获得授权访问令牌的请求加载授权。<br>所有OAuth 2.0提供者，都通过特殊的Spring OAuth <code>@Configuration</code> adapters简化了配置。还有一个XML命名空间也用于OAuth配置，相应的schema位于 <a href="http://www.springframework.org/schema/security/spring-security-oauth2.xsd" target="_blank" rel="external">http://www.springframework.org/schema/security/spring-security-oauth2.xsd</a>. 命名空间是<code>http://www.springframework.org/schema/security/oauth2</code>.</li>
+</ul>
+<h2 id="四、授权服务器配置"><a href="#四、授权服务器配置" class="headerlink" title="四、授权服务器配置"></a>四、授权服务器配置</h2><p>当你配置授权服务器时，你需要考虑客户端将会使用的grant type（如：授权码，用户账号user credentials，更新令牌），用于客户端从终端用户获取访问令牌。这个配置用于提供客户端细节服务和令牌服务的实现，以及用于全局激活或禁用该机制的某些层面。然而，需要注意的是，每个客户端都可以特殊配置，只要有使用某些授权机制和授予访问的许可就行。所以，当仅有提供者被配置为支持“client credentials”的grant type时，并不意味着一个具体的客户端就被授权可以使用那种grant type了.</p>
+<p>注解<code>@EnableAuthorizationServer</code>和任何实现了<code>AuthorizationServerConfigurer</code>（有一种简便的实现办法就是使用空的方法）的<code>@Beans</code>一起，被用于配置OAuth 2.0授权服务器机制。以下特性被分派于将Spring产生的配置项分开，并传进<code>AuthorizationServerConfigurer</code>:</p>
+<ul>
+<li><code>ClientDetailsServiceConfigurer</code>: 定义了用户细节服务的配置项。用户细节可以是已经被初始化的，或指定为一个已存在的store.</li>
 <li><code>AuthorizationServerSecurityConfigurer</code>: 定义了令牌endpoint的安全限制。</li>
 <li><code>AuthorizationServerEndpointConfigurer</code>: 定义了授权endpoint和令牌endpoint，以及令牌服务。</li>
 </ul>
@@ -429,21 +432,21 @@
 <li><code>authorizedGrantTypes</code>: 授权给客户端的grant types。 默认值为空。</li>
 <li><code>authorities</code>: 授予客户端的权限。（常规的Spring Security权限）</li>
 </ul>
-<p>用户细节可以在应用运行时更新，通过直接访问其下的store（如，<code>JdbcClientDetailsService</code>的数据库表），或通过<code>ClientDetailsManager</code>接口类（which both implementations of <code>ClientDetailsService</code> also implement ？？）即可更新。</p>
+<p>用户细节可以在应用运行时更新，通过直接访问其下的store（如，<code>JdbcClientDetailsService</code>的数据库表），或通过<code>ClientDetailsManager</code>接口类（<code>ClientDetailsService</code>的两种实现类都实现了）即可更新。</p>
 <p>注意：JDBC服务的schema没有打包进库（因为在实践中你可能会用到其中太多的变量），github上有一个相关的入门案例供您使用：<a href="https://github.com/spring-projects/spring-security-oauth/blob/master/spring-security-oauth2/src/test/resources/schema.sql" target="_blank" rel="external">test code in github</a></p>
 <h3 id="2-管理令牌"><a href="#2-管理令牌" class="headerlink" title="2 管理令牌"></a>2 管理令牌</h3><p><code>AuthorizationServerTokenServices</code>接口类定义了管理OAuth 2.0令牌的必要操作。注意：</p>
 <ul>
 <li>当创建了一个访问令牌，相应验证必须存储起来，以便接收该访问令牌的资源将来可以找到它。</li>
-<li>访问令牌用于加载验证，该验证用于批准该令牌的创建。 ？？</li>
+<li>访问令牌用于加载验证，该验证用于批准该令牌的创建。</li>
 </ul>
 <p>当你在创建<code>AuthorizationServerTokenServices</code>实现类时，你可能想使用<code>DefaultTokenServices</code>，它有许多可以引入的策略，这些策略可以改变令牌的格式和存储。默认情况下，它会通过随机值生成令牌，并负责令牌相关的所有问题，除了令牌持久性，这个问题它委托给了一个<code>TokenStore</code>来负责。默认的store是<a href="http://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/token/store/InMemoryTokenStore.html" target="_blank" rel="external">in-memory 实现</a>，也有一些其他可用的实现。下面是对这些实现的讨论和介绍：</p>
 <ul>
 <li>默认的<code>InMemoryTokenStore</code>对单个服务器（也即：低流量，宕机时不会热切换为备份服务器）来说表现完美。大多数项目可以由此开始（可能以开发模式操作），来轻松开启一个无依赖的服务器。</li>
-<li><code>JdbcTokenStore</code>是同一个东西的JDBC 版本，它将令牌存储于关系数据库。如果你能在不同服务器或同一个服务器的按比例放大的实例（如果只有一个服务器的话）中共享一个数据库，那么就可以使用JDBC版的<code>TokenStore</code>。要想使用<code>JdbcTokenStore</code>，你需要在classpath中设置”spring-jdbc”。<pre><code>- JSON Web Token(JWT) 版的store把授权相关的所有数据编码进了令牌本身（因此没有后端store，这是个显著优势）。有一个缺点是，你无法轻易撤销一个访问令牌，因此它们都被授予了短暂时效，由刷新令牌负责撤销操作。另一个缺点是，如果你在其中存储了大量用户账号信息，令牌可能会变得非常大。`JwtTokenStore`并不真的是一个“仓库”，因为它并不持久化任何数据，但是它同样扮演着转换令牌值和`DefaultTokenServices`中的验证信息的角色。
-</code></pre></li>
+<li><code>JdbcTokenStore</code>是同一个东西的JDBC 版本，它将令牌存储于关系数据库。如果你能在不同服务器或同一个服务器的按比例放大的实例（如果只有一个服务器的话）中共享一个数据库，那么就可以使用JDBC版的<code>TokenStore</code>。要想使用<code>JdbcTokenStore</code>，你需要在classpath中设置”spring-jdbc”。</li>
+<li>JSON Web Token(JWT) 版的store把授权相关的所有数据编码进了令牌本身（因此没有后端store，这是个显著优势）。有一个缺点是，你无法轻易撤销一个访问令牌，因此它们都被授予了短暂时效，由刷新令牌负责撤销操作。另一个缺点是，如果你在其中存储了大量用户账号信息，令牌可能会变得非常大。<code>JwtTokenStore</code>并不真的是一个“仓库”，因为它并不持久化任何数据，但是它同样扮演着转换令牌值和<code>DefaultTokenServices</code>中的验证信息的角色。</li>
 </ul>
 <p>注意：确保注解<code>@EnableTransactionManagement</code>来避免令牌创建时，客户端应用竞争同一行时产生的冲突。样例schema有明确的<code>PRIMARY KEY</code>声明 —— 这些在一致环境中也是必要的。</p>
-<h3 id="3-JWT-Tokens"><a href="#3-JWT-Tokens" class="headerlink" title="3 JWT Tokens"></a>3 JWT Tokens</h3><p>要想使用JWT令牌，你需要在你的授权服务器中使用<code>JwtTokenStore</code>。资源服务器需要能够对令牌解码，因此<code>JwtTokenStore</code>依赖于<code>JwtAccessTokenConverter</code>，授权服务器和资源服务器都需要相同的实现？？？。令牌是被默认标记的，？？资源服务器也能验证签名，因此它要么需要和收钱服务器（共享secret，或对称秘钥）相同的对称（签名）秘钥，要么需要共有秘钥（验证秘钥）来匹配授权服务器中的（公-私或非对称秘钥）私有秘钥（签名秘钥）。公有秘钥（如果有的话）是被授权服务器暴露在<code>/oauth/token_key</code>endpoint上的，该endpoint由默认的访问规则<code>denyAll()</code>保证安全。你可以通过向<code>AuthorizationServerSecurityConfigurer</code>注入标准的SPEL表达式来打开它（例如，<code>permitAll()</code>也许就足够了，因为它是一个共有秘钥）。</p>
+<h3 id="3-JWT-Tokens"><a href="#3-JWT-Tokens" class="headerlink" title="3 JWT Tokens"></a>3 JWT Tokens</h3><p>要想使用JWT令牌，你需要在你的授权服务器中使用<code>JwtTokenStore</code>。资源服务器需要能够对令牌解码，因此<code>JwtTokenStore</code>依赖于<code>JwtAccessTokenConverter</code>，授权服务器和资源服务器都需要有相同的实现。令牌是默认有签名的，资源服务器应能验证签名，因此它要么需要和授权服务器（共享secret，或对称秘钥）相同的对称（签名）秘钥，要么需要共有秘钥（验证秘钥）来匹配授权服务器中的（公-私或非对称秘钥）私有秘钥（签名秘钥）。公有秘钥（如果有的话）是被授权服务器暴露在<code>/oauth/token_key</code>endpoint上的，该endpoint由默认的访问规则<code>denyAll()</code>保证安全。你可以通过向<code>AuthorizationServerSecurityConfigurer</code>注入标准的SPEL表达式来打开它（例如，<code>permitAll()</code>也许就足够了，因为它是一个共有秘钥）。</p>
 <p>要使用<code>JwtTokenStore</code>，你需要在你的classpath中配置<code>spring-security-jwt</code>.（你可以在Spring OAuth github中找到它的一个不同的发布版本）。</p>
 <h3 id="4-Grant-Types"><a href="#4-Grant-Types" class="headerlink" title="4 Grant Types"></a>4 Grant Types</h3><p>由<code>AuthorizationEndpoint</code>支持的grant types可以通过<code>AuthorizationServerEndpointsConverter</code>配置。默认情况下所有grant types都是被支持的，除了密码（如何开启见下方介绍）。以下属性影响grant types:</p>
 <ul>
@@ -460,7 +463,7 @@
 <li>必须的定制路径（以“/”开始）</li>
 </ul>
 <p>框架提供的URL路径是：<code>/oauth/authorize</code>（授权endpoint）,  <code>/oauth/token</code>（令牌endpoint）  <code>/oauth/confirm_access</code>（用户在此发送授予准许）, <code>oauth/error</code>（用于在授权服务器中渲染错误）,  <code>oauth/check_token</code>（资源服务器用来解码访问令牌）和<code>/oauth/token_key</code>（如果使用JWT令牌，为令牌验证暴露出公有密钥）。</p>
-<p>注意：授权endpoint <code>/oauth.authorize</code>（或其映射替代）应该使用Spring Security进行保护，这样它就只对认证用户可访问。例如，使用标准Spring Decurity <code>WebSecurityConfigurer</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    http</div><div class="line">        .authorizeRequests().antMatchers(<span class="string">"/login"</span>).permitAll().and()</div><div class="line">        <span class="comment">// default protection for all resources (including /oauth/authorize)</span></div><div class="line">        .authorizeRequests()</div><div class="line">        .anyRequest().hasRole(<span class="string">"USER"</span>)</div><div class="line">        <span class="comment">// ... more configuration, e.g. for form login</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注意：授权endpoint <code>/oauth/authorize</code>（或其映射替代）应该使用Spring Security进行保护，这样它就只对认证用户可访问。例如，使用标准Spring Decurity <code>WebSecurityConfigurer</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    http</div><div class="line">        .authorizeRequests().antMatchers(<span class="string">"/login"</span>).permitAll().and()</div><div class="line">        <span class="comment">// default protection for all resources (including /oauth/authorize)</span></div><div class="line">        .authorizeRequests()</div><div class="line">        .anyRequest().hasRole(<span class="string">"USER"</span>)</div><div class="line">        <span class="comment">// ... more configuration, e.g. for form login</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>注意：如果你的授权服务器也是资源服务器，那么这里有另一个安全过滤器链，它以相对较低的优先级控制API资源。对于那些请求被访问令牌保护的资源，你需要保证它们的路径不会和主要user-facing过滤器链中的路径匹配，因此，请确保包含一个请求匹配器，仅仅选出以上<code>WebSecurityConfigurer</code>中的非API资源。</p>
 <p>默认通过<code>@Configuration</code>支持中的Spring OAuth，使用HTTP基础认证客户端secret来保护令牌endpoint。这不是XML中的情形（因此它需要明确被保护）。</p>
 <p>XML中，<code>&lt;authorization-server/&gt;</code>元素有一些可用于以相似的方式改变默认endpoint URL的属性。<code>/check_token</code>endpoint需要被明确激活（使用<code>check-token-enabled</code>属性）。</p>

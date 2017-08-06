@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/10/《React-引领未来的用户界面框架》读书笔记/index.html">
 <meta property="og:site_name" content="长岛冰茶与火鸟">
 <meta property="og:description" content="一、JSX1 JSX定义及优点 JavaScript XML 每个JSX节点都对应一个js函数 JSX好处：语义化，抽象化（React版本更新时代码改动得少），关注点分离（逻辑+标签封装在组件中）">
-<meta property="og:updated_time" content="2017-06-08T12:17:36.000Z">
+<meta property="og:updated_time" content="2017-08-03T08:48:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《React:引领未来的用户界面框架》读书笔记">
 <meta name="twitter:description" content="一、JSX1 JSX定义及优点 JavaScript XML 每个JSX节点都对应一个js函数 JSX好处：语义化，抽象化（React版本更新时代码改动得少），关注点分离（逻辑+标签封装在组件中）">
@@ -322,8 +322,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-06-08T20:17:36+08:00">
-                2017-06-08
+              <time title="更新于" itemprop="dateModified" datetime="2017-08-03T16:48:09+08:00">
+                2017-08-03
               </time>
             
           </span>
@@ -411,7 +411,7 @@
 <a id="more"></a>
 <h3 id="2-使用组件"><a href="#2-使用组件" class="headerlink" title="2 使用组件"></a>2 使用组件</h3><ul>
 <li>使用动态值：<code>{}</code>中的任何东西都会被求值：变量，函数求值，字符串数组自动求值为拼接字符串。</li>
-<li>子节点：<code>{this.props.children}</code>，React会将放在该组件标签之间的任何东西渲染出来。举例：定义组件<code>Divider</code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Divider = React.createClass(&#123;</div><div class="line">    <span class="attr">render</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">return</span> (</div><div class="line">          &lt;div className="divider clearfix"&gt;</div><div class="line">            &lt;h2&gt;&#123;this.props.children&#125;&lt;/h2&gt;&lt;hr /&gt;</div><div class="line">          &lt;/div&gt;</div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<li>子节点：<code>{this.props.children}</code>，React会将放在该组件标签之间的任何东西渲染出来。举例：定义组件<code>Divider</code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Divider = React.createClass(&#123;</div><div class="line">    <span class="attr">render</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">return</span> (</div><div class="line">          <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"divider clearfix"</span>&gt;</span></span></div><div class="line">            <span class="tag">&lt;<span class="name">h2</span>&gt;</span>&#123;this.props.children&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">hr</span> /&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>使用组件：<br><code>&lt;Divider&gt;Questions&lt;/Divider&gt;</code>这里的<code>Questions</code>就是<code>this.props.children</code><br>渲染输出的结果为：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"divider clearfix"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>Questions<span class="tag">&lt;/<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">hr</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
@@ -475,7 +475,7 @@
 <li>不能改变组件的状态，不能修改DOM的输出 =&gt; “纯净”</li>
 </ul>
 <p>(5) <code>componentDidMount</code><br>真实的DOM被渲染后，可在该方法内部通过<code>this.getDOMNode()</code>访问到真实DOM</p>
-<p>注意：该组件类后续所有应用将不会调用<code>getDefaultProos</code>方法，而是依次调用上面第2到5个方法。</p>
+<p>注意：该组件类后续所有应用将不会调用<code>getDefaultProps</code>方法，而是依次调用上面第2到5个方法。</p>
 <h3 id="2-存在期"><a href="#2-存在期" class="headerlink" title="2 存在期"></a>2 存在期</h3><p>组件已经渲染完成，用户可以与它交互（通过鼠标键盘等触发事件处理器）。用户会改变组件或整个应用的<code>state</code>，新的<code>state</code>会流入组件树。依次调用：<br>(1) <code>componentWillReceiveProps</code><br>组件的<code>props</code>随时可以通过父辈组件来更改。在该方法中可以更改<code>props</code>对象和更新<code>state</code>(使用<code>setState()</code>)。</p>
 <p>(2) <code>shouldComponentUpdate</code><br>大部分时间没必要使用，准确测量出性能瓶颈后用于性能调优：</p>
 <ul>
@@ -672,7 +672,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -683,7 +683,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -707,7 +707,7 @@
                 <h3 class="widget-title">标签云</h3>
                 <div id="myCanvasContainer" class="widget tagcloud">
                     <canvas width="250" height="250" id="resCanvas" style="width=100%">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OAuth2/">OAuth2</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OAuth2/">OAuth2</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li></ul>
                     </canvas>
                 </div>
             </div>

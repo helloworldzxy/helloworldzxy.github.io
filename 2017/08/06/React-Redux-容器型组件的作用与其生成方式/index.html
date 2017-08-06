@@ -1,0 +1,1152 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/upload/image/favicon48.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文总结了展示型组件和容器型组件的差别，解释了为什么需要 React Redux 的connect()及其工作原理。 一、展示型组件与容器型组件1.1 展示型组件 关注于“组件展示的外在形态是什么样的”；  内部可能会包含展示型组件和容器型组件，通常会有一些DOM标签和样式；">
+<meta name="keywords" content="React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Redux - 容器型组件的作用与其生成方式">
+<meta property="og:url" content="http://yoursite.com/2017/08/06/React-Redux-容器型组件的作用与其生成方式/index.html">
+<meta property="og:site_name" content="长岛冰茶与火鸟">
+<meta property="og:description" content="本文总结了展示型组件和容器型组件的差别，解释了为什么需要 React Redux 的connect()及其工作原理。 一、展示型组件与容器型组件1.1 展示型组件 关注于“组件展示的外在形态是什么样的”；  内部可能会包含展示型组件和容器型组件，通常会有一些DOM标签和样式；">
+<meta property="og:image" content="http://yoursite.com/upload/image/custom-jcrop/connect.png">
+<meta property="og:updated_time" content="2017-08-06T14:15:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Redux - 容器型组件的作用与其生成方式">
+<meta name="twitter:description" content="本文总结了展示型组件和容器型组件的差别，解释了为什么需要 React Redux 的connect()及其工作原理。 一、展示型组件与容器型组件1.1 展示型组件 关注于“组件展示的外在形态是什么样的”；  内部可能会包含展示型组件和容器型组件，通常会有一些DOM标签和样式；">
+<meta name="twitter:image" content="http://yoursite.com/upload/image/custom-jcrop/connect.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/06/React-Redux-容器型组件的作用与其生成方式/"/>
+
+
+
+
+
+  <title> React Redux - 容器型组件的作用与其生成方式 | 长岛冰茶与火鸟 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7fe473d7596c476c8be1be7acfa6c517";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">长岛冰茶与火鸟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/06/React-Redux-容器型组件的作用与其生成方式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="长岛冰茶与火鸟">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/upload/image/zxy.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="长岛冰茶与火鸟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                React Redux - 容器型组件的作用与其生成方式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-06T22:04:49+08:00">
+                2017-08-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-08-06T22:15:37+08:00">
+                2017-08-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术学习/" itemprop="url" rel="index">
+                    <span itemprop="name">技术学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/08/06/React-Redux-容器型组件的作用与其生成方式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/08/06/React-Redux-容器型组件的作用与其生成方式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/08/06/React-Redux-容器型组件的作用与其生成方式/" class="leancloud_visitors" data-flag-title="React Redux - 容器型组件的作用与其生成方式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文总结了展示型组件和容器型组件的差别，解释了为什么需要 React Redux 的<code>connect()</code>及其工作原理。</p>
+<h2 id="一、展示型组件与容器型组件"><a href="#一、展示型组件与容器型组件" class="headerlink" title="一、展示型组件与容器型组件"></a>一、展示型组件与容器型组件</h2><h3 id="1-1-展示型组件"><a href="#1-1-展示型组件" class="headerlink" title="1.1 展示型组件"></a>1.1 展示型组件</h3><ol>
+<li><p>关注于“组件展示的外在形态是什么样的”；</p>
+</li>
+<li><p>内部可能会包含展示型组件和容器型组件，通常会有一些DOM标签和样式；</p>
+</li>
+</ol>
+<a id="more"></a>
+<ol>
+<li><p>不依赖于应用的其余部分，如 Flux 的 <code>action</code> 和 <code>store</code> ;</p>
+</li>
+<li><p>很少有自己的state，如果有，则是 UI state, 而不是数据；</p>
+</li>
+<li><p>一般可以用<code>function</code>手动编写，除非需要state, 生命周期钩子，性能优化等就用class。</p>
+</li>
+</ol>
+<h3 id="1-2-容器型组件"><a href="#1-2-容器型组件" class="headerlink" title="1.2 容器型组件"></a>1.2 容器型组件</h3><ol>
+<li><p>关注于“组件是如何运转的”；</p>
+</li>
+<li><p>内部可能包含展示型和容器型组件，但是一般不会有DOM标签（除了用于包裹的div标签）和样式；</p>
+</li>
+<li><p>为展示型组件或其他容器型组件提供数据和行为；</p>
+</li>
+<li><p>调用Flux actions，并以回调的形式提供给展示型组件；</p>
+</li>
+<li><p>通常是有状态的，通常作为数据来源；</p>
+</li>
+<li><p>一般通过高阶组件来产生，例如：React Redux 的<code>connect()</code>, Relay 的 <code>createContainer()</code>, Flux Utils 的<code>Container.create()</code>, 而不是手动编写。(参见本文第六部分)</p>
+</li>
+</ol>
+<h3 id="1-3-表格总结"><a href="#1-3-表格总结" class="headerlink" title="1.3 表格总结"></a>1.3 表格总结</h3><table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">展示型组件</th>
+<th style="text-align:center">容器型组件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">功能</td>
+<td style="text-align:center">决定程序如何显示（模板，样式）</td>
+<td style="text-align:center">决定程序如何运作（数据获取，状态更新）</td>
+</tr>
+<tr>
+<td style="text-align:center">是否连接 Redux</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td style="text-align:center">读取数据</td>
+<td style="text-align:center">从<code>props</code>中读取</td>
+<td style="text-align:center">订阅 Redux 的<code>state</code></td>
+</tr>
+<tr>
+<td style="text-align:center">更新数据</td>
+<td style="text-align:center">调用来自props的回调函数</td>
+<td style="text-align:center">发起 Redux 的 <code>action</code></td>
+</tr>
+<tr>
+<td style="text-align:center">生成方式</td>
+<td style="text-align:center">手动编写</td>
+<td style="text-align:center">大多通过 react-redux 自动生成</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-4-将组件分为这两类的好处"><a href="#1-4-将组件分为这两类的好处" class="headerlink" title="1.4 将组件分为这两类的好处"></a>1.4 将组件分为这两类的好处</h3><ol>
+<li><p>关注点分离。这样编写组件可以让你更好地理解你的应用和UI；</p>
+</li>
+<li><p>更好的复用性。你可以使用同一个展示型组件，给它完全不同的数据来源，将这些封装成独立的容器型组件，可进行更广泛地复用；</p>
+</li>
+<li><p>展示型组件实质上是你的应用的“调色板”。你可以将其放在一个单页面上，设计师就可以调整它的样式，而不用接触到应用的逻辑。你也可以在这个页面上运行截图回归测试。</p>
+</li>
+<li><p>强制你将布局组件（如，Sidebar, Page, ContextMenu）抽离出来，在其他容器型组件中使用<code>this.props.children</code>引入，而不是复制同样的标签和布局。</p>
+</li>
+<li><p>补充说明：</p>
+</li>
+</ol>
+<p>将组件分为这两类是React与Redux开发的最佳实践，但这个约定并非需要死板地遵循：</p>
+<p>containers目录中也可能放置没有连接Redux的组件，因为有些页面就是不需要连接Redux但它仍然是其他组件的容器；</p>
+<p>components目录中也可以放置连接Redux的组件，比如 ReduxForm 生成的表单组件。</p>
+<p>但绝大多数情况下，都应将 Redux 连接在组件顶层，不让里面的组件感受到 Redux 的存在。</p>
+<h2 id="二、什么时候需要容器型组件？"><a href="#二、什么时候需要容器型组件？" class="headerlink" title="二、什么时候需要容器型组件？"></a>二、什么时候需要容器型组件？</h2><p>如果你需要从上而下传递很多的<code>props</code>，而传递过程中，有些中间组件并不需要使用这些<code>props</code>，仅仅是把它们继续往下传递（因为<code>props</code>只能逐级传递），每当你的目标子组件需要新数据时你就得再次经过这些中间组件，这时需要引入容器型组件来解决这个问题。</p>
+<p><img src="/upload/image/custom-jcrop/connect.png" alt="容器型组件生成前后对比图"></p>
+<p>容器型组件会将 Redux store 中的数据连接到展示组件。(参见本文第三部分)</p>
+<h2 id="三、如何生成容器型组件"><a href="#三、如何生成容器型组件" class="headerlink" title="三、如何生成容器型组件"></a>三、如何生成容器型组件</h2><h3 id="3-1-Redux基本用法"><a href="#3-1-Redux基本用法" class="headerlink" title="3.1 Redux基本用法"></a>3.1 Redux基本用法</h3><p>通过 reducer 创建一个 store，每当我们在 store 上 dispatch 一个 action，store 内的数据就会相应地发生变化。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> reducer = <span class="function">(<span class="params">state = &#123;count: <span class="number">0</span>&#125;, action</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">switch</span> (action.type)&#123;</div><div class="line">    <span class="keyword">case</span> <span class="string">'INCREASE'</span>: <span class="keyword">return</span> &#123;<span class="attr">count</span>: state.count + <span class="number">1</span>&#125;;</div><div class="line">    <span class="keyword">case</span> <span class="string">'DECREASE'</span>: <span class="keyword">return</span> &#123;<span class="attr">count</span>: state.count - <span class="number">1</span>&#125;;</div><div class="line">    <span class="keyword">default</span>: <span class="keyword">return</span> state;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> actions = &#123;</div><div class="line">  <span class="attr">increase</span>: <span class="function"><span class="params">()</span> =&gt;</span> (&#123;<span class="attr">type</span>: <span class="string">'INCREASE'</span>&#125;),</div><div class="line">  <span class="attr">decrease</span>: <span class="function"><span class="params">()</span> =&gt;</span> (&#123;<span class="attr">type</span>: <span class="string">'DECREASE'</span>&#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> store = createStore(reducer);</div><div class="line"></div><div class="line">store.subscribe(<span class="function"><span class="params">()</span> =&gt;</span></div><div class="line">  <span class="built_in">console</span>.log(store.getState())</div><div class="line">);</div><div class="line"></div><div class="line">store.dispatch(actions.increase()) <span class="comment">// &#123;count: 1&#125;</span></div><div class="line">store.dispatch(actions.increase()) <span class="comment">// &#123;count: 2&#125;</span></div><div class="line">store.dispatch(actions.decrease()) <span class="comment">// &#123;count: 1&#125;</span></div><div class="line"><span class="string">``</span><span class="string">` </span></div><div class="line"></div><div class="line">### 3.2 方法一：手动生成</div><div class="line"></div><div class="line">使用 `store.subscribe()<span class="string">` 从 Redux state 树中读取部分数据，并通过 `</span>props<span class="string">` 来把这些数据提供给要渲染的组件。</span></div><div class="line"></div><div class="line">`<span class="string">``</span>javascript</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line"></div><div class="line">  componentWillMount()&#123;</div><div class="line">    <span class="comment">//使用store.subscribe监听state变化</span></div><div class="line">    store.subscribe(<span class="function">(<span class="params">state</span>)=&gt;</span><span class="keyword">this</span>.setState(state))</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  render()&#123;</div><div class="line">    <span class="comment">//将 state 上的属性作为 props 层层传递下去</span></div><div class="line">    <span class="keyword">return</span> &lt;Comp state=&#123;this.state&#125;</div><div class="line">                 onIncrease=&#123;()=&gt;store.dispatch(actions.increase())&#125;</div><div class="line">                 onDecrease=&#123;()=&gt;store.dispatch(actions.decrease())&#125;</div><div class="line">    /&gt;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方法的不好之处在于：</p>
+<ul>
+<li><p>无法直接给子组件传递<code>state</code>和方法；</p>
+</li>
+<li><p>任意<code>state</code>的变化都会导致整个组件树的重新渲染。（可能需要为了性能优化而手动实现 <a href="https://facebook.github.io/react/docs/optimizing-performance.html" target="_blank" rel="external">React 性能优化建议</a> 中的 <code>shouldComponentUpdate</code> 方法。）</p>
+</li>
+</ul>
+<h3 id="3-3-方法二：使用-react-redux-连接"><a href="#3-3-方法二：使用-react-redux-连接" class="headerlink" title="3.3 方法二：使用 react-redux 连接"></a>3.3 方法二：使用 react-redux 连接</h3><h4 id="3-3-1-用法"><a href="#3-3-1-用法" class="headerlink" title="3.3.1 用法"></a>3.3.1 用法</h4><p>主要是 <code>Provider</code> 和 <code>connect</code>的使用。</p>
+<p>将所有内容包裹在<code>Provider</code>中，并将<code>store</code>作为<code>prop</code>传递给<code>Provider</code> ：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> App = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> (</div><div class="line">    &lt;Provider store=&#123;store&#125;&gt;</div><div class="line">      &lt;Comp/&gt;</div><div class="line">    &lt;/Provider&gt;</div><div class="line">  )</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><code>Provider</code>中的任何组件（比如<code>Comp</code>），如果要使用<code>state</code>中的数据，要求<code>Comp</code>是被<code>connect</code>方法包装过的组件（容器型组件）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComp</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">  <span class="comment">// content...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//使用connect生成容器型组件，后面会介绍connect的参数</span></div><div class="line"><span class="keyword">const</span> Comp = connect(...args)(MyComp);</div></pre></td></tr></table></figure>
+<p>注意：推荐使用react-redux而不是手动编写来生成容器型组件。因为<code>connect()</code>方法做了性能优化来避免很多不必要的重复渲染。</p>
+<h4 id="3-3-2-connect的参数"><a href="#3-3-2-connect的参数" class="headerlink" title="3.3.2 connect的参数"></a>3.3.2 connect的参数</h4><p><code>connect(mapStateToProps, mapDispatchToProps, mergeProps, options)</code></p>
+<h5 id="1-mapStateToProps函数"><a href="#1-mapStateToProps函数" class="headerlink" title="1) mapStateToProps函数"></a>1) mapStateToProps函数</h5><p><code>(state, ownProps) =&gt; stateProps</code></p>
+<p>将store中的数据作为props绑定到组件上：</p>
+<ul>
+<li>第一个参数<code>state</code>是 Redux 的<code>store</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> mapStateToProps = <span class="function">(<span class="params">state</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">count</span>: state.count, <span class="comment">//直接传递store中的数据</span></div><div class="line">    greaterThanFive: state.count &gt; <span class="number">5</span> <span class="comment">//将store中的数据处理后传递</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>绑定后，组件<code>MyComp</code>可以通过<code>this.props</code>访问到<code>store</code>中的数据：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComp</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">  render()&#123;</div><div class="line">    <span class="keyword">return</span> &lt;div&gt;</div><div class="line">        计数：&#123;this.props.count&#125;次, </div><div class="line">        是否大于5：&#123;this,props.greaterThanFive&#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> Comp = connect(...args)(MyComp);</div></pre></td></tr></table></figure>
+<ul>
+<li>第二个参数<code>ownProps</code>是原组件<code>MyComp</code>自身的<code>props</code>。有时会用到，比如，当你在 <code>store</code>中维护了一个用户列表，而你的组件<code>MyComp</code>只关心一个用户（通过<code>props</code>中的 `userId体现）：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> mapStateToProps = <span class="function">(<span class="params">state, ownProps</span>) =&gt;</span> &#123;</div><div class="line">  <span class="comment">// state 是 &#123;userList: [&#123;id: 0, name: '王二'&#125;]&#125;</span></div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">user</span>: _.find(state.userList, &#123;<span class="attr">id</span>: ownProps.userId&#125;)</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComp</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">  </div><div class="line">  <span class="keyword">static</span> PropTypes = &#123;</div><div class="line">    <span class="attr">userId</span>: PropTypes.string.isRequired,</div><div class="line">    <span class="attr">user</span>: PropTypes.object</div><div class="line">  &#125;;</div><div class="line">  </div><div class="line">  render()&#123;</div><div class="line">    <span class="keyword">return</span> &lt;div&gt;用户名：&#123;this.props.user.name&#125;&lt;/div&gt;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> Comp = connect(mapStateToProps)(MyComp);</div></pre></td></tr></table></figure>
+<p>当<code>state</code>或者<code>ownProps</code>变化的时候，<code>mapStateToProps</code>都会被调用，计算出一个新的 <code>stateProps</code>，（在与<code>ownProps</code> merge 后）更新给<code>MyComp</code>。</p>
+<h5 id="2-mapDispatchToProps"><a href="#2-mapDispatchToProps" class="headerlink" title="2) mapDispatchToProps"></a>2) mapDispatchToProps</h5><p><code>(dispatch, ownProps) =&gt; dispatchProps</code></p>
+<p>将<code>action</code>作为<code>props</code>绑定到<code>MyComp</code>上。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> mapDispatchToProps = <span class="function">(<span class="params">dispatch, ownProps</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">increase</span>: <span class="function"><span class="params">()</span> =&gt;</span> dispatch(actions.increase()),</div><div class="line">    <span class="attr">decrease</span>: <span class="function"><span class="params">()</span> =&gt;</span> dispatch(actions.decrease())</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComp</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">  render()&#123;</div><div class="line">    <span class="keyword">const</span> &#123;count, increase, decrease&#125; = <span class="keyword">this</span>.props;</div><div class="line">    <span class="keyword">return</span> (&lt;div&gt;</div><div class="line">      &lt;div&gt;计数：&#123;this.props.count&#125;次&lt;/div&gt;</div><div class="line">      &lt;button onClick=&#123;increase&#125;&gt;增加&lt;/button&gt;</div><div class="line">      &lt;button onClick=&#123;decrease&#125;&gt;减少&lt;/button&gt;</div><div class="line">    &lt;/div&gt;)</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> Comp = connect(mapStateToProps， mapDispatchToProps)(MyComp);</div></pre></td></tr></table></figure>
+<p>Q：为什么不直接将<code>action</code>对象传递给<code>MyComp</code>组件，而要传递函数<code>increase</code>和<code>decrease</code>，包装<code>dispatch</code>分发该<code>action</code>的过程？</p>
+<p>A：为了不让<code>MyComp</code>组件感知到<code>dispatch</code>的存在，将<code>action</code>包装成可以直接被调用的函数。Redux的<code>bindActionCreators</code>函数也可以做到：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123;bindActionCreators&#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> mapDispatchToProps = <span class="function">(<span class="params">dispatch, ownProps</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> bindActionCreators(&#123;</div><div class="line">    <span class="attr">increase</span>: action.increase,</div><div class="line">    <span class="attr">decrease</span>: action.decrease</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>函数<code>bindActionCreators(actionCreators, dispatch)</code>会返回一个对象，该对象中的每个函数都可以直接<code>dipatch</code>相应的<code>action</code>。</p>
+<h5 id="3-mergeProps"><a href="#3-mergeProps" class="headerlink" title="3) mergeProps"></a>3) mergeProps</h5><p><code>(stateProps, dispatchProps, ownProps) =&gt; props</code></p>
+<p>将前面两个函数生成的<code>stateProps</code>和<code>dispatchProps</code>，与原组件<code>MyComp</code>原有属性<code>ownProps</code>合并后赋给<code>MyComp</code>.通常情况下，如果不传这个参数，<code>connect</code>会默认使用<code>Object.assign()</code>替代这个方法。</p>
+<h3 id="四、Provider和connect的工作原理"><a href="#四、Provider和connect的工作原理" class="headerlink" title="四、Provider和connect的工作原理"></a>四、Provider和connect的工作原理</h3><h4 id="4-1-Provider"><a href="#4-1-Provider" class="headerlink" title="4.1 Provider"></a>4.1 Provider</h4><p><code>Provider</code>是个 React 组件，它通过<code>context</code>而不是<code>props</code>将<code>store</code>传递给子组件，所以可以跨级传递。下面是它的部分源代码：</p>
+<p><code>node_modules/react-redux/src/components/Provider.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Provider</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    getChildContext() &#123;</div><div class="line">        <span class="keyword">return</span> &#123; <span class="attr">store</span>: <span class="keyword">this</span>.store &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">Provider.propTypes = &#123;</div><div class="line">    <span class="attr">store</span>: storeShape.isRequired,</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line">Provider.childContextTypes = &#123;</div><div class="line">    <span class="attr">store</span>: storeShape.isRequired</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-2-connect"><a href="#4-2-connect" class="headerlink" title="4.2 connect"></a>4.2 connect</h4><p><code>Connect</code>是一个嵌套函数，运行<code>connect()</code>后，会生成一个高阶组件，该高阶组件接收一个组件作为参数再次运行，会生成一个新组件(<code>connect</code>组件)。</p>
+<p><code>connect</code>组件从<code>context</code>中获取来自<code>Provider</code>的<code>store</code>，然后从<code>store</code>获取<code>state</code>和<code>dispatch</code>，最后将<code>state</code>和经过<code>dispatch</code>加工过的<code>action</code>创建函数连接到组件上，并在<code>state</code>变化时重新渲染组件。</p>
+<p>react-redux所做的性能优化：如果一个页面有多个被<code>connect()</code>连接的组件，这些组件只会在自己对应的<code>state</code>变化时重新渲染（重新渲染前会检测传入组件的数据是否变化，如果没变化就不会执行旋绕），所以不组件的数据如果用<code>connect()</code>隔离开，它们的渲染不会相互干扰。</p>
+<p>如下简单列出它的部分源码（主要是看出高阶组件）：</p>
+<p><code>node_modules/react-redux/src/components/connect.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">connect</span>(<span class="params">mapStateToProps, mapDispatchToProps, mergeProps, options = &#123;&#125;</span>) </span>&#123;</div><div class="line">    </div><div class="line">    ...</div><div class="line"></div><div class="line">    return  <span class="function"><span class="keyword">function</span> <span class="title">wrapWithConnect</span>(<span class="params">WrappedComponent</span>) </span>&#123;</div><div class="line"></div><div class="line">        ...</div><div class="line"></div><div class="line">        class Connect extends Component &#123;</div><div class="line">            shouldComponentUpdate() &#123;</div><div class="line">                <span class="keyword">return</span> !pure || <span class="keyword">this</span>.haveOwnPropsChanged || <span class="keyword">this</span>.hasStoreStateChanged</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">constructor</span>(props, context) &#123;</div><div class="line">                <span class="keyword">super</span>(props, context)</div><div class="line">                </div><div class="line">                ...</div><div class="line">                </div><div class="line">                this.store = props.store || context.store</div><div class="line">                </div><div class="line">                ...</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            ...</div><div class="line"></div><div class="line">            render() &#123;</div><div class="line">                ...</div><div class="line"></div><div class="line">                return <span class="keyword">this</span>.renderedElement</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        ...</div><div class="line"></div><div class="line">        Connect.WrappedComponent = WrappedComponent</div><div class="line"></div><div class="line">        ...</div><div class="line"></div><div class="line">        return hoistStatics(Connect, WrappedComponent)</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="五、补充：一些对立词汇的解释"><a href="#五、补充：一些对立词汇的解释" class="headerlink" title="五、补充：一些对立词汇的解释"></a>五、补充：一些对立词汇的解释</h2><h3 id="1-“有状态-stateful-”与“无状态-stateless-”"><a href="#1-“有状态-stateful-”与“无状态-stateless-”" class="headerlink" title="1 “有状态(stateful)”与“无状态(stateless)”"></a>1 “有状态(stateful)”与“无状态(stateless)”</h3><p>某些组件会使用React的<code>setState()</code>方法，而有的组件不用。</p>
+<p>容器型组件倾向于是“有状态”的，展示型组件倾向于是“无状态”的，但这也不是绝对的。</p>
+<h3 id="2-class-与-function"><a href="#2-class-与-function" class="headerlink" title="2 class 与 function"></a>2 class 与 function</h3><p>二者都可以用于定义组件。</p>
+<p>用函数定义组件更简单和易于理解，但是缺少某些只对class可用的特性，比如state, 声明周期钩子，性能优化。将来有可能会减少这些限制。</p>
+<h3 id="3-“纯净-pure-”与“非纯净-impure-”"><a href="#3-“纯净-pure-”与“非纯净-impure-”" class="headerlink" title="3 “纯净(pure)”与“非纯净(impure)”"></a>3 “纯净(pure)”与“非纯净(impure)”</h3><ul>
+<li><p>“纯净的”组件：对于相同的<code>props</code>和<code>state</code>, 总是输出同样的结果。</p>
+</li>
+<li><p>组件纯净与否与其定义方式和有无状态无关。</p>
+</li>
+<li><p>纯组件不依赖于其<code>props</code>和<code>state</code>的变化，因此它们的渲染性能可以在<code>shouldComponentUpdate()</code>钩子函数中<strong>浅对比</strong>(shallow comparison)来优化。</p>
+</li>
+</ul>
+<p>这里简要介绍一下<strong>浅对比</strong>：</p>
+<p>ES6类使用React时，使用<code>shallowCompare</code>完成和<code>PureRenderMixin</code>相同的功能：如果组件的绘制函数是“纯净的”，可以使用这个辅助函数在某些情况下提升性能。</p>
+<p>对<code>props</code>和<code>nextProps</code>对象，<code>state</code>和<code>nextState</code>对象的键值key分别进行迭代比较，在key值<code>!==</code>时，<code>shouldComponentUpdate()</code>函数就返回<code>true</code>，说明组件应该更新。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><p><a href="http://cn.redux.js.org/docs/basics/UsageWithReact.html" target="_blank" rel="external">Redux官方文档 - 中文版</a></p>
+</li>
+<li><p><a href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0" target="_blank" rel="external">Presentational and Container Components - Medium</a></p>
+</li>
+<li><p><a href="http://taobaofed.org/blog/2016/08/18/react-redux-connect/" target="_blank" rel="external">React 实践心得：react-redux 之 connect 方法详解</a></p>
+</li>
+<li><p><a href="https://facebook.github.io/react/docs/shallow-compare.html" target="_blank" rel="external">shallowCompare</a></p>
+</li>
+<li><p><a href="https://github.com/zchen9/code/issues/7" target="_blank" rel="external">React + Redux 入坑指南</a></p>
+</li>
+<li><p>《React与Redux开发实例精解》，刘一奇著，电子工业出版社，2016.11</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/13/为现有Spring-MVC项目添加OAuth/" rel="prev" title="为现有Spring MVC项目添加OAuth">
+                为现有Spring MVC项目添加OAuth <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!--MOB SHARE BEGIN-->
+<div class="-mob-share-ui-button -mob-share-open">分享</div>
+<div class="-mob-share-ui -mob-share-ui-theme  -mob-share-ui-theme-slide-bottom" style="display: none">
+    <ul class="-mob-share-list">
+        <li class="-mob-share-weibo"><p>新浪微博</p></li>
+        <li class="-mob-share-weixin"><p>微信</p></li>
+        <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+        <li class="-mob-share-pocket"><p>Pocket</p></li>
+        <li class="-mob-share-facebook"><p>Facebook</p></li>
+        <li class="-mob-share-twitter"><p>Twitter</p></li>
+    </ul>
+    <div class="-mob-share-close">取消</div>
+</div>
+<div class="-mob-share-ui-bg"></div>
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=1e2b5a54b350d"></script>
+<!--MOB SHARE END-->
+
+
+      
+  </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/upload/image/zxy.jpeg"
+               alt="长岛冰茶与火鸟" />
+          <p class="site-author-name" itemprop="name">长岛冰茶与火鸟</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点点的前端程序媛</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          
+            <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+            <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+            <div class="widget-wrap">
+                <h3 class="widget-title">标签云</h3>
+                <div id="myCanvasContainer" class="widget tagcloud">
+                    <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OAuth2/">OAuth2</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li></ul>
+                    </canvas>
+                </div>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/helloworldzxy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/helloworldzxy" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://book.douban.com/mine?icn=index-nav" target="_blank" title="豆瓣书摘">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣书摘
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+           <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=67528&auto=0&height=66"></iframe>
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、展示型组件与容器型组件"><span class="nav-text">一、展示型组件与容器型组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-展示型组件"><span class="nav-text">1.1 展示型组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-容器型组件"><span class="nav-text">1.2 容器型组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-表格总结"><span class="nav-text">1.3 表格总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-将组件分为这两类的好处"><span class="nav-text">1.4 将组件分为这两类的好处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、什么时候需要容器型组件？"><span class="nav-text">二、什么时候需要容器型组件？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、如何生成容器型组件"><span class="nav-text">三、如何生成容器型组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Redux基本用法"><span class="nav-text">3.1 Redux基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-方法二：使用-react-redux-连接"><span class="nav-text">3.3 方法二：使用 react-redux 连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-用法"><span class="nav-text">3.3.1 用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-connect的参数"><span class="nav-text">3.3.2 connect的参数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-mapStateToProps函数"><span class="nav-text">1) mapStateToProps函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-mapDispatchToProps"><span class="nav-text">2) mapDispatchToProps</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-mergeProps"><span class="nav-text">3) mergeProps</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、Provider和connect的工作原理"><span class="nav-text">四、Provider和connect的工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Provider"><span class="nav-text">4.1 Provider</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-connect"><span class="nav-text">4.2 connect</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、补充：一些对立词汇的解释"><span class="nav-text">五、补充：一些对立词汇的解释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-“有状态-stateful-”与“无状态-stateless-”"><span class="nav-text">1 “有状态(stateful)”与“无状态(stateless)”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-class-与-function"><span class="nav-text">2 class 与 function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-“纯净-pure-”与“非纯净-impure-”"><span class="nav-text">3 “纯净(pure)”与“非纯净(impure)”</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">长岛冰茶与火鸟</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    访客量 <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    访问次数 <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://helloworldzxy.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2017/08/06/React-Redux-容器型组件的作用与其生成方式/';
+          this.page.identifier = '2017/08/06/React-Redux-容器型组件的作用与其生成方式/';
+          this.page.title = 'React Redux - 容器型组件的作用与其生成方式';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://helloworldzxy.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("f1ufW13qlGddew5inanKJ79a-gzGzoHsz", "dp1rMt2iMERlKRjnbPKoly3b");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

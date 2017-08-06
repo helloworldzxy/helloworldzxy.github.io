@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="AngularJS," />
 
 
 
@@ -87,27 +87,19 @@
 
 
 
-<meta name="description" content="问题描述：JCrop是jQuery的一种用于图片剪裁、框选的插件，项目里用到了它。由于需要在一张图片上框出多个选框，所以传入JCrop的参数中的multi选项为true。现在的问题是，框过的选框无法取消（删除），这样对于修改选框个数的用户体验非常不好。如下图：">
-<meta name="keywords">
+<meta name="description" content="总结AngularJS 1.x中 scope 的用法 作用域的作用 每条Angular指令都有其作用域，在指令定义时return的DDO（Directive Definition Object）里设置。  scope自身是一个对象：有自己的方法和属性。">
+<meta name="keywords" content="AngularJS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Custom JCrop: 多选框模式下的选框删除">
-<meta property="og:url" content="http://yoursite.com/2017/05/25/Custom-JCrop-多选框模式下的选框删除/index.html">
+<meta property="og:title" content="AngularJS 1.x 指令作用域初探">
+<meta property="og:url" content="http://yoursite.com/2017/08/06/AngularJS-1-x-指令作用域初探/index.html">
 <meta property="og:site_name" content="长岛冰茶与火鸟">
-<meta property="og:description" content="问题描述：JCrop是jQuery的一种用于图片剪裁、框选的插件，项目里用到了它。由于需要在一张图片上框出多个选框，所以传入JCrop的参数中的multi选项为true。现在的问题是，框过的选框无法取消（删除），这样对于修改选框个数的用户体验非常不好。如下图：">
-<meta property="og:image" content="http://yoursite.com/upload/image/custom-jcrop/QesDesc1.png">
-<meta property="og:image" content="http://yoursite.com/upload/image/custom-jcrop/QesDesc2.png">
-<meta property="og:image" content="http://yoursite.com/upload/image/custom-jcrop/first-try.png">
-<meta property="og:image" content="http://yoursite.com/upload/image/custom-jcrop/left.png">
-<meta property="og:image" content="http://yoursite.com/upload/image/custom-jcrop/bottom.png">
-<meta property="og:image" content="http://yoursite.com/upload/image/custom-jcrop/right.png">
-<meta property="og:image" content="http://yoursite.com/upload/image/custom-jcrop/top.png">
-<meta property="og:image" content="http://yoursite.com/upload/image/custom-jcrop/second-try-before.png">
-<meta property="og:image" content="http://yoursite.com/upload/image/custom-jcrop/second-try-after.png">
-<meta property="og:updated_time" content="2017-06-21T03:49:14.000Z">
+<meta property="og:description" content="总结AngularJS 1.x中 scope 的用法 作用域的作用 每条Angular指令都有其作用域，在指令定义时return的DDO（Directive Definition Object）里设置。  scope自身是一个对象：有自己的方法和属性。">
+<meta property="og:image" content="http://yoursite.com/upload/image/console.log_scope.png">
+<meta property="og:updated_time" content="2017-08-06T14:23:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Custom JCrop: 多选框模式下的选框删除">
-<meta name="twitter:description" content="问题描述：JCrop是jQuery的一种用于图片剪裁、框选的插件，项目里用到了它。由于需要在一张图片上框出多个选框，所以传入JCrop的参数中的multi选项为true。现在的问题是，框过的选框无法取消（删除），这样对于修改选框个数的用户体验非常不好。如下图：">
-<meta name="twitter:image" content="http://yoursite.com/upload/image/custom-jcrop/QesDesc1.png">
+<meta name="twitter:title" content="AngularJS 1.x 指令作用域初探">
+<meta name="twitter:description" content="总结AngularJS 1.x中 scope 的用法 作用域的作用 每条Angular指令都有其作用域，在指令定义时return的DDO（Directive Definition Object）里设置。  scope自身是一个对象：有自己的方法和属性。">
+<meta name="twitter:image" content="http://yoursite.com/upload/image/console.log_scope.png">
 
 
 
@@ -135,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/25/Custom-JCrop-多选框模式下的选框删除/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/06/AngularJS-1-x-指令作用域初探/"/>
 
 
 
 
 
-  <title> Custom JCrop: 多选框模式下的选框删除 | 长岛冰茶与火鸟 </title>
+  <title> AngularJS 1.x 指令作用域初探 | 长岛冰茶与火鸟 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -280,7 +272,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/25/Custom-JCrop-多选框模式下的选框删除/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/06/AngularJS-1-x-指令作用域初探/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="长岛冰茶与火鸟">
@@ -301,7 +293,7 @@
             
             
               
-                Custom JCrop: 多选框模式下的选框删除
+                AngularJS 1.x 指令作用域初探
               
             
           </h1>
@@ -316,8 +308,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-25T11:57:38+08:00">
-                2017-05-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-06T22:19:47+08:00">
+                2017-08-06
               </time>
             
 
@@ -332,8 +324,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-06-21T11:49:14+08:00">
-                2017-06-21
+              <time title="更新于" itemprop="dateModified" datetime="2017-08-06T22:23:10+08:00">
+                2017-08-06
               </time>
             
           </span>
@@ -351,8 +343,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/实践总结/" itemprop="url" rel="index">
-                    <span itemprop="name">实践总结</span>
+                  <a href="/categories/技术学习/" itemprop="url" rel="index">
+                    <span itemprop="name">技术学习</span>
                   </a>
                 </span>
 
@@ -369,9 +361,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/25/Custom-JCrop-多选框模式下的选框删除/#comments" itemprop="discussionUrl">
+                <a href="/2017/08/06/AngularJS-1-x-指令作用域初探/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/05/25/Custom-JCrop-多选框模式下的选框删除/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/08/06/AngularJS-1-x-指令作用域初探/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -379,7 +371,7 @@
 
           
           
-             <span id="/2017/05/25/Custom-JCrop-多选框模式下的选框删除/" class="leancloud_visitors" data-flag-title="Custom JCrop: 多选框模式下的选框删除">
+             <span id="/2017/08/06/AngularJS-1-x-指令作用域初探/" class="leancloud_visitors" data-flag-title="AngularJS 1.x 指令作用域初探">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -413,27 +405,74 @@
       
 
       
-        <h2 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h2><p>JCrop是jQuery的一种用于图片剪裁、框选的插件，项目里用到了它。由于需要在一张图片上框出多个选框，所以传入JCrop的参数中的<code>multi</code>选项为<code>true</code>。现在的问题是，框过的选框无法取消（删除），这样对于修改选框个数的用户体验非常不好。如下图：</p>
-<a id="more"></a>
-<p><img src="/upload/image/custom-jcrop/QesDesc1.png" alt="QesDesc1"><br>单击确认按钮后，如下图：<br><img src="/upload/image/custom-jcrop/QesDesc2.png" alt="QesDesc2"></p>
-<p>想实现的功能：选定某个选框，单击一个“取消”按钮，该选框就可以消除。</p>
-<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>1、由于JCrop是提供<code>multi:false</code>（单选）模式的，即：只能存在单个选框，每次重新框选时，原有选框都会消失。所以JCrop内部一定存在消除选框的功能。<br>2、选中选框时，记录当前选框对象（即高亮的选框）；<br>3、将JCrop内部的选框消除函数暴露出来，在外部调用该函数。</p>
-<h2 id="实现过程："><a href="#实现过程：" class="headerlink" title="实现过程："></a>实现过程：</h2><h3 id="第一次实现：视觉上没有完全消除选框"><a href="#第一次实现：视觉上没有完全消除选框" class="headerlink" title="第一次实现：视觉上没有完全消除选框"></a>第一次实现：视觉上没有完全消除选框</h3><h4 id="关键代码："><a href="#关键代码：" class="headerlink" title="关键代码："></a>关键代码：</h4><p>注意：</p>
-<ul>
-<li>要把对取消按钮的事件绑定写在Jcrop的回调函数中，不然获取不到Jcrop的<code>this</code>对象。</li>
-<li>同确认按钮一样，取消按钮也使用了事件委托，因为这两个按钮是用JS动态添加的。</li>
-<li>使用<code>call</code>绑定暴露出来的函数的<code>this</code></li>
+        <p>总结AngularJS 1.x中 scope 的用法</p>
+<h2 id="作用域的作用"><a href="#作用域的作用" class="headerlink" title="作用域的作用"></a>作用域的作用</h2><ul>
+<li><p>每条Angular指令都有其作用域，在指令定义时<code>return</code>的DDO（Directive Definition Object）里设置。</p>
+</li>
+<li><p><code>scope</code>自身是一个对象：有自己的方法和属性。</p>
+</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'#toast_'</span>+id).find(<span class="string">'.toastImg'</span>).Jcrop(&#123;</div><div class="line">    <span class="attr">bgOpacity</span>: <span class="number">.35</span>,</div><div class="line">    <span class="attr">multi</span>: <span class="literal">true</span>,</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    jcrop_api = <span class="keyword">this</span>; <span class="comment">//将Jcrop对象传递出来，以便后面在该对象上调用removeSelection函数</span></div><div class="line">    <span class="comment">//=================框选删除====================</span></div><div class="line">    $(<span class="string">'body'</span>).on(<span class="string">'click'</span>, <span class="string">'.toastCancel button'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;<span class="comment">//单击“取消”按钮的绑定事件</span></div><div class="line">        <span class="keyword">var</span> current = $(<span class="string">'.jcrop-current'</span>); <span class="comment">//当前选中的div DOM元素</span></div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'Jcrop this'</span>, jcrop_api); </div><div class="line"></div><div class="line">        <span class="keyword">if</span>(current &amp;&amp; jcrop_api)&#123;</div><div class="line">            <span class="keyword">var</span> removeFunc = jcrop_api.removeSelection; <span class="comment">//获取Jcrop中实现消除选框功能的函数</span></div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'removeFunc'</span>, removeFunc);</div><div class="line">            removeFunc.call(jcrop_api, jcrop_api.ui.selection); <span class="comment">//用call函数在选中选框（Selection对象）上调用暴露出来的removeSelection函数</span></div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h4 id="JCrop-源代码相关部分："><a href="#JCrop-源代码相关部分：" class="headerlink" title="JCrop 源代码相关部分："></a>JCrop 源代码相关部分：</h4><p>其实源代码没有什么实质性修改，主要是要找到实现所需功能的函数：<code>multi</code>属性 -&gt; <code>requestDelete</code>函数 -&gt; <code>deleteSelection</code>函数 -&gt; <code>removeSelection</code>函数，并获取其所需的<code>this</code>和参数<code>sel</code>。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Jcrop API methods</span></div><div class="line">$.extend(Jcrop.prototype,&#123;</div><div class="line">    <span class="comment">//...other functions</span></div><div class="line">    removeSelection: <span class="function"><span class="keyword">function</span>(<span class="params">sel</span>)</span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'this in removeSelection: '</span>, <span class="keyword">this</span>); <span class="comment">//该函数需要用到JCrop插件的this对象</span></div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'sel in removeSelection: '</span>, sel); <span class="comment">//传入的参数是个Selection对象</span></div><div class="line">      <span class="keyword">var</span> i, n = [], m = <span class="keyword">this</span>.ui.multi;</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;m.length;i++)&#123;</div><div class="line">        <span class="keyword">if</span> (sel !== m[i])</div><div class="line">          n.push(m[i]);</div><div class="line">        <span class="keyword">else</span> m[i].remove();</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.ui.multi = n;</div><div class="line">    &#125;,</div><div class="line">    <span class="comment">//...other functions</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样修改后，基本可以实现想要的功能，但是还有一个小bug：选中选框后单击取消按钮，该选框是可以正常消除，并且在目标图片页面也不会出现红色框选线。但是，单击取消按钮时，选中选框并没有完全消失，仍然有个像遮罩层一样的东西存在于页面：<br><img src="/upload/image/custom-jcrop/first-try.png" alt="first-try"><br>通过Chrome Dev Tools的Element面板看出，该Selection区域四周的jcrop-shades仍然存在。<br><img src="/upload/image/custom-jcrop/left.png" alt="left"><br><img src="/upload/image/custom-jcrop/bottom.png" alt="bottom"><br><img src="/upload/image/custom-jcrop/right.png" alt="right"><br><img src="/upload/image/custom-jcrop/top.png" alt="top"></p>
-<h3 id="第二次实现：完善消除选框的样式："><a href="#第二次实现：完善消除选框的样式：" class="headerlink" title="第二次实现：完善消除选框的样式："></a>第二次实现：完善消除选框的样式：</h3><p>对比源码中使用<code>removeSelection</code>函数的地方，在其之后又调用了<code>refresh</code>函数，猜测我的bug是因为这个函数没有调用的原因。这次直接调用Jcrop API method中的<code>requestDelete</code>函数。它包含了消除函数<code>removeSelection</code>和更新函数<code>refresh</code>。</p>
-<h4 id="关键代码：-1"><a href="#关键代码：-1" class="headerlink" title="关键代码："></a>关键代码：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'#toast_'</span>+id).find(<span class="string">'.toastImg'</span>).Jcrop(&#123;</div><div class="line">   <span class="attr">bgOpacity</span>: <span class="number">.35</span>,</div><div class="line">    <span class="attr">multi</span>: <span class="literal">true</span>,</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    jcrop_api = <span class="keyword">this</span>;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'parent'</span>, <span class="keyword">this</span>);</div><div class="line">    <span class="comment">//框选删除</span></div><div class="line">    $(<span class="string">'body'</span>).on(<span class="string">'click'</span>, <span class="string">'.toastCancel button'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> current = $(<span class="string">'.jcrop-current'</span>);</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'Jcrop this'</span>, jcrop_api);</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(current &amp;&amp; jcrop_api)&#123;</div><div class="line">            <span class="keyword">var</span> requestDelete = jcrop_api.requestDelete;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'requestDelete:'</span>, requestDelete);</div><div class="line">            requestDelete.call(jcrop_api); <span class="comment">//关键</span></div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>然后修改按钮样式，并删除源码中不需要的<code>console.log</code>,得到完美结果：<br>删除选框前：<br><img src="/upload/image/custom-jcrop/second-try-before.png" alt="second-try-before"><br>删除选框后：<br><img src="/upload/image/custom-jcrop/second-try-after.png" alt="second-try-after"></p>
-<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="http://jcrop.org/doc/api" target="_blank" rel="external">Jcrop API overview</a></p>
-<h2 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h2><ul>
-<li>本来以为会很复杂的代码才能实现的功能，到最后竟然几行就搞定了。思路清晰挺重要的~</li>
-<li>准备实习面试的过程中<code>call</code>函数是常考的，这次终于把<code>call</code>函数调用用在了实际问题的解决中~</li>
+<a id="more"></a>
+<p>Angular会通过<code>scope</code>对象维护所有作用域之间的继承关系。</p>
+<p><img src="/upload/image/console.log_scope.png" alt="console.log(scope)"></p>
+<ul>
+<li><strong>是视图(View)和控制器(Controller)之间的纽带。</strong></li>
+</ul>
+<p>创建 controller 时将<code>$scope</code>作为参数传入，可以将 controller 的数据对应展示到 view 中。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-app</span>=<span class="string">"myApp"</span> <span class="attr">ng-controller</span>=<span class="string">"myCtrl"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123;carname&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'myApp'</span>, []);</div><div class="line">app.controller(<span class="string">'myCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.carname = <span class="string">"Volvo"</span>;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="作用域的取值"><a href="#作用域的取值" class="headerlink" title="作用域的取值"></a>作用域的取值</h2><p>代码示例：<a href="https://plnkr.co/edit/GFf6n7bwPjfIrU7EQxDi?p=preview" target="_blank" rel="external">plunker演示</a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-app</span>=<span class="string">"test"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"Ctrl1"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">h2</span> <span class="attr">ng-click</span>=<span class="string">"reverseName()"</span>&gt;</span>Hey &#123;&#123;name&#125;&#125;, Click me to reverse your name<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">my-directive</span> <span class="attr">class</span>=<span class="string">'directive'</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = angular.module(<span class="string">"test"</span>, []);</div><div class="line"></div><div class="line">app.controller(<span class="string">"Ctrl1"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.name = <span class="string">"Harry"</span>;</div><div class="line">    $scope.reverseName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        $scope.name = $scope.name.split(<span class="string">''</span>).reverse().join(<span class="string">''</span>);</div><div class="line">    &#125;;</div><div class="line">&#125;);</div><div class="line">app.directive(<span class="string">"myDirective"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123; <span class="comment">//DDO: Directive Defination Object</span></div><div class="line">        restrict: <span class="string">"EA"</span>,</div><div class="line">        <span class="comment">// scope: false, //使用父作用域，没有自己的作用域。所以父作用域中的name和指令的name之一改变都会影响到对方。</span></div><div class="line">        scope: <span class="literal">true</span>, <span class="comment">//基于父作用域（一般是directive所在的controller，没有的话就是ng-app的rootScope）创建指令自己的作用域，在input内容改变之前，父作用域会影响指令的子作用域（但是input的内容改变后，父作用域就作用不到子作用域了），但子作用域不影响父作用域</span></div><div class="line">        <span class="comment">// scope: &#123;&#125;, //对象字面量的形式，完全独立于父作用域，从一开始父作用域就不能影响到自己了</span></div><div class="line">        link: <span class="function"><span class="keyword">function</span>(<span class="params">scope</span>)</span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(scope);</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">template</span>: <span class="string">"&lt;div&gt;Your name is : &#123;&#123;name&#125;&#125;&lt;/div&gt;"</span> +</div><div class="line">            <span class="string">"Change your name : &lt;input type='text' ng-model='name' /&gt;"</span></div><div class="line">    &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="1-scope-false-默认值"><a href="#1-scope-false-默认值" class="headerlink" title="1. scope: false (默认值)"></a>1. <code>scope: false</code> (默认值)</h3><p>指令没有自己的作用域，继承其所在 controller 的作用域，或者<code>rootScope</code>。</p>
+<ul>
+<li><p>“继承”：在父作用域中修改的变量<strong>总是</strong>会体现到子作用域中；</p>
+</li>
+<li><p>“没有自己的作用域”：在指令的模板中可以访问和<strong>修改</strong>父作用域中的变量。</p>
+</li>
+</ul>
+<h3 id="2-scope-true"><a href="#2-scope-true" class="headerlink" title="2. scope: true"></a>2. <code>scope: true</code></h3><p>指令继承了父作用域，但是创建了新的自己的作用域。</p>
+<ul>
+<li><p>“继承”：在父作用域中修改的变量会体现到子作用域中（在子作用域的同名变量创建之前）；</p>
+</li>
+<li><p>“有自己的作用域”：如果在指令的模板中修改与父作用域同名的变量（仅限于<strong>原始数据类型</strong>，如 <code>Number</code> / <code>String</code> / <code>Boolean</code> ），则访问这个同名变量时只会访问到子作用域的，访问不到父作用域的（和JS原型继承类似）。因为这样会在子作用域中创建一个新的变量。</p>
+</li>
+</ul>
+<hr>
+<h3 id="几点关于JS原型继承的补充："><a href="#几点关于JS原型继承的补充：" class="headerlink" title="几点关于JS原型继承的补充："></a>几点关于JS原型继承的补充：</h3><p>主要是在<code>childScope</code>上对基本类型和引用类型的同名变量取值和赋值方面的差别。</p>
+<ol>
+<li><p>对基本类型和引用类型的变量的取值，都会沿着原型链向上查找；</p>
+</li>
+<li><p>对基本类型的赋值：先查找<code>childScope</code>是否有该变量，如果有就更新，如果没有，不会使用原型链查找，而是直接创建该变量然后赋值；后面如果访问这个变量也是访问到<code>childScope</code>中的而不是<code>parentScope</code>中的同名变量。</p>
+</li>
+<li><p>对引用类型的赋值：</p>
+</li>
+</ol>
+<ul>
+<li><p>如果对某对象（或数组、函数）赋值，会在本作用域内查找，有就更新该引用，如果没有也不会使用原型链查找，而是直接新建对象然后赋值，这个和基本类型的赋值一致；</p>
+</li>
+<li><p>如果对某对象的属性赋值，就会直接查找原型链，找到该对象后直接在原对象上修改，而不会在本地新建。</p>
+</li>
+</ul>
+<hr>
+<h4 id="可能导致的问题：父子作用域之间的通信问题"><a href="#可能导致的问题：父子作用域之间的通信问题" class="headerlink" title="可能导致的问题：父子作用域之间的通信问题"></a>可能导致的问题：父子作用域之间的通信问题</h4><h4 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h4><p>1）在子作用域中使用<code>$parent.parentScopeProp</code>访问和修改父作用域的数据;</p>
+<p>2）更换数据类型：使用Object（引用类型）而不是原始数据类型，来存储需要共享的数据，访问和修改时使用<code>myObject.myPrimitive</code>；<a href="https://plnkr.co/edit/zo3Nsq5RVA75jdno11nO?p=preview" target="_blank" rel="external">plunker演示</a></p>
+<p>3）在父作用域中定义回调函数，子作用域调用可实现修改。</p>
+<p>适用于调用不传参或参数不为变量的情况：<br><a href="http://jsfiddle.net/mrajcok/jNxyE/" target="_blank" rel="external">jsfiddle演示</a></p>
+<h4 id="引申：AngularJS中的“组件”通信方式（计划放到下一篇KM文章里总结）"><a href="#引申：AngularJS中的“组件”通信方式（计划放到下一篇KM文章里总结）" class="headerlink" title="引申：AngularJS中的“组件”通信方式（计划放到下一篇KM文章里总结）"></a>引申：AngularJS中的“组件”通信方式（计划放到下一篇KM文章里总结）</h4><p><strong>【重要】</strong><br>一些常用的内建指令如：<code>ng-repeat</code>, <code>ng-include</code>, <code>ng-switch</code>, <code>ng-controller</code> 的<code>scope</code>值也是<code>true</code>。使用它们会创建新的子作用域，如果不注意上面的方法，可能达不到预期的修改父作用域的数据的效果。</p>
+<h3 id="3-scope-对象字面量"><a href="#3-scope-对象字面量" class="headerlink" title="3. scope = {...} 对象字面量"></a>3. <code>scope = {...}</code> 对象字面量</h3><p>创造完全不依赖于父作用域的新的作用域。</p>
+<p>好处：便于组件化，可移植性强。</p>
+<p>用法：三种前缀（属性匹配）表示法</p>
+<p>代码示例：<a href="https://plnkr.co/edit/g5hFIQM3WPAXsPFGfNjE?p=preview" target="_blank" rel="external">plunkr演示</a></p>
+<p>先看父作用域：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">app.controller(<span class="string">"MainCtrl"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"> $scope </span>)</span>&#123;</div><div class="line">    $scope.name = <span class="string">"Harry"</span>;</div><div class="line">    $scope.color = <span class="string">"#333333"</span>;</div><div class="line">    $scope.reverseName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     $scope.name = $scope.name.split(<span class="string">""</span>).reverse().join(<span class="string">""</span>);</div><div class="line">    &#125;;</div><div class="line">    $scope.randomColor = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        $scope.color = <span class="string">'#'</span>+<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">16777215</span>).toString(<span class="number">16</span>);</div><div class="line">    &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>子作用域：在DDO中对<code>scope</code>的设置：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//object iteral - isolated scope. 三种prefix。将scope的property映射到父作用域的同名attribute。也可以在这里更改映射到指定的属性。</span></div><div class="line">scope: &#123; </div><div class="line"></div><div class="line">    <span class="comment">//text binding 单向绑定。对应的attribute value得用&#123;&#123;&#125;&#125;包裹起来。只能从父作用域传到指令作用域。适用于指令需要从父作用域获得value进行初始化。</span></div><div class="line">    name: <span class="string">"@"</span>, </div><div class="line">         </div><div class="line">    <span class="comment">//model binding双向绑定。对应的attribute value得是model name</span></div><div class="line">    color: <span class="string">"="</span>, </div><div class="line">    </div><div class="line">    <span class="comment">//method binding 对应的attribute value得是父作用域的函数。适用于指令中需要调用父作用域的回调函数</span></div><div class="line">    reverse: <span class="string">"&amp;"</span> </div><div class="line">    </div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><p><a href="https://github.com/angular/angular.js/wiki/Understanding-Scopes" target="_blank" rel="external">官方介绍：对scope的理解</a></p>
+</li>
+<li><p><a href="https://www.undefinednull.com/2014/02/11/mastering-the-scope-of-a-directive-in-angularjs/" target="_blank" rel="external">Mastering the scope of a directive in AngularJS</a></p>
+</li>
 </ul>
 
       
@@ -462,6 +501,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/AngularJS/" rel="tag"># AngularJS</a>
+          
+        </div>
+      
 
       
         
@@ -471,18 +516,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/02/《Javascript语言精粹》读书笔记/" rel="next" title="《Javascript语言精粹》读书笔记">
-                <i class="fa fa-chevron-left"></i> 《Javascript语言精粹》读书笔记
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/14/《了不起的Node-js》读书笔记/" rel="prev" title="《了不起的Node.js》读书笔记">
-                《了不起的Node.js》读书笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/06/React-Redux-容器型组件的作用与其生成方式/" rel="prev" title="React Redux - 容器型组件的作用与其生成方式">
+                React Redux - 容器型组件的作用与其生成方式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -683,7 +724,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述："><span class="nav-text">问题描述：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路："><span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现过程："><span class="nav-text">实现过程：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一次实现：视觉上没有完全消除选框"><span class="nav-text">第一次实现：视觉上没有完全消除选框</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键代码："><span class="nav-text">关键代码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JCrop-源代码相关部分："><span class="nav-text">JCrop 源代码相关部分：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二次实现：完善消除选框的样式："><span class="nav-text">第二次实现：完善消除选框的样式：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键代码：-1"><span class="nav-text">关键代码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-text">参考文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#心得"><span class="nav-text">心得</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用域的作用"><span class="nav-text">作用域的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作用域的取值"><span class="nav-text">作用域的取值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-scope-false-默认值"><span class="nav-text">1. scope: false (默认值)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-scope-true"><span class="nav-text">2. scope: true</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几点关于JS原型继承的补充："><span class="nav-text">几点关于JS原型继承的补充：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可能导致的问题：父子作用域之间的通信问题"><span class="nav-text">可能导致的问题：父子作用域之间的通信问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决方案："><span class="nav-text">解决方案：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引申：AngularJS中的“组件”通信方式（计划放到下一篇KM文章里总结）"><span class="nav-text">引申：AngularJS中的“组件”通信方式（计划放到下一篇KM文章里总结）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-scope-对象字面量"><span class="nav-text">3. scope = {...} 对象字面量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
@@ -851,9 +892,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2017/05/25/Custom-JCrop-多选框模式下的选框删除/';
-          this.page.identifier = '2017/05/25/Custom-JCrop-多选框模式下的选框删除/';
-          this.page.title = 'Custom JCrop: 多选框模式下的选框删除';
+          this.page.url = 'http://yoursite.com/2017/08/06/AngularJS-1-x-指令作用域初探/';
+          this.page.identifier = '2017/08/06/AngularJS-1-x-指令作用域初探/';
+          this.page.title = 'AngularJS 1.x 指令作用域初探';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://helloworldzxy.disqus.com/embed.js';

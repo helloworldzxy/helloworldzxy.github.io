@@ -94,12 +94,12 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/07/前端跨域请求解决方案汇总/index.html">
 <meta property="og:site_name" content="长岛冰茶与火鸟">
 <meta property="og:description" content="网上关于这类解决方案的描述有很多，都是差不多的内容，这里做一个摘要。">
-<meta property="og:image" content="http://yoursite.com/2017/09/07/前端跨域请求解决方案汇总/upload/image/location.hash+iframe.png">
-<meta property="og:updated_time" content="2017-09-07T07:33:43.000Z">
+<meta property="og:image" content="http://yoursite.com/upload/image/location.hash+iframe.png">
+<meta property="og:updated_time" content="2017-09-07T07:36:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端跨域请求解决方案汇总">
 <meta name="twitter:description" content="网上关于这类解决方案的描述有很多，都是差不多的内容，这里做一个摘要。">
-<meta name="twitter:image" content="http://yoursite.com/2017/09/07/前端跨域请求解决方案汇总/upload/image/location.hash+iframe.png">
+<meta name="twitter:image" content="http://yoursite.com/upload/image/location.hash+iframe.png">
 
 
 
@@ -334,7 +334,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-09-07T15:33:43+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-07T15:36:30+08:00">
                 2017-09-07
               </time>
             
@@ -465,7 +465,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//模拟一个简单的参数处理操作</span></div><div class="line"><span class="keyword">switch</span>(location.hash)&#123;</div><div class="line">    <span class="keyword">case</span> <span class="string">'#paramdo'</span>:</div><div class="line">        callBack();</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> <span class="string">'#paramset'</span>:</div><div class="line">        <span class="comment">//do something……</span></div><div class="line">        <span class="keyword">break</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">callBack</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        parent.location.hash = <span class="string">'somedata'</span>;</div><div class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">        <span class="comment">// ie、chrome的安全机制无法修改parent.location.hash，</span></div><div class="line">        <span class="comment">// 所以要利用一个中间的a.com域下的代理iframe</span></div><div class="line">        <span class="keyword">var</span> ifrproxy = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>);</div><div class="line">        ifrproxy.style.display = <span class="string">'none'</span>;</div><div class="line">        ifrproxy.src = <span class="string">'http://a.com/test/cscript/cs3.html#somedata'</span>;    <span class="comment">// 注意该文件在"a.com"域下</span></div><div class="line">        <span class="built_in">document</span>.body.appendChild(ifrproxy);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>a.com下的域名cs3.html</p>
 <p>//因为parent.parent和自身属于同一个域，所以可以改变其location.hash的值<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">parent.parent.location.hash = self.location.hash.substring(<span class="number">1</span>);</div></pre></td></tr></table></figure></p>
-<p><img src="./upload/image/location.hash+iframe.png" alt="location.hash+iframe原理图"></p>
+<p><img src="/upload/image/location.hash+iframe.png" alt="location.hash+iframe原理图"></p>
 <p>优点：</p>
 <ul>
 <li>可以解决域名完全不同的跨域。</li>

@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="JavaScript的“面向对象”：封装和继承提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。">
+<meta name="description" content="提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript的封装和继承">
 <meta property="og:url" content="http://yoursite.com/2017/09/07/JavaScript的封装和继承/index.html">
 <meta property="og:site_name" content="长岛冰茶与火鸟">
-<meta property="og:description" content="JavaScript的“面向对象”：封装和继承提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。">
-<meta property="og:updated_time" content="2017-09-07T13:44:27.000Z">
+<meta property="og:description" content="提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。">
+<meta property="og:updated_time" content="2017-09-07T13:46:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript的封装和继承">
-<meta name="twitter:description" content="JavaScript的“面向对象”：封装和继承提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。">
+<meta name="twitter:description" content="提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。">
 
 
 
@@ -332,7 +332,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-09-07T21:44:27+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-07T21:46:42+08:00">
                 2017-09-07
               </time>
             
@@ -414,7 +414,7 @@
       
 
       
-        <h1 id="JavaScript的“面向对象”：封装和继承"><a href="#JavaScript的“面向对象”：封装和继承" class="headerlink" title="JavaScript的“面向对象”：封装和继承"></a>JavaScript的“面向对象”：封装和继承</h1><p>提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。</p>
+        <p>提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。</p>
 <a id="more"></a>
 <h3 id="继承机制的设计思想"><a href="#继承机制的设计思想" class="headerlink" title="继承机制的设计思想"></a><a href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html" target="_blank" rel="external">继承机制的设计思想</a></h3><ul>
 <li><p>所有实例对象需要共享的属性和方法，都放在这个对象里面；那些不需要共享的属性和方法，就放在构造函数里面。</p>
@@ -718,7 +718,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript的“面向对象”：封装和继承"><span class="nav-text">JavaScript的“面向对象”：封装和继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#继承机制的设计思想"><span class="nav-text">继承机制的设计思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封装"><span class="nav-text">封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数的继承-（五种方法）"><span class="nav-text">构造函数的继承 （五种方法）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一：构造函数绑定"><span class="nav-text">方法一：构造函数绑定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二：prototype模式（又称原型链继承，注意需要对constructor修正）"><span class="nav-text">方法二：prototype模式（又称原型链继承，注意需要对constructor修正）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法三：直接继承prototype"><span class="nav-text">方法三：直接继承prototype</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法四：利用空对象作为中介-（又称寄生组合继承，对方法三的改良）：完美"><span class="nav-text">方法四：利用空对象作为中介 （又称寄生组合继承，对方法三的改良）：完美</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法五：拷贝继承：把Parent-prototype的所有属性和方法，拷贝进Child-prototype"><span class="nav-text">方法五：拷贝继承：把Parent.prototype的所有属性和方法，拷贝进Child.prototype</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非构造函数的继承"><span class="nav-text">非构造函数的继承</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一：object-（实质上还是原型继承）"><span class="nav-text">方法一：object()（实质上还是原型继承）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二：浅拷贝（只能拷贝数据全是基本类型的对象）"><span class="nav-text">方法二：浅拷贝（只能拷贝数据全是基本类型的对象）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法三：深拷贝"><span class="nav-text">方法三：深拷贝</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#继承机制的设计思想"><span class="nav-text">继承机制的设计思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封装"><span class="nav-text">封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数的继承-（五种方法）"><span class="nav-text">构造函数的继承 （五种方法）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一：构造函数绑定"><span class="nav-text">方法一：构造函数绑定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二：prototype模式（又称原型链继承，注意需要对constructor修正）"><span class="nav-text">方法二：prototype模式（又称原型链继承，注意需要对constructor修正）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法三：直接继承prototype"><span class="nav-text">方法三：直接继承prototype</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法四：利用空对象作为中介-（又称寄生组合继承，对方法三的改良）：完美"><span class="nav-text">方法四：利用空对象作为中介 （又称寄生组合继承，对方法三的改良）：完美</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法五：拷贝继承：把Parent-prototype的所有属性和方法，拷贝进Child-prototype"><span class="nav-text">方法五：拷贝继承：把Parent.prototype的所有属性和方法，拷贝进Child.prototype</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非构造函数的继承"><span class="nav-text">非构造函数的继承</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一：object-（实质上还是原型继承）"><span class="nav-text">方法一：object()（实质上还是原型继承）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二：浅拷贝（只能拷贝数据全是基本类型的对象）"><span class="nav-text">方法二：浅拷贝（只能拷贝数据全是基本类型的对象）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法三：深拷贝"><span class="nav-text">方法三：深拷贝</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="JavaScript," />
 
 
 
@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta name="keywords">
+<meta name="description" content="apply、call、bind 三者都是用来改变函数的this对象的指向的。">
+<meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/04/11/hello-world/index.html">
+<meta property="og:title" content="call, apply和bind">
+<meta property="og:url" content="http://yoursite.com/2017/09/09/call apply和bind/index.html">
 <meta property="og:site_name" content="长岛冰茶与火鸟">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-04-18T04:39:12.000Z">
+<meta property="og:description" content="apply、call、bind 三者都是用来改变函数的this对象的指向的。">
+<meta property="og:updated_time" content="2017-09-09T02:51:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="call, apply和bind">
+<meta name="twitter:description" content="apply、call、bind 三者都是用来改变函数的this对象的指向的。">
 
 
 
@@ -125,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/11/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/09/call apply和bind/"/>
 
 
 
 
 
-  <title> Hello World | 长岛冰茶与火鸟 </title>
+  <title> call, apply和bind | 长岛冰茶与火鸟 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -280,7 +280,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/11/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/call apply和bind/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="长岛冰茶与火鸟">
@@ -301,7 +301,7 @@
             
             
               
-                Hello World
+                call, apply和bind
               
             
           </h2>
@@ -316,8 +316,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T09:37:13+08:00">
-                2017-04-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-09T10:50:56+08:00">
+                2017-09-09
               </time>
             
 
@@ -332,12 +332,34 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-04-18T12:39:12+08:00">
-                2017-04-18
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-09T10:51:59+08:00">
+                2017-09-09
               </time>
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试知识点总结/" itemprop="url" rel="index">
+                    <span itemprop="name">面试知识点总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -348,8 +370,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/04/11/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/04/11/hello-world/" itemprop="commentsCount"></span>
+                <a href="/2017/09/09/call apply和bind/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/09/09/call apply和bind/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -358,7 +380,7 @@
 
           
           
-             <span id="/2017/04/11/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
+             <span id="/2017/09/09/call apply和bind/" class="leancloud_visitors" data-flag-title="call, apply和bind">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -392,16 +414,24 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+        <p><code>apply</code>、<code>call</code>、<code>bind</code> 三者都是用来改变函数的<code>this</code>对象的指向的。</p>
 <a id="more"></a>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+<p>##（1）函数调用</p>
+<p>在<code>obj</code>对象上调用函数<code>myFunc</code>的三种方式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">obj.myFunc();</div><div class="line">myFunc.call(obj, arg1, arg2..);</div><div class="line">myFunc.apply(obj, [arg1,arg2..]);</div><div class="line"><span class="string">``</span><span class="string">`    </span></div><div class="line"></div><div class="line">##（2）实现继承</div><div class="line"></div><div class="line">参考我的[JavaScript中的封装和继承](https://helloworldzxy.github.io/2017/09/07/JavaScript%E7%9A%84%E5%B0%81%E8%A3%85%E5%92%8C%E7%BB%A7%E6%89%BF/#more)，其中介绍构造函数绑定和组合继承时用到了`call<span class="string">`/`</span>apply<span class="string">`。</span></div><div class="line"></div><div class="line">可以实现多重继承。</div><div class="line"></div><div class="line">##（3）两者对比</div><div class="line"></div><div class="line">两者的作用相同，接收参数不同：</div><div class="line"></div><div class="line">`func.call([thisObj[,arg1[, arg2[,   [,.argN]]]]])<span class="string">`</span></div><div class="line"></div><div class="line">`func.apply([thisObj[, <span class="built_in">arguments</span>])<span class="string">`</span></div><div class="line"></div><div class="line">- 将一个函数`func<span class="string">`的对象上下文从初始的上下文改变为由 `</span>thisObj<span class="string">` 指定的新对象。</span></div><div class="line"></div><div class="line">- `apply<span class="string">`接收的是数组参数，`</span>call<span class="string">`接收的是连续参数。</span></div><div class="line"></div><div class="line">- `call<span class="string">`与`</span>apply<span class="string">`都属于`</span><span class="built_in">Function</span>.prototype<span class="string">`的一个方法，所以每个function实例都有`</span>call、apply<span class="string">`属性。</span></div><div class="line"></div><div class="line">##（4）其他tips</div><div class="line"></div><div class="line">### Function.apply()使代码更优雅简洁</div><div class="line"></div><div class="line">- 求数组中的最大值</div><div class="line"></div><div class="line">`<span class="string">``</span>javascript</div><div class="line"><span class="keyword">var</span> arr=[<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">1</span>]; </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getMax2</span>(<span class="params">arr</span>)</span>&#123;  </div><div class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.max.apply(<span class="literal">null</span>,arr);  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(getMax2(arr)); <span class="comment">//9</span></div><div class="line"><span class="string">``</span><span class="string">`   </span></div><div class="line"></div><div class="line">- 数组的`push<span class="string">`方法</span></div><div class="line"></div><div class="line">`<span class="string">``</span>javascript</div><div class="line"><span class="keyword">var</span> arr1=[<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>];  </div><div class="line"><span class="keyword">var</span> arr2=[<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];  </div><div class="line"><span class="comment">//如果我们要把 arr2展开，然后一个一个追加到arr1中去，最后让arr1=[1,3,4,3,4,5]   </span></div><div class="line"><span class="comment">//arr1.push(arr2)显然是不行的。 因为这样做会得到[1,3,4,[3,4,5]]   </span></div><div class="line"></div><div class="line"><span class="comment">//我们只能用一个循环去一个一个的push(当然也可以用arr1.concat(arr2)，但是concat方法并不改变arr1本身)   </span></div><div class="line"></div><div class="line"><span class="keyword">var</span> arrLen=arr2.length;  </div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;arrLen;i++)&#123;  </div><div class="line">    arr1.push(arr2[i]);  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="comment">//自从有了Apply,事情就变得如此简单   </span></div><div class="line"><span class="built_in">Array</span>.prototype.push.apply(arr1,arr2); <span class="comment">//现在arr1就是想要的结果</span></div></pre></td></tr></table></figure>
+<ul>
+<li>验证是否为数组</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isArray</span>(<span class="params">obj</span>)</span>&#123; </div><div class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(obj) === <span class="string">'[object Array]'</span> ;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>让类数组(NodeList, arguments等)使用数组方法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> domNodes = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">document</span>.getElementsByTagName(<span class="string">"*"</span>));</div><div class="line"><span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>);</div></pre></td></tr></table></figure>
+<h3 id="当使用apply、call的参数为null时，会直接执行对象构造所定义的代码段。"><a href="#当使用apply、call的参数为null时，会直接执行对象构造所定义的代码段。" class="headerlink" title="当使用apply、call的参数为null时，会直接执行对象构造所定义的代码段。"></a>当使用<code>apply</code>、<code>call</code>的参数为<code>null</code>时，会直接执行对象构造所定义的代码段。</h3><p>##（5）与<code>bind</code>的比较</p>
+<p><code>bind</code>是返回对应函数，便于稍后调用（回调）；<code>apply</code>、<code>call</code>则是立即调用。</p>
+<p>多次<code>bind</code>，只有第一次的生效。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="http://www.cnblogs.com/huyong/p/4139875.html" target="_blank" rel="external">Javascript中的apply与call详解</a></p>
+<p><a href="http://web.jobbole.com/83642/" target="_blank" rel="external">深入浅出妙用 Javascript 中 apply、call、bind</a></p>
 
       
     </div>
@@ -429,6 +459,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
 
       
         
@@ -438,15 +474,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/11/About my Hexo Blog/" rel="next" title="About My Hexo Blog">
-                <i class="fa fa-chevron-left"></i> About My Hexo Blog
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/09/AngularJS-1-x-apply指令和digest指令初探/" rel="prev" title="AngularJS 1.x apply指令和digest指令初探">
+                AngularJS 1.x apply指令和digest指令初探 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -650,7 +686,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#当使用apply、call的参数为null时，会直接执行对象构造所定义的代码段。"><span class="nav-text">当使用apply、call的参数为null时，会直接执行对象构造所定义的代码段。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-text">参考文章</span></a></div>
             
 
           </div>
@@ -822,7 +858,7 @@
 		_hcwp.push({widget:"Bloggerstream", widget_id: 91511, selector:".hc-comment-count", label: "{\%COUNT%\}" });
 
 		
-		_hcwp.push({widget:"Stream", widget_id: 91511, xid: "2017/04/11/hello-world/"});
+		_hcwp.push({widget:"Stream", widget_id: 91511, xid: "2017/09/09/call apply和bind/"});
 		
 
 		(function() {

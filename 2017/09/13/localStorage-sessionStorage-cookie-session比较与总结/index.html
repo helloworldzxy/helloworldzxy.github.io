@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。">
+<meta name="description" content="cookie 在持久保存客户端数据提供了方便，分担了服务器存储的负担。">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript的封装和继承">
-<meta property="og:url" content="http://yoursite.com/2017/09/07/JavaScript的封装和继承/index.html">
+<meta property="og:title" content="localStorage, sessionStorage, cookie, session比较与总结">
+<meta property="og:url" content="http://yoursite.com/2017/09/13/localStorage-sessionStorage-cookie-session比较与总结/index.html">
 <meta property="og:site_name" content="长岛冰茶与火鸟">
-<meta property="og:description" content="提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。">
-<meta property="og:updated_time" content="2017-09-07T13:46:42.000Z">
+<meta property="og:description" content="cookie 在持久保存客户端数据提供了方便，分担了服务器存储的负担。">
+<meta property="og:updated_time" content="2017-09-13T07:11:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript的封装和继承">
-<meta name="twitter:description" content="提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。">
+<meta name="twitter:title" content="localStorage, sessionStorage, cookie, session比较与总结">
+<meta name="twitter:description" content="cookie 在持久保存客户端数据提供了方便，分担了服务器存储的负担。">
 
 
 
@@ -125,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/07/JavaScript的封装和继承/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/13/localStorage-sessionStorage-cookie-session比较与总结/"/>
 
 
 
 
 
-  <title> JavaScript的封装和继承 | 长岛冰茶与火鸟 </title>
+  <title> localStorage, sessionStorage, cookie, session比较与总结 | 长岛冰茶与火鸟 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -280,7 +280,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/07/JavaScript的封装和继承/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/13/localStorage-sessionStorage-cookie-session比较与总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="长岛冰茶与火鸟">
@@ -301,7 +301,7 @@
             
             
               
-                JavaScript的封装和继承
+                localStorage, sessionStorage, cookie, session比较与总结
               
             
           </h2>
@@ -316,8 +316,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T21:40:14+08:00">
-                2017-09-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-13T14:52:47+08:00">
+                2017-09-13
               </time>
             
 
@@ -332,8 +332,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-09-07T21:46:42+08:00">
-                2017-09-07
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-13T15:11:24+08:00">
+                2017-09-13
               </time>
             
           </span>
@@ -370,8 +370,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/09/07/JavaScript的封装和继承/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/09/07/JavaScript的封装和继承/" itemprop="commentsCount"></span>
+                <a href="/2017/09/13/localStorage-sessionStorage-cookie-session比较与总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/09/13/localStorage-sessionStorage-cookie-session比较与总结/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -380,7 +380,7 @@
 
           
           
-             <span id="/2017/09/07/JavaScript的封装和继承/" class="leancloud_visitors" data-flag-title="JavaScript的封装和继承">
+             <span id="/2017/09/13/localStorage-sessionStorage-cookie-session比较与总结/" class="leancloud_visitors" data-flag-title="localStorage, sessionStorage, cookie, session比较与总结">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -414,56 +414,67 @@
       
 
       
-        <p>提到JavaScript“面向对象编程”，主要就是封装和继承，这里主要依据阮一峰及其他博客的系列文章做个总结。</p>
+        <p>cookie 在持久保存客户端数据提供了方便，分担了服务器存储的负担。</p>
 <a id="more"></a>
-<h3 id="继承机制的设计思想"><a href="#继承机制的设计思想" class="headerlink" title="继承机制的设计思想"></a><a href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html" target="_blank" rel="external">继承机制的设计思想</a></h3><ul>
-<li><p>所有实例对象需要共享的属性和方法，都放在这个对象里面；那些不需要共享的属性和方法，就放在构造函数里面。</p>
+<h2 id="cookie-与-session"><a href="#cookie-与-session" class="headerlink" title="cookie 与 session"></a>cookie 与 session</h2><h3 id="最主要的两点区别"><a href="#最主要的两点区别" class="headerlink" title="最主要的两点区别"></a>最主要的两点区别</h3><ul>
+<li><p>cookie 保存在客户端，session 保存在服务端（可以保存在集群、数据库、文件中），session 默认被存在在服务器的一个文件里（不是内存）。</p>
 </li>
-<li><p>由于所有的实例对象共享同一个<code>prototype</code>对象，那么从外界看起来，<code>prototype</code>对象就好像是实例对象的原型，而实例对象则好像”继承”了<code>prototype</code>对象一样。</p>
+<li><p>安全性：cookie 没有 session 的高。</p>
+</li>
+<li><p>session 会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能。考虑到减轻服务器性能方面，应当使用 cookie。</p>
+</li>
+<li><p>单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie。</p>
 </li>
 </ul>
-<h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a><a href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html" target="_blank" rel="external">封装</a></h3><p>主要介绍了如何”封装”数据和方法，以及如何从原型对象生成实例。</p>
-<p>（1） 封装：把属性和方法封装成一个对象。</p>
-<p>（2）如何根据某一规格（原型）生成对象：构造函数。相较于原始方法（用字面量一个一个手动生成对象），其优点在于：</p>
+<h3 id="cookie-机制介绍"><a href="#cookie-机制介绍" class="headerlink" title="cookie 机制介绍"></a>cookie 机制介绍</h3><p>正统的 cookie 分发是通过扩展 HTTP 协议来实现的，服务器通过在 HTTP 的响应头中加上一行特殊的指示以提示浏览器按照指示生成相应的cookie。然而纯粹的客户端脚本如 JavaScript 或者 VBScript 也可以生成cookie。而 cookie 的使用是由浏览器按照一定的原则在后台自动发送给服务器的。浏览器检查所有存储的 cookie，如果某个 cookie 所声明的作用范围大于等于将要请求的资源所在的位置，则把该 cookie 附在请求资源的 HTTP 请求头上发送给服务器。</p>
+<p>cookie 主要包括：名字，值，过期时间，路径和域。</p>
+<p>两种 cookie:</p>
 <ul>
-<li><p>减少代码重复，将对象普遍具有的属性先用构造函数定义好，使用构造函数生成对象时传参即可为产生的对象的属性赋值；</p>
+<li><p>若不设置过期时间，则为会话 cookie。关闭浏览器 cookie 就消失，生命期为浏览器会话期。会话 cookie 一般不存储在硬盘上而是保存在内存里。</p>
 </li>
-<li><p>体现生成的对象与原型对象之间的联系。</p>
-</li>
-<li><p>构造函数具有的<code>prototype</code>属性的优点：将所有对象具有的值相同的属性，挂在<code>prototype</code>上，无论生成多少个对象，它们都共用这一份<code>prototype</code>，在内存中只有一份，减少不必要的资源浪费。<code>isPrototypeOf</code>, <code>hasOwnProperty()</code>检测是本地属性还是原型属性，<code>in</code>遍历对象的所有属性，包括原型属性。</p>
+<li><p>设置了过期时间的 cookie 被保存在硬盘上，关闭后再次打开浏览器，这些 cookie 仍然有效直到超过设定的过期时间。存储在硬盘上的 cookie 可以在不同的浏览器进程间共享，比如两个IE窗口。</p>
 </li>
 </ul>
-<p>【注意】：构造函数中的属性是本地属性，每个对象都维护各自的值，<code>prototype</code>中的属性是引用属性，所有对象共有一份。原型属性与实例属性同名时，原型属性会被实例属性覆盖</p>
-<h3 id="构造函数的继承-（五种方法）"><a href="#构造函数的继承-（五种方法）" class="headerlink" title="构造函数的继承 （五种方法）"></a><a href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html" target="_blank" rel="external">构造函数的继承</a> （五种方法）</h3><h4 id="方法一：构造函数绑定"><a href="#方法一：构造函数绑定" class="headerlink" title="方法一：构造函数绑定"></a>方法一：构造函数绑定</h4><p>在子对象构造函数<code>Cat()</code>中加一行：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Animal.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);<span class="comment">//Animal()为被继承者</span></div></pre></td></tr></table></figure>
-<p><strong>优点</strong>：可以实现多继承(<code>call/apply</code>多个对象)；并且，创建子类实例时，可以向父类传递参数。</p>
-<p><strong>缺点</strong>：只能继承父类的实例属性和方法，不能继承父类的原型属性/方法。（这里引申出【组合继承】：在本方法基础上，加上方法二的原型继承，即<code>call</code>+<code>prototype</code>方法，组合继承既可以继承原型属性/方法，又可以继承实例属性/方法，而且还可传参）。</p>
-<h4 id="方法二：prototype模式（又称原型链继承，注意需要对constructor修正）"><a href="#方法二：prototype模式（又称原型链继承，注意需要对constructor修正）" class="headerlink" title="方法二：prototype模式（又称原型链继承，注意需要对constructor修正）"></a>方法二：<code>prototype</code>模式（又称原型链继承，注意需要对<code>constructor</code>修正）</h4><p>将父类的实例作为子类的原型：如果”猫”的prototype对象，指向一个Animal的实例，那么所有”猫”的实例，就能继承Animal了。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Cat.prototype = <span class="keyword">new</span> Animal(); <span class="comment">//它相当于完全删除了prototype 对象原先的值，然后赋予一个新值。包括改写Cat.prototype.constructor为Animal</span></div><div class="line">Cat.prototype.constructor = Cat; <span class="comment">//如果不改回去，会导致继承链的混乱</span></div></pre></td></tr></table></figure>
-<p>【注意】：</p>
+<h3 id="session-机制介绍"><a href="#session-机制介绍" class="headerlink" title="session 机制介绍"></a>session 机制介绍</h3><p>HTTP协议是无状态协议，服务端需要记录用户的状态时，会用到 session 机制。比如用户下单，服务端要为特定的用户创建特定的 session，用于标识这个用户，并且跟踪用户，这样才知道该用户的购物车里面有几本书。</p>
+<p>实际上大多数的应用都是用 cookie 来实现 session 跟踪的，第一次创建 session 的时候，服务端会在 HTTP 协议中告诉客户端，需要在 cookie 里面记录一个 session ID，以后每次请求把这个会话 ID 发送到服务器，我就知道你是谁了。如果客户端的浏览器禁用了 cookie，会使用<strong>URL重写</strong>或<strong>表单隐藏字段</strong>来进行会话跟踪，即每次 HTTP 交互，URL后面都会被附加上一个诸如<code>sid=xxxxx</code> 这样的参数，或服务器自动修改表单，添加一个隐藏字段，以便在表单提交时能够把 session id 传递回服务器服务端据此来识别用户。</p>
+<h2 id="cookie-与-localStorage-sessionStorage"><a href="#cookie-与-localStorage-sessionStorage" class="headerlink" title="cookie 与 localStorage, sessionStorage"></a>cookie 与 localStorage, sessionStorage</h2><h3 id="webStorage-localStorage-和-sessionStorage"><a href="#webStorage-localStorage-和-sessionStorage" class="headerlink" title="webStorage: localStorage 和 sessionStorage"></a>webStorage: localStorage 和 sessionStorage</h3><p>HTML5提供的两种在客户端存储数据的新方法。对于不同的网站，数据存储于不同的区域，并且一个网站只能访问其自身的数据。只能存储字符串类型的数据。</p>
+<p>这两者的区别只有<strong>作用域</strong>和<strong>有效期</strong>不同。</p>
 <ul>
-<li><p>任何一个<code>prototype</code>对象(<code>cat.prototype</code>)都有一个<code>constructor</code>属性，指向它的构造函数。</p>
+<li>localStorage 没有时间限制的数据存储，除非主动删除数据，否则数据是不会过期的。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">localStorage.lastname = <span class="string">"Smith"</span>;</div><div class="line">localStorage.pagecount <span class="comment">//可以用这个属性记录用户访问某个页面的次数（刷新或关闭后再打开可继续计数）</span></div></pre></td></tr></table></figure>
+<ul>
+<li>sessionStorage 针对一个 session 的数据存储。当用户关闭浏览器窗口后，数据会被删除（会话级别）。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sessionStorage.lastname = <span class="string">"Smith"</span>;</div><div class="line">sessionStorage.pagecount <span class="comment">//可以用这个属性记录用户访问某个页面的次数（刷新后会继续计数，关闭后再打开会重置计数）</span></div></pre></td></tr></table></figure>
+<ul>
+<li>webStorage支持事件通知机制，可以将数据更新的通知发生给监听者。</li>
+</ul>
+<h3 id="webStorage-与-cookie的比较"><a href="#webStorage-与-cookie的比较" class="headerlink" title="webStorage 与 cookie的比较"></a>webStorage 与 cookie的比较</h3><p><a href="http://blog.csdn.net/u011413061/article/details/50082855" target="_blank" rel="external">blog1</a><br><a href="http://blog.csdn.net/u012545279/article/details/25891297" target="_blank" rel="external">blog2</a><br><a href="http://www.cnblogs.com/boyuguoblog/p/6203331.html" target="_blank" rel="external">blog3</a></p>
+<ul>
+<li><p>每次请求一个新的页面 cookie 都会被发送过去；webStorage 只有在手动添加的时候才能请求。</p>
 </li>
-<li><p>更重要的是，每一个实例(<code>cat1</code>)也有一个<code>constructor</code>属性，默认调用<code>prototype</code>对象的<code>constructor</code>属性。</p>
+<li><p>cookie 只有4KB，webStorage 有平均5MB的本地存储。</p>
+</li>
+<li><p>cookie 根据 expires 设置过期时间。webStorage 在浏览器窗口关闭或者始终有效（靠手动进行删除）。</p>
+</li>
+<li><p>cookie 在同源下只要没过期就会一直共享，localStorage 在同源中没被删除情况也会共享。sessionStorage 在窗口关闭之前在同一个窗口同源下才能共享。(<strong>三者的共享都是需要同源的！</strong>)</p>
+</li>
+<li><p>cookie没有原生的 <code>setCookie</code>, <code>getCookie</code>方法，需要前端开发者自己封装。cookie 的读取只有<code>document.cookie</code>（一般结合<code>encodeURIComponent</code>设置 cookie 的 name），cookie 的删除是通过设置其 expires 强制过期实现的。webStorage 自己有<code>setItem</code>, <code>getItem</code>, <code>removeItem</code>, <code>clear</code>等方法。</p>
+</li>
+<li><p>cookie是作为HTTP规范而存在，作用是与服务器进行交互。webStorage 仅仅为了在本地存储数据而生。</p>
+</li>
+<li><p>cookie 的浏览器兼容性更好：在IE6 7中不支持localStorage sessionStorage，使用<code>userData</code>实现本地存储。cookie所有浏览器都支持。</p>
 </li>
 </ul>
-<p>=&gt;</p>
-<p>【普适性的规则】：如果替换了<code>prototype</code>对象，下一步必然是为新的<code>prototype</code>对象加上<code>constructor</code>属性，并将这个属性指回原来的构造函数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">o.prototype = &#123;&#125;;</div><div class="line">o.prototype.constructor = o;</div></pre></td></tr></table></figure>
-<p><strong>缺点</strong>：无法实现多继承；创建子类实例时，无法向父类构造函数传参。</p>
-<h4 id="方法三：直接继承prototype"><a href="#方法三：直接继承prototype" class="headerlink" title="方法三：直接继承prototype"></a>方法三：直接继承<code>prototype</code></h4><p>优点是 效率比较高（不用执行和建立<code>Animal</code>的实例了），比较省内存。</p>
-<p>缺点是 <code>Cat.prototype</code>和<code>Animal.prototype</code>现在指向了同一个对象，那么任何对<code>Cat.prototype</code>的修改，都会反映到<code>Animal.prototype</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Cat.prototype = Animal.prototype;</div><div class="line">Cat.prototype.constructor = Cat; <span class="comment">//这样导致`Animal.prototype.constructor`也被改掉了。下面的方法四针对这个问题用空函数作中介做了改进。</span></div></pre></td></tr></table></figure>
-<h4 id="方法四：利用空对象作为中介-（又称寄生组合继承，对方法三的改良）：完美"><a href="#方法四：利用空对象作为中介-（又称寄生组合继承，对方法三的改良）：完美" class="headerlink" title="方法四：利用空对象作为中介 （又称寄生组合继承，对方法三的改良）：完美"></a>方法四：利用空对象作为中介 （又称寄生组合继承，对方法三的改良）：完美</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">extend</span>(<span class="params">Child, Parent</span>) </span>&#123;</div><div class="line">　　<span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</div><div class="line">　　F.prototype = Parent.prototype;</div><div class="line">　　Child.prototype = <span class="keyword">new</span> F();</div><div class="line">　　Child.prototype.constructor = Child;</div><div class="line">　　Child.uber = Parent.prototype; <span class="comment">//在子对象上打开一条通道，可以直接调用父对象的方法，纯属备用性质，实现继承的完备性</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="方法五：拷贝继承：把Parent-prototype的所有属性和方法，拷贝进Child-prototype"><a href="#方法五：拷贝继承：把Parent-prototype的所有属性和方法，拷贝进Child-prototype" class="headerlink" title="方法五：拷贝继承：把Parent.prototype的所有属性和方法，拷贝进Child.prototype"></a>方法五：拷贝继承：把<code>Parent.prototype</code>的所有属性和方法，拷贝进<code>Child.prototype</code></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">extend</span>(<span class="params">Child, Parent</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> p = Parent.prototype;</div><div class="line">　　<span class="keyword">var</span> c = Child.prototype;</div><div class="line">　　<span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> p) &#123;</div><div class="line">　　　　c[i] = p[i];</div><div class="line">　　&#125;</div><div class="line">　　c.uber = p;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>拷贝继承支持多继承。</p>
-<h3 id="非构造函数的继承"><a href="#非构造函数的继承" class="headerlink" title="非构造函数的继承"></a><a href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html" target="_blank" rel="external">非构造函数的继承</a></h3><p>继承某个具体的对象。</p>
-<h4 id="方法一：object-（实质上还是原型继承）"><a href="#方法一：object-（实质上还是原型继承）" class="headerlink" title="方法一：object()（实质上还是原型继承）"></a>方法一：<code>object()</code>（实质上还是原型继承）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">object</span>(<span class="params">o</span>) </span>&#123;</div><div class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line">　　F.prototype = o;</div><div class="line">　　<span class="keyword">return</span> <span class="keyword">new</span> F();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="方法二：浅拷贝（只能拷贝数据全是基本类型的对象）"><a href="#方法二：浅拷贝（只能拷贝数据全是基本类型的对象）" class="headerlink" title="方法二：浅拷贝（只能拷贝数据全是基本类型的对象）"></a>方法二：浅拷贝（只能拷贝数据全是基本类型的对象）</h4><p>存在问题：如果父对象的属性等于数组或另一个对象，那么实际上，子对象获得的只是一个内存地址，而不是真正拷贝，因此存在父对象被篡改的可能。</p>
-<h4 id="方法三：深拷贝"><a href="#方法三：深拷贝" class="headerlink" title="方法三：深拷贝"></a>方法三：深拷贝</h4><p>递归调用浅拷贝</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">p, c</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> c = c || &#123;&#125;;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> p) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> p[i] === <span class="string">'object'</span> ) &#123;</div><div class="line">            c[i] = (p[i].constructor === <span class="built_in">Array</span>) ? [] : &#123;&#125;;</div><div class="line">            deepCopy(p[i], c[i]);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            c[i] = p[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> c;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>优点</strong>：支持多继承。</p>
-<p><strong>缺点</strong>：效率较低，内存占用高（因为要拷贝父类的属性）；无法获取父类不可枚举的方法（不可枚举方法，不能使用for in 访问到）。</p>
+<h2 id="cookie-的弊端"><a href="#cookie-的弊端" class="headerlink" title="cookie 的弊端"></a>cookie 的弊端</h2><ol>
+<li><p>数量和长度的限制。很多浏览器都限制一个域名最多保存20个cookie，每个 cookie 长度不能超过4KB，否则会被截掉。</p>
+</li>
+<li><p>安全性问题。 cookie 可能被拦截、篡改，如果 cookie 被拦截，就有可能取得所有的 session 信息。</p>
+</li>
+<li><p>cookie 在每次发起 HTTP 请求的时候都会被发送给服务器，一些不需要的信息也有可能会被发送，浪费带宽。</p>
+</li>
+</ol>
 
       
     </div>
@@ -506,8 +517,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/08/JavaScript中的闭包/" rel="next" title="JavaScript中的闭包">
-                <i class="fa fa-chevron-left"></i> JavaScript中的闭包
+              <a href="/2017/09/13/HTML与CSS问题合集/" rel="next" title="HTML与CSS问题合集">
+                <i class="fa fa-chevron-left"></i> HTML与CSS问题合集
               </a>
             
           </div>
@@ -516,8 +527,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/07/前端跨域请求解决方案汇总/" rel="prev" title="前端跨域请求解决方案汇总">
-                前端跨域请求解决方案汇总 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/09/call-apply和bind/" rel="prev" title="call, apply和bind">
+                call, apply和bind <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -722,7 +733,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#继承机制的设计思想"><span class="nav-text">继承机制的设计思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封装"><span class="nav-text">封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数的继承-（五种方法）"><span class="nav-text">构造函数的继承 （五种方法）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一：构造函数绑定"><span class="nav-text">方法一：构造函数绑定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二：prototype模式（又称原型链继承，注意需要对constructor修正）"><span class="nav-text">方法二：prototype模式（又称原型链继承，注意需要对constructor修正）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法三：直接继承prototype"><span class="nav-text">方法三：直接继承prototype</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法四：利用空对象作为中介-（又称寄生组合继承，对方法三的改良）：完美"><span class="nav-text">方法四：利用空对象作为中介 （又称寄生组合继承，对方法三的改良）：完美</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法五：拷贝继承：把Parent-prototype的所有属性和方法，拷贝进Child-prototype"><span class="nav-text">方法五：拷贝继承：把Parent.prototype的所有属性和方法，拷贝进Child.prototype</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非构造函数的继承"><span class="nav-text">非构造函数的继承</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一：object-（实质上还是原型继承）"><span class="nav-text">方法一：object()（实质上还是原型继承）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二：浅拷贝（只能拷贝数据全是基本类型的对象）"><span class="nav-text">方法二：浅拷贝（只能拷贝数据全是基本类型的对象）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法三：深拷贝"><span class="nav-text">方法三：深拷贝</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie-与-session"><span class="nav-text">cookie 与 session</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最主要的两点区别"><span class="nav-text">最主要的两点区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie-机制介绍"><span class="nav-text">cookie 机制介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#session-机制介绍"><span class="nav-text">session 机制介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie-与-localStorage-sessionStorage"><span class="nav-text">cookie 与 localStorage, sessionStorage</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webStorage-localStorage-和-sessionStorage"><span class="nav-text">webStorage: localStorage 和 sessionStorage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webStorage-与-cookie的比较"><span class="nav-text">webStorage 与 cookie的比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie-的弊端"><span class="nav-text">cookie 的弊端</span></a></li></ol></div>
             
 
           </div>
@@ -894,7 +905,7 @@
 		_hcwp.push({widget:"Bloggerstream", widget_id: 91511, selector:".hc-comment-count", label: "{\%COUNT%\}" });
 
 		
-		_hcwp.push({widget:"Stream", widget_id: 91511, xid: "2017/09/07/JavaScript的封装和继承/"});
+		_hcwp.push({widget:"Stream", widget_id: 91511, xid: "2017/09/13/localStorage-sessionStorage-cookie-session比较与总结/"});
 		
 
 		(function() {

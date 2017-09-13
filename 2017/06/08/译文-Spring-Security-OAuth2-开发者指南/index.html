@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/08/译文-Spring-Security-OAuth2-开发者指南/index.html">
 <meta property="og:site_name" content="长岛冰茶与火鸟">
 <meta property="og:description" content="因为最近在做毕设，涉及到给现有项目添加Spring Security OAuth2功能，参考了网上的几个两个项目，然而并不能达到预期的效果。参考项目1参考项目2这个是官方的项目。所以想通过官方文档来解决。这里是官网原文 一、介绍该用户指南分为两部分，分别供OAuth 2.0 的提供者(Provider)和客户端(Client)参考。">
-<meta property="og:updated_time" content="2017-06-09T01:41:39.000Z">
+<meta property="og:updated_time" content="2017-09-12T09:17:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[译文]Spring Security OAuth2 开发者指南">
 <meta name="twitter:description" content="因为最近在做毕设，涉及到给现有项目添加Spring Security OAuth2功能，参考了网上的几个两个项目，然而并不能达到预期的效果。参考项目1参考项目2这个是官方的项目。所以想通过官方文档来解决。这里是官网原文 一、介绍该用户指南分为两部分，分别供OAuth 2.0 的提供者(Provider)和客户端(Client)参考。">
@@ -332,8 +332,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-06-09T09:41:39+08:00">
-                2017-06-09
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-12T17:17:03+08:00">
+                2017-09-12
               </time>
             
           </span>
@@ -499,7 +499,7 @@
 </ul>
 <p><code>@EnableResourceServer</code>自动向Spring Security filter chain添加了<code>OAuth2AuthenticationProcessingFilter</code>类型的过滤器。</p>
 <p>在XML中，有一个<code>&lt;resource-server/&gt;</code>元素，其<code>id</code>属性是servlet<code>Filter</code>的bean的id. <code>Filter</code>接着会被手动添加到标准的Spring Security chain中。</p>
-<p>你的<code>ResourceServerTokenServices</code>是与授权服务器的合同的另一半。如果资源服务器和授权服务器在同一个应用中并且你使用了<code>DefaultTokenServices</code>，那你就不需要过多考虑这些了，因为它实现了所有需要的接口，因此它是自动一致的。如果你的资源服务器是单独的应用，那你就需要确保你匹配了授权服务器的能力，并提供一个<code>ResourceServerTokenServices</code>，它知道怎样正确地解码令牌。对于授权服务器，你可以经常使用<code>DefaultTokenServices</code>，而且<code>TokenStore</code>（后端存储或本地编码）也展示了大部分选择。一个替代放啊是<code>RemoteTokenServices</code>，这是一个Spring OAuth特性（不是特殊部分），它允许资源服务器通过授权服务器上的HTTP资源来解码令牌（<code>/oauth/check_token</code>）。如果资源服务器没有很大体量的流量（每个请求都要用授权服务器去验证），或者你能负担得起缓存结果，<code>RemoteTokenServices</code>会很方便。要使用<code>/oauth/check_token</code>endpoint，你需要通过改变它的访问规则（默认是<code>denyAll()</code>）来在<code>AuthorizationServerSecurityConfigurer</code>暴露它，比如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthorizationServerSecurityConfigurer oauthServer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    oauthServer.tokenKeyAccess(<span class="string">"isAnonymous() || hasAuthority('ROLE_TRUSTED_CLIENT')"</span>).checkTokenAccess(</div><div class="line">        <span class="string">"hasAuthority('ROLE_TRUSTED_CLIENT')"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>你的<code>ResourceServerTokenServices</code>是与授权服务器的合同的另一半。如果资源服务器和授权服务器在同一个应用中并且你使用了<code>DefaultTokenServices</code>，那你就不需要过多考虑这些了，因为它实现了所有需要的接口，因此它是自动一致的。如果你的资源服务器是单独的应用，那你就需要确保你匹配了授权服务器的能力，并提供一个<code>ResourceServerTokenServices</code>，它知道怎样正确地解码令牌。对于授权服务器，你可以经常使用<code>DefaultTokenServices</code>，而且<code>TokenStore</code>（后端存储或本地编码）也展示了大部分选择。一个替代方案是<code>RemoteTokenServices</code>，这是一个Spring OAuth特性（不是特殊部分），它允许资源服务器通过授权服务器上的HTTP资源来解码令牌（<code>/oauth/check_token</code>）。如果资源服务器没有很大体量的流量（每个请求都要用授权服务器去验证），或者你能负担得起缓存结果，<code>RemoteTokenServices</code>会很方便。要使用<code>/oauth/check_token</code>endpoint，你需要通过改变它的访问规则（默认是<code>denyAll()</code>）来在<code>AuthorizationServerSecurityConfigurer</code>暴露它，比如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthorizationServerSecurityConfigurer oauthServer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    oauthServer.tokenKeyAccess(<span class="string">"isAnonymous() || hasAuthority('ROLE_TRUSTED_CLIENT')"</span>).checkTokenAccess(</div><div class="line">        <span class="string">"hasAuthority('ROLE_TRUSTED_CLIENT')"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>在本例中，我们配置了<code>/oauth/check_token</code>endpoint和<code>/oauth/token_key</code>endpoint（这样受信任的资源就能获取JWT验证所需的公钥了）。这两个endpoint受HTTP基础认证保护，HTTP基础认证使用了客户端资格认证。</p>
 <h3 id="配置一个OAuth可知的表达式处理器"><a href="#配置一个OAuth可知的表达式处理器" class="headerlink" title="配置一个OAuth可知的表达式处理器"></a>配置一个OAuth可知的表达式处理器</h3><p>你可能想利用Spring Security的<a href="http://docs.spring.io/spring-security/site/docs/3.2.5.RELEASE/reference/htmlsingle/#el-access" target="_blank" rel="external">基于表达式的访问控制</a>的优势。表达式处理器可以默认在<code>@EnableResourceServer</code>步骤中注册。表达式包括<em>#oauth.clientHasRole</em>, <em>#oauth.clientHasAnyRole</em> 和 <em>#oauth.denyClient</em>，它们可以用于提供基于oauth客户端角色的访问权限（参照<code>OAuth2SecurityExpressionMethods</code>获得全面的清单）。 在XML中你可以使用常规的<code>&lt;http/&gt;</code>安全配置中的<code>expression-handler</code>元素注册一个oauth可知的表达式处理器。</p>
 <h2 id="九、OAuth-2-0-客户端"><a href="#九、OAuth-2-0-客户端" class="headerlink" title="九、OAuth 2.0 客户端"></a>九、OAuth 2.0 客户端</h2><p>OAuth 2.0 客户端机制负责访问其他服务器上的OAuth 2.0受保护资源。配置包括创建用户可能有访问权限的相关受保护资源。客户端可能也需要为用户存储授权码和访问令牌的存储机制。</p>
@@ -678,7 +678,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -700,7 +700,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -713,7 +713,7 @@
                 <h3 class="widget-title">标签云</h3>
                 <div id="myCanvasContainer" class="widget tagcloud">
                     <canvas width="250" height="250" id="resCanvas" style="width=100%">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AngularJS/">AngularJS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OAuth2/">OAuth2</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AngularJS/">AngularJS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OAuth2/">OAuth2</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li></ul>
                     </canvas>
                 </div>
             </div>

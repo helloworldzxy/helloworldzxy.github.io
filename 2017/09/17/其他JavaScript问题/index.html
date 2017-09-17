@@ -1,0 +1,1058 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/upload/image/favicon48.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="JS原生操作DOM节点">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="其他JavaScript问题">
+<meta property="og:url" content="http://yoursite.com/2017/09/17/其他JavaScript问题/index.html">
+<meta property="og:site_name" content="长岛冰茶与火鸟">
+<meta property="og:description" content="JS原生操作DOM节点">
+<meta property="og:updated_time" content="2017-09-17T03:12:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="其他JavaScript问题">
+<meta name="twitter:description" content="JS原生操作DOM节点">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/17/其他JavaScript问题/"/>
+
+
+
+
+
+  <title> 其他JavaScript问题 | 长岛冰茶与火鸟 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7fe473d7596c476c8be1be7acfa6c517";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">长岛冰茶与火鸟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-commenting-o"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/17/其他JavaScript问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="长岛冰茶与火鸟">
+      <meta itemprop="description" content="每天进步一点点的前端程序媛">
+      <meta itemprop="image" content="/upload/image/zxy.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="长岛冰茶与火鸟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                其他JavaScript问题
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T11:09:52+08:00">
+                2017-09-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-17T11:12:00+08:00">
+                2017-09-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试知识点总结/" itemprop="url" rel="index">
+                    <span itemprop="name">面试知识点总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/17/其他JavaScript问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/09/17/其他JavaScript问题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+             <span id="/2017/09/17/其他JavaScript问题/" class="leancloud_visitors" data-flag-title="其他JavaScript问题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="JS原生操作DOM节点"><a href="#JS原生操作DOM节点" class="headerlink" title="JS原生操作DOM节点"></a>JS原生操作DOM节点</h2><a id="more"></a>
+<h3 id="创建、添加新节点"><a href="#创建、添加新节点" class="headerlink" title="创建、添加新节点"></a>创建、添加新节点</h3><p><code>createDocumentFragment()</code> 当需要多次<code>appendChild</code>时，可以先append到fragment页面片中，再一次性将该页面片append到DOM中，减少DOM渲染次数。</p>
+<p><code>createElement(tagName)</code></p>
+<p><code>createTextNode(text)</code></p>
+<p><code>appendChild(ele)</code></p>
+<p><code>insertBefor(ele)</code></p>
+<h3 id="删除、替换节点"><a href="#删除、替换节点" class="headerlink" title="删除、替换节点"></a>删除、替换节点</h3><p><code>removeChild(ele)</code></p>
+<p><code>replaceChild()</code></p>
+<h3 id="查找节点"><a href="#查找节点" class="headerlink" title="查找节点"></a>查找节点</h3><p><code>getElementsByTagName()</code></p>
+<p><code>getElementsByClassName()</code></p>
+<p><code>getElementById()</code></p>
+<p><code>querySelector(CSS selectors)</code>：匹配指定 CSS 选择器的第一个元素。 如果没有找到，返回 null。</p>
+<p><code>querySelectorAll()</code>：找出全部符合指定 CSS 选择器的元素。</p>
+<h4 id="getElement-与-querySelector-的区别"><a href="#getElement-与-querySelector-的区别" class="headerlink" title="getElement 与 querySelector 的区别"></a>getElement 与 querySelector 的区别</h4><p><a href="https://github.com/cncounter/translation/blob/master/tiemao_2014/NodeList/NodeList.md" target="_blank" rel="external">DOM中的动态NodeList与静态NodeList</a></p>
+<p><code>getElementsByTagName(&#39;a&#39;)</code> 方法的性能通常比 <code>querySelector(&#39;a&#39;)</code> 要高很多。因为<code>getElementsByTagName(&#39;a&#39;)</code> 方法返回的是<strong>动态的</strong><code>NodeList</code>，而 <code>querySelector(&#39;a&#39;)</code> 返回的是<strong>静态的</strong><code>NodeList</code>.</p>
+<p><code>getElementsByTagName()</code> 方法返回对应标签名的元素的一个动态集合，只要<code>document</code>中相关元素发生变化，就会自动更新对应的元素。如果先获取了某个元素的子元素的动态集合 <code>NodeList</code> 对象，然后又在其他地方顺序添加更多子元素到这个DOM父元素中(可以是添加，修改，删除子元素等操作)，这些更改将自动反射到 <code>NodeList</code>，不需要手动进行其他调用。下面的代码是个死循环：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 适当的中间变量是一个好习惯</span></div><div class="line"><span class="keyword">var</span> divs = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"div"</span>);</div><div class="line"><span class="keyword">var</span> i = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="keyword">while</span>(i &lt; divs.length)&#123;</div><div class="line">    <span class="built_in">document</span>.body.appendChild(<span class="built_in">document</span>.createElement(<span class="string">"div"</span>));</div><div class="line">    i++;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>querySelector()</code>返回的 <code>NodeList</code> 就是方法被调用时刻的文档状态的快照。下面的代码就不会是个死循环：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> divs = <span class="built_in">document</span>.querySelectorAll(<span class="string">"div"</span>),</div><div class="line">    i = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="keyword">while</span>(i &lt; divs.length)&#123;</div><div class="line">    <span class="built_in">document</span>.body.appendChild(<span class="built_in">document</span>.createElement(<span class="string">"div"</span>));</div><div class="line">    i++;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Q：为什么返回动态的 <code>NodeList</code> 会更快？</p>
+<p>A：因为返回静态的 <code>NodeList</code> 前要进行一系列的前期处理工作，而返回动态的 <code>NodeList</code> 则不需要。（涉及WebKit内核源码）。</p>
+<p>关于两者的区别，在2017阿里校招笔试题中有涉及：整理在<a href="https://github.com/helloworldzxy/code-snippets" target="_blank" rel="external">我的github</a>上了。但是具体原因还没弄明白。</p>
+<h2 id="NaN-null-undefined的区别"><a href="#NaN-null-undefined的区别" class="headerlink" title="NaN, null, undefined的区别"></a><code>NaN</code>, <code>null</code>, <code>undefined</code>的区别</h2><p><code>null</code>是一个表示”无”的对象，转为数值时为0</p>
+<p><code>undefined</code>是一个表示”无”的原始值，转为数值时为<code>NaN</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="literal">NaN</span> == <span class="literal">NaN</span>; <span class="comment">//false</span></div><div class="line"></div><div class="line"><span class="literal">undefined</span> == <span class="literal">undefined</span>; <span class="comment">//true</span></div><div class="line"><span class="literal">undefined</span> == <span class="number">0</span>;<span class="comment">//false</span></div><div class="line"></div><div class="line"><span class="literal">false</span> == <span class="number">0</span>;<span class="comment">//true</span></div><div class="line"><span class="literal">true</span> == <span class="number">1</span>;<span class="comment">//true</span></div></pre></td></tr></table></figure>
+<h2 id="document-write-和-innerHTML"><a href="#document-write-和-innerHTML" class="headerlink" title="document.write 和 innerHTML"></a><code>document.write</code> 和 <code>innerHTML</code></h2><p><code>document.write</code> 只能同步执行，如果在<code>window.onload</code> 之前执行则在文档流中绘制内容，如果在<code>window.onload</code> 之后则会重绘整个页面（之前内容被冲刷掉）</p>
+<p><code>innerHTML</code> 则是绘制某个元素内的内容，没有这个限制</p>
+<h2 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h2><p><a href="http://blog.csdn.net/hcy48/article/details/69767124" target="_blank" rel="external">内存泄漏问题</a></p>
+<p><a href="http://www.cnblogs.com/webhelper/p/3711888.html" target="_blank" rel="external">setTimeout函数的第一个参数问题</a></p>
+<p><a href="http://www.jianshu.com/p/c2aa0c69fcab" target="_blank" rel="external">setTimeout第一个参数为字符串时造成内存泄漏的情况分析</a>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">test1</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> a = <span class="number">1</span>;</div><div class="line">    <span class="built_in">console</span>.log(a);</div><div class="line">&#125;, <span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test2</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> b = <span class="number">1</span>;</div><div class="line">    <span class="built_in">console</span>.log(b);</div><div class="line">&#125;</div><div class="line"></div><div class="line">setTimeout(test2.toString(), <span class="number">0</span>)</div></pre></td></tr></table></figure>
+<p>执行代码后，打开控制台，分别输入函数名<code>test1</code>和<code>test2</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">test1</div><div class="line"><span class="comment">// Uncaught ReferenceError: test1 is not defined</span></div><div class="line"></div><div class="line">test2</div><div class="line"><span class="comment">// ... (打印出 test2 的函数体)</span></div></pre></td></tr></table></figure>
+<p>会发现，当第一个参数为函数时，回调函数执行完毕后，<code>test1</code>函数被销毁，其所使用内存也被释放；当第一个参数为字符串时，<code>test2</code>却始终存在，它没有被销毁，始终占据着内存，也就造成了内存泄漏。</p>
+<p>所以让我们需要使用 <code>setTimeout</code> 时，一定要注意，第一个参数必须传入一个函数。</p>
+<h2 id="data-属性的作用"><a href="#data-属性的作用" class="headerlink" title="data-属性的作用"></a><code>data-</code>属性的作用</h2><p><code>data-</code>为H5新增的为前端开发者提供自定义的属性，这些属性集可以通过对象的 <code>dataset</code> 属性获取，不支持该属性的浏览器可以通过 <code>getAttribute</code> 方法获取 :</p>
+<p>需要注意的是：<code>data-</code>之后的以连字符分割的多个单词组成的属性，获取的时候使用驼峰风格。 所有主流浏览器都支持 <code>data-*</code> 属性。<br>即：当没有合适的属性和元素时，自定义的 data 属性是能够存储页面或 App 的私有的自定义数据。</p>
+<h2 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h2><p>深复制和浅复制只针对像 Object, Array 这样的复杂对象的。简单来说，浅复制只复制一层对象的属性，而深复制则递归复制了所有层级。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">p, c</span>) </span>&#123;</div><div class="line">　　<span class="keyword">var</span> c = c || &#123;&#125;;</div><div class="line">　　<span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> p) &#123;</div><div class="line">　　　　<span class="keyword">if</span> (<span class="keyword">typeof</span> p[i] === <span class="string">'object'</span>) &#123;</div><div class="line">　　　　　　c[i] = (p[i].constructor === <span class="built_in">Array</span>) ? [] : &#123;&#125;;</div><div class="line">　　　　　　deepCopy(p[i], c[i]);</div><div class="line">　　　　&#125; <span class="keyword">else</span> &#123;</div><div class="line">　　　　　　　c[i] = p[i];</div><div class="line">　　　　&#125;</div><div class="line">　　&#125;</div><div class="line">　　<span class="keyword">return</span> c;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h2><h3 id="方法一：for循环中每次从原数组中取出一个元素，看这个元素是否已出现在结果数组中，注意NaN和"><a href="#方法一：for循环中每次从原数组中取出一个元素，看这个元素是否已出现在结果数组中，注意NaN和" class="headerlink" title="方法一：for循环中每次从原数组中取出一个元素，看这个元素是否已出现在结果数组中，注意NaN和{}"></a>方法一：for循环中每次从原数组中取出一个元素，看这个元素是否已出现在结果数组中，注意NaN和{}</h3><p>效率最低。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeDuplicatedItem</span>(<span class="params">ar</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> ret = [];</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, j = ar.length; i &lt; j; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (ret.indexOf(ar[i]) === <span class="number">-1</span>) &#123;</div><div class="line">            ret.push(ar[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>考虑 <code>NaN</code>和<code>{}</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [&#123;&#125;, <span class="literal">NaN</span>];</div><div class="line"><span class="keyword">var</span> obj = &#123;&#125;;</div><div class="line"><span class="built_in">console</span>.log(obj <span class="keyword">in</span> arr); <span class="comment">//false</span></div><div class="line"><span class="built_in">console</span>.log(<span class="literal">NaN</span> == arr[<span class="number">1</span>]); <span class="comment">//false</span></div><div class="line"><span class="built_in">console</span>.log(<span class="literal">NaN</span> <span class="keyword">in</span> arr); <span class="comment">//false</span></div><div class="line"><span class="comment">//以上代码说明：NaN != NaN  &#123;&#125; != &#123;&#125;</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> obj1 = &#123;&#125;;</div><div class="line"><span class="keyword">var</span> obj2 = &#123;&#125;;</div><div class="line"><span class="built_in">console</span>.log(obj1 == obj2); <span class="comment">//false</span></div><div class="line"><span class="comment">//所以，碰到数组中有两个&#123;&#125;，这两个元素并不算重复元素。</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> a = <span class="literal">NaN</span>;</div><div class="line"><span class="keyword">var</span> b = <span class="literal">NaN</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(a)); <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(b)); <span class="comment">//true</span></div><div class="line"><span class="comment">//但是如果有两个NaN，则应算作重复元素。</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> arr = [&#123;&#125;, <span class="literal">NaN</span>];</div><div class="line"><span class="built_in">console</span>.log(arr.indexOf(&#123;&#125;)); <span class="comment">//-1</span></div><div class="line"><span class="built_in">console</span>.log(arr.indexOf(<span class="literal">NaN</span>)); <span class="comment">//-1</span></div><div class="line"><span class="comment">//而indexOf并不能正确识别这一点，所以需要手动判断</span></div></pre></td></tr></table></figure>
+<p>修改后的数组去重：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//(这里还可以继续优化代码：其实可以只判断NaN,用isNaN即可，不需要使用a != a 把对&#123;&#125;的判断也包含进来。)</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeDuplicatedItem3</span>(<span class="params">ar</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> res = [];</div><div class="line">    <span class="keyword">var</span> flagForNaN = <span class="literal">true</span>; <span class="comment">//初始时可以push NaN</span></div><div class="line">    <span class="comment">//而对于数组中出现的每一个&#123;&#125;，都应该push进去，不算重复</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ar; i++)&#123;</div><div class="line">        <span class="keyword">if</span>(res.indexOf(ar[i]) == <span class="number">-1</span>)&#123; <span class="comment">//这里注意：indexOf()，除了没有出现过的元素之外，对于NaN和&#123;&#125;元素总是会返回-1，即使NaN和&#123;&#125;已出现过。</span></div><div class="line">            <span class="keyword">if</span>(ar[i] != ar[i])&#123; <span class="comment">//如果是NaN或&#123;&#125;</span></div><div class="line">                <span class="keyword">if</span> (<span class="built_in">isNaN</span>(ar[i])) &#123; <span class="comment">//NaN</span></div><div class="line">                    <span class="keyword">if</span>(flagForNaN)&#123; <span class="comment">//如果目前为止还没有push过NaN</span></div><div class="line">                        res.push(ar[i]);</div><div class="line">                        flagForNaN = <span class="literal">false</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">else</span> &#123; <span class="comment">//如果是&#123;&#125;不管什么情况都push</span></div><div class="line">                    res.push(ar[i]);</div><div class="line">                &#125;   </div><div class="line">            &#125;<span class="keyword">else</span>&#123; <span class="comment">//除了NaN和&#123;&#125;之外的元素</span></div><div class="line">                res.push(ar[i]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="方法二：遍历数组，利用indexOf判断元素下标是否为第一次出现的位置"><a href="#方法二：遍历数组，利用indexOf判断元素下标是否为第一次出现的位置" class="headerlink" title="方法二：遍历数组，利用indexOf判断元素下标是否为第一次出现的位置"></a>方法二：遍历数组，利用indexOf判断元素下标是否为第一次出现的位置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeDuplicatedItem3</span>(<span class="params">ar</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> ret = [];</div><div class="line"></div><div class="line">    ar.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">e, i, ar</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (ar.indexOf(e) === i) &#123; <span class="comment">//这里也要注意NaN和&#123;&#125;的问题，这里省略</span></div><div class="line">            ret.push(e);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="方法三：用另一个对象存储出现过的元素"><a href="#方法三：用另一个对象存储出现过的元素" class="headerlink" title="方法三：用另一个对象存储出现过的元素"></a>方法三：用另一个对象存储出现过的元素</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.prototype.unique1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> res = [];</div><div class="line">    <span class="keyword">var</span> hash = &#123;&#125;;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (!hash[<span class="keyword">this</span>[i]]) &#123;</div><div class="line">            res.push(<span class="keyword">this</span>[i]);</div><div class="line">            hash[<span class="keyword">this</span>[i]] = <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="方法四：先排序。检查原数组中的第i个元素-与-结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。"><a href="#方法四：先排序。检查原数组中的第i个元素-与-结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。" class="headerlink" title="方法四：先排序。检查原数组中的第i个元素 与 结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。"></a>方法四：先排序。检查原数组中的第i个元素 与 结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。</h3><p>结果是排序后的，会打乱数组的原有顺序，看清题目要求</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.prototype.unique2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.sort(); <span class="comment">//先排序</span></div><div class="line">    <span class="keyword">var</span> res = [<span class="keyword">this</span>[<span class="number">0</span>]];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>[i] !== res[res.length - <span class="number">1</span>]) &#123;</div><div class="line">            res.push(<span class="keyword">this</span>[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="方法五：利用Set"><a href="#方法五：利用Set" class="headerlink" title="方法五：利用Set"></a>方法五：利用Set</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">uniqArray</span>(<span class="params">arr</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(arr));</div><div class="line">    <span class="comment">//或</span></div><div class="line">    <span class="keyword">return</span> [... new <span class="built_in">Set</span>(arr)];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/13/HTML与CSS问题合集/" rel="prev" title="HTML与CSS问题合集">
+                HTML与CSS问题合集 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!--MOB SHARE BEGIN-->
+<div class="-mob-share-ui-button -mob-share-open">分享</div>
+<div class="-mob-share-ui -mob-share-ui-theme  -mob-share-ui-theme-slide-bottom" style="display: none">
+    <ul class="-mob-share-list">
+        <li class="-mob-share-weibo"><p>新浪微博</p></li>
+        <li class="-mob-share-weixin"><p>微信</p></li>
+        <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+        <li class="-mob-share-pocket"><p>Pocket</p></li>
+        <li class="-mob-share-facebook"><p>Facebook</p></li>
+        <li class="-mob-share-twitter"><p>Twitter</p></li>
+    </ul>
+    <div class="-mob-share-close">取消</div>
+</div>
+<div class="-mob-share-ui-bg"></div>
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=1e2b5a54b350d"></script>
+<!--MOB SHARE END-->
+
+
+      
+  </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/upload/image/zxy.jpeg"
+               alt="长岛冰茶与火鸟" />
+          <p class="site-author-name" itemprop="name">长岛冰茶与火鸟</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点点的前端程序媛</p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          
+            <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+            <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+            <div class="widget-wrap">
+                <h3 class="widget-title">标签云</h3>
+                <div id="myCanvasContainer" class="widget tagcloud">
+                    <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AngularJS/">AngularJS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OAuth2/">OAuth2</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li></ul>
+                    </canvas>
+                </div>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/helloworldzxy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/helloworldzxy" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://book.douban.com/people/64833519/" target="_blank" title="豆瓣书摘">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣书摘
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://zcfy.cc/@helloworldzxy/article" target="_blank" title="众成翻译">
+                  
+                    <i class="fa fa-fw fa-/upload/image/zcfy_favicon.png"></i>
+                  
+                  众成翻译
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+           <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=67528&auto=0&height=66"></iframe>
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS原生操作DOM节点"><span class="nav-text">JS原生操作DOM节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建、添加新节点"><span class="nav-text">创建、添加新节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除、替换节点"><span class="nav-text">删除、替换节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找节点"><span class="nav-text">查找节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getElement-与-querySelector-的区别"><span class="nav-text">getElement 与 querySelector 的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NaN-null-undefined的区别"><span class="nav-text">NaN, null, undefined的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#document-write-和-innerHTML"><span class="nav-text">document.write 和 innerHTML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存泄漏"><span class="nav-text">内存泄漏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-属性的作用"><span class="nav-text">data-属性的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深拷贝"><span class="nav-text">深拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组去重"><span class="nav-text">数组去重</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一：for循环中每次从原数组中取出一个元素，看这个元素是否已出现在结果数组中，注意NaN和"><span class="nav-text">方法一：for循环中每次从原数组中取出一个元素，看这个元素是否已出现在结果数组中，注意NaN和{}</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：遍历数组，利用indexOf判断元素下标是否为第一次出现的位置"><span class="nav-text">方法二：遍历数组，利用indexOf判断元素下标是否为第一次出现的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法三：用另一个对象存储出现过的元素"><span class="nav-text">方法三：用另一个对象存储出现过的元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法四：先排序。检查原数组中的第i个元素-与-结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。"><span class="nav-text">方法四：先排序。检查原数组中的第i个元素 与 结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法五：利用Set"><span class="nav-text">方法五：利用Set</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">长岛冰茶与火鸟</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    访客量 <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    访问次数 <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 91511, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 91511, xid: "2017/09/17/其他JavaScript问题/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/91511/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("f1ufW13qlGddew5inanKJ79a-gzGzoHsz", "dp1rMt2iMERlKRjnbPKoly3b");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -95,7 +95,8 @@
 <meta property="og:site_name" content="长岛冰茶与火鸟">
 <meta property="og:description" content="整理收集的HTML和CSS相关问题。">
 <meta property="og:image" content="http://yoursite.com/2017/09/13/HTML与CSS问题合集/盒模型.jpeg">
-<meta property="og:updated_time" content="2017-09-17T03:08:54.000Z">
+<meta property="og:image" content="http://images.cnitblog.com/blog/275014/201308/17194803-cbaa54f624bb4d529ddddaba7f7cf3df.png">
+<meta property="og:updated_time" content="2017-09-24T06:04:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTML与CSS问题合集">
 <meta name="twitter:description" content="整理收集的HTML和CSS相关问题。">
@@ -334,8 +335,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-09-17T11:08:54+08:00">
-                2017-09-17
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-24T14:04:36+08:00">
+                2017-09-24
               </time>
             
           </span>
@@ -418,7 +419,7 @@
       
         <p>整理收集的HTML和CSS相关问题。</p>
 <a id="more"></a>
-<h2 id="display-none-与-visibility-hidden-的区别"><a href="#display-none-与-visibility-hidden-的区别" class="headerlink" title="display: none 与 visibility: hidden 的区别"></a><code>display: none</code> 与 <code>visibility: hidden</code> 的区别</h2><ol>
+<h1 id="HTML和CSS相关问题合集"><a href="#HTML和CSS相关问题合集" class="headerlink" title="HTML和CSS相关问题合集"></a>HTML和CSS相关问题合集</h1><h2 id="display-none-与-visibility-hidden-的区别"><a href="#display-none-与-visibility-hidden-的区别" class="headerlink" title="display: none 与 visibility: hidden 的区别"></a><code>display: none</code> 与 <code>visibility: hidden</code> 的区别</h2><ol>
 <li><p><code>display: none</code> 隐藏对应的元素，在文档布局中不再给它分配空间，它各边的元素会合拢，就当他从来不存在。<code>visibility: hidden</code> 隐藏对应的元素，但是在文档布局中仍保留原来的空间。</p>
 </li>
 <li><p><code>display: none</code> 是非继承属性，子孙节点消失是由于元素从渲染树中消失造成，通过修改子孙节点的属性无法显示；<code>visibility: hidden</code> 是继承属性，子孙节点消失是由于继承了<code>hidden</code>，通过设置<code>visibility: visible</code>，可以让子孙节点显示。</p>
@@ -430,7 +431,7 @@
 <li><code>link</code>属于HTML标签，而<code>@import</code>是CSS提供的；导入CSS的语法不同：</li>
 </ol>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"style.css"</span> <span class="attr">type</span>=<span class="string">"text/css"</span>/&gt;</span></div></pre></td></tr></table></figure>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></div><div class="line">    @import url("style.css");</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></div><div class="line">  @import url("style.css");</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
 <ol>
 <li><p>页面被加载时，<code>link</code>会顺序加载，而<code>@import</code>引用的CSS文件会等到HTML页面被加载完再加载。</p>
 </li>
@@ -482,12 +483,12 @@
 <li><p>若已知浮动元素的高度，则直接设置其父元素的高度；</p>
 </li>
 <li><p>在父元素结束前新建一个盒子并添加样式：<code>clear:both;</code>，或将该清理样式加在现有的合适的元素上。</p>
-<p>  原理：<code>clear</code>属性是指元素的两边或某一侧不能有浮动元素，为了达到这个目的，在 CSS1 和 CSS2 中，这是通过自动为清除元素（即设置了<code>clear</code>属性的元素）增加上外边距实现的。在 CSS2.1 中，会在元素上外边距之上增加清除空间，而外边距本身并不改变。最终使这个元素被挤到浮动元素的下外边距以下。</p>
+<p>原理：<code>clear</code>属性是指元素的两边或某一侧不能有浮动元素，为了达到这个目的，在 CSS1 和 CSS2 中，这是通过自动为清除元素（即设置了<code>clear</code>属性的元素）增加上外边距实现的。在 CSS2.1 中，会在元素上外边距之上增加清除空间，而外边距本身并不改变。最终使这个元素被挤到浮动元素的下外边距以下。</p>
 </li>
 <li><p>父元素样式添加：<code>overflow: hidden/auto;</code></p>
-<p>  原理：<code>overflow</code>需要父元素紧贴子元素，所以父元素需要撑大来包裹子元素。</p>
-<p>  当设置成<code>auto</code>时，如果父元素内容过多，会出现滚动条；而使用<code>hidden</code>时，不能和<code>position</code>配合使用，因为超出的尺寸的会被隐藏。</p>
-<p>  这个方法不适用于 IE6/7，需要加上一个IE特有的属性<code>zoom:1</code></p>
+<p>原理：<code>overflow</code>需要父元素紧贴子元素，所以父元素需要撑大来包裹子元素。</p>
+<p>当设置成<code>auto</code>时，如果父元素内容过多，会出现滚动条；而使用<code>hidden</code>时，不能和<code>position</code>配合使用，因为超出的尺寸的会被隐藏。</p>
+<p>这个方法不适用于 IE6/7，需要加上一个IE特有的属性<code>zoom:1</code></p>
 </li>
 <li><p>以浮制浮（父级同时浮动）：缺点是需要给每个浮动元素父级添加浮动，浮动多了容易出现问题。</p>
 </li>
@@ -572,6 +573,12 @@
 </li>
 </ol>
 <p>BFC中的元素的布局是不受外界的影响（我们往往利用这个特性来消除浮动元素对其非浮动的兄弟元素和其父元素带来的影响。）并且在一个BFC中，块盒与行盒（行盒由一行中所有的内联元素所组成）都会垂直沿着其父元素的边框排列。</p>
+<p>补充：IFC（Inline Formatting Context）即行内格式化上下文。</p>
+<h2 id="垂直方向外边距折叠计算"><a href="#垂直方向外边距折叠计算" class="headerlink" title="垂直方向外边距折叠计算"></a>垂直方向外边距折叠计算</h2><ul>
+<li>参加折叠的<code>margin</code>都是正值：取其中<code>margin</code>较大的值为最终<code>margin</code>值。</li>
+<li>参与折叠的<code>margin</code>都是负值：取的是其中绝对值较大的，然后，从 0 位置，负向位移。</li>
+<li>参与折叠的<code>margin</code>中有正值，有负值：先取出负<code>margin</code>中绝对值中最大的，然后，和正<code>margin</code>值中最大的<code>margin</code>相加。</li>
+</ul>
 <h2 id="CSS-Sprites"><a href="#CSS-Sprites" class="headerlink" title="CSS Sprites"></a>CSS Sprites</h2><h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3><p>CSS Sprites在国内很多人叫css精灵，是一种网页图片应用处理方式。它允许你将一个页面涉及到的所有零星图片都包含到一张大图中去，这样一来，当访问该页面时，载入的图片就不会像以前那样一幅一幅地慢慢显示出来了。</p>
 <p>利用CSS的<code>background-image</code>, <code>background-repeat</code>, <code>background-position</code>的组合进行背景定位，<code>background-position</code>可以用数字精确的定位出背景图片的位置。</p>
 <p>利用CSS Sprites能很好地减少网页的http请求，这样可以减少很多图片请求的开销，从而大大的提高页面的性能，因为请求耗时比较长，请求虽然可以并发，但是也有限制，一般浏览器都是6个。这也是CSS Sprites最大的优点，也是其被广泛传播和应用的主要原因。从这个点来讲，未来可能就不需要这样做了，因为有了支持多路传输的HTTP2。</p>
@@ -604,26 +611,124 @@
 <h2 id="HTML-兼容性问题"><a href="#HTML-兼容性问题" class="headerlink" title="HTML 兼容性问题"></a>HTML 兼容性问题</h2><p>网上有很多，这里摘取三个我认为相对更常见的：</p>
 <ol>
 <li><p>浏览器默认的 margin 和 padding 不同</p>
-<p> 解决方案：加一个全局的 <code>*{margin:0;padding:0;}</code> 来统一。</p>
+<p>解决方案：加一个全局的 <code>*{margin:0;padding:0;}</code> 来统一。</p>
 </li>
 <li><p>超链接的样式设置顺序：</p>
- <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:link</span> &#123;&#125;</div><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123;&#125;</div><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;&#125;</div><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:active</span> &#123;&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:link</span> &#123;&#125;</div><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123;&#125;</div><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;&#125;</div><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:active</span> &#123;&#125;</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <ol>
 <li><p>上下margin重合问题：IE 和 FF 都存在，相邻的两个 div 的<code>margin-left</code>和<code>margin-right</code>不会重合，但是<code>margin-top</code>和<code>margin-bottom</code>却会发生重合。</p>
-<p> 解决方法：养成良好的代码编写习惯，同时采用<code>margin-top</code>或者同时采用<code>margin-bottom</code>。</p>
+<p>解决方法：养成良好的代码编写习惯，同时采用<code>margin-top</code>或者同时采用<code>margin-bottom</code>。</p>
 </li>
 </ol>
 <h2 id="对浏览器内核的理解"><a href="#对浏览器内核的理解" class="headerlink" title="对浏览器内核的理解"></a>对浏览器内核的理解</h2><p>主要分成两部分：渲染引擎(layout engineer或 Rendering Engine) 和 JS 引擎。</p>
 <p>渲染引擎：负责取得网页的内容（HTML、 XML 、图像等等）、整理讯息（例如加入 CSS 等），以及计算网页的显示方式，然后会输出至显示器或打印机。浏览器的内核的不同对于网页的语法解释会有不同，所以渲染的效果也不相同。所有网页浏览器、电子邮件客户端以及其它需要编辑、显示网络内容的应用程序都需要内核。</p>
 <p>JS引擎则：解析和执行 javascript 来实现网页的动态效果。</p>
 <p>最开始渲染引擎和JS引擎并没有区分的很明确，后来 JS 引擎越来越独立，内核就倾向于只指渲染引擎。</p>
-<h2 id="如何居中div-如何居中一个浮动元素"><a href="#如何居中div-如何居中一个浮动元素" class="headerlink" title="如何居中div, 如何居中一个浮动元素?"></a>如何居中div, 如何居中一个浮动元素?</h2><p>(1)非浮动元素居中：可以设置 <code>margin:0 auto</code> 令其居中, 定位 ,父级元素 <code>text-align:center</code>等等</p>
-<p>(2)浮动元素居中: </p>
-<p>方法一:设置当前div的宽度，然后设置<code>margin-left:50%; position:relative; left:-250px;</code>其中的<code>left</code>是宽度的一半。</p>
-<p>方法二:父元素和子元素同时左浮动，然后父元素相对左移动50%，再然后子元素相对左移动-50%。<br>方法三:<code>position</code>定位等等。</p>
-
+<h2 id="利用CSS画三角形、圆形"><a href="#利用CSS画三角形、圆形" class="headerlink" title="利用CSS画三角形、圆形"></a>利用CSS画三角形、圆形</h2><h3 id="画三角形"><a href="#画三角形" class="headerlink" title="画三角形"></a>画三角形</h3><p><a href="http://www.tuicool.com/articles/3eaINn" target="_blank" rel="external">原理</a></p>
+<p>以下面为基础：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.caret</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">border-top</span>: <span class="number">40px</span> solid <span class="number">#000</span>;</div><div class="line">    <span class="attribute">border-right</span>: <span class="number">40px</span> solid <span class="number">#ff0000</span>;</div><div class="line">    <span class="attribute">border-left</span>: <span class="number">40px</span> solij d <span class="number">#ff0000</span>;</div><div class="line">    <span class="attribute">border-bottom</span>: <span class="number">40px</span> solid <span class="number">#000</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>只需要为三角形底部设置边框，两腰边框透明即可制作四个朝向的三角形。</p>
+<h3 id="画圆"><a href="#画圆" class="headerlink" title="画圆"></a>画圆</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.circle</span>&#123;</div><div class="line">        <span class="attribute">background-color</span>: grey;</div><div class="line">        </div><div class="line">        <span class="comment">/*border-radius为圆弧长的四分之一（l = 90度圆心角 * 半径r）。或者写50% */</span></div><div class="line">        <span class="attribute">border-radius</span>: <span class="number">78.5px</span>;</div><div class="line">        </div><div class="line">        <span class="comment">/*width和height均为直径2r*/</span></div><div class="line">        <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">        <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="水平居中-垂直居中"><a href="#水平居中-垂直居中" class="headerlink" title="水平居中 垂直居中"></a>水平居中 垂直居中</h2><h3 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h3><h3 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h3><h3 id="品字形布局"><a href="#品字形布局" class="headerlink" title="品字形布局"></a>品字形布局</h3><p>上方的“口”中有一个元素水平垂直居中 下面两个“口”各50%</p>
+<h4 id="满屏自适应品字形"><a href="#满屏自适应品字形" class="headerlink" title="满屏自适应品字形"></a>满屏自适应品字形</h4><p>三个有一定高度的div，上面的div宽100%，下面的两个div分别宽50%，然后用float使其不换行即可。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"header"</span>&gt;</span>头部<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"left"</span>&gt;</span>左<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"right"</span>&gt;</span>右<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.header</span>, <span class="selector-class">.left</span>, <span class="selector-class">.right</span> &#123;</div><div class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.header</span>&#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">background-color</span>: yellow;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span>&#123;</div><div class="line">  <span class="attribute">float</span>: left;</div><div class="line">  <span class="attribute">width</span>: <span class="number">50%</span>;</div><div class="line">  <span class="attribute">background-color</span>: red;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span>&#123;</div><div class="line">  <span class="attribute">float</span>: left;</div><div class="line">  <span class="attribute">width</span>: <span class="number">50%</span>;</div><div class="line">  <span class="attribute">background-color</span>: blue;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="非满屏品字形"><a href="#非满屏品字形" class="headerlink" title="非满屏品字形"></a>非满屏品字形</h4><p>左右在排版时要反过来，不然不出效果</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"header"</span>&gt;</span>Header<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"right"</span>&gt;</span>Right<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"left"</span>&gt;</span>Left<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.header</span>, <span class="selector-class">.left</span>, <span class="selector-class">.right</span> &#123;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.header</span> &#123;</div><div class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</div><div class="line">    <span class="attribute">background-color</span>: <span class="number">#FF0000</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span> &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">    <span class="attribute">margin-left</span>: <span class="number">50%</span>; <span class="comment">/*先布局right div*/</span></div><div class="line">    <span class="attribute">background-color</span>: blue;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.left</span> &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">    <span class="attribute">margin-left</span>: -<span class="number">200px</span>; <span class="comment">/*负的两倍的div宽度*/</span></div><div class="line">    <span class="attribute">background-color</span>: yellow;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="CSS-overflow属性"><a href="#CSS-overflow属性" class="headerlink" title="CSS overflow属性"></a>CSS overflow属性</h2><table>
+<thead>
+<tr>
+<th>可取的值</th>
+<th>如何表现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>visible</td>
+<td>默认值。溢出不裁剪</td>
+</tr>
+<tr>
+<td>hidden</td>
+<td>溢出部分不可见，无滚动条</td>
+</tr>
+<tr>
+<td>scroll</td>
+<td>无论是否需要，用户代理都会提供一种滚动机制。即使元素框中可以放下所有内容也会出现滚动条。</td>
+</tr>
+<tr>
+<td>auto</td>
+<td>滚动条：需要才有</td>
+</tr>
+<tr>
+<td>inherit</td>
+<td>IE(all) not supported</td>
+</tr>
+</tbody>
+</table>
+<p>W3School 详解+在线示例 <a href="http://www.w3school.com.cn/cssref/pr_pos_overflow.asp" target="_blank" rel="external">link</a> </p>
+<h2 id="HTML-lt-a-gt-HTML-5-lt-form-gt-target属性"><a href="#HTML-lt-a-gt-HTML-5-lt-form-gt-target属性" class="headerlink" title="(HTML &lt;a&gt; / HTML 5 &lt;form&gt;) target属性"></a>(HTML <code>&lt;a&gt;</code> / HTML 5 <code>&lt;form&gt;</code>) <code>target</code>属性</h2><table>
+<thead>
+<tr>
+<th>保留值</th>
+<th>如何表现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_blank</code></td>
+<td>新打开未命名窗口</td>
+</tr>
+<tr>
+<td><code>_self</code></td>
+<td>默认值。在当前窗口中打开</td>
+</tr>
+<tr>
+<td><code>_parent</code></td>
+<td>载入包含该链接的窗口/父框架集。如果链接在当前窗口则等同于 <code>_self</code></td>
+</tr>
+<tr>
+<td><code>_top</code></td>
+<td>清除所有被包含的框架并将文档载入整个浏览器窗口</td>
+</tr>
+</tbody>
+</table>
+<h2 id="alt与title的区别"><a href="#alt与title的区别" class="headerlink" title="alt与title的区别"></a>alt与title的区别</h2><ul>
+<li><code>alt</code>: 图片加载失败时的文字展示。搜索引擎优化。</li>
+<li><code>title</code>: 鼠标滑过该img显示的提示信息。</li>
+</ul>
+<h2 id="浏览器内核"><a href="#浏览器内核" class="headerlink" title="浏览器内核"></a>浏览器内核</h2><p>主要分成两部分：渲染引擎(Layout Engineer或 Rendering Engine) 和 JS 引擎。</p>
+<p>渲染引擎：负责取得网页的内容（HTML、 XML 、图像等等）、整理讯息（例如加入 CSS 等），以及计算网页的显示方式，然后会输出至显示器或打印机。浏览器的内核的不同对于网页的语法解释会有不同，所以渲染的效果也不相同。所有网页浏览器、电子邮件客户端以及其它需要编辑、显示网络内容的应用程序都需要内核。</p>
+<p>JS引擎：解析和执行 javascript 来实现网页的动态效果。</p>
+<p>最开始渲染引擎和JS引擎并没有区分的很明确，后来 JS 引擎越来越独立，内核就倾向于只指渲染引擎。</p>
+<p>主流的三大浏览器内核：Webkit, Gecko, Trident.</p>
+<p>Wekbit: Safari, Chrome.</p>
+<p>Firefox: Gecko.</p>
+<p>IE系列: Trident。</p>
+<p>另外，搜狗浏览器是双核的，双核并不是指一个页面由2个内核同时处理，而是所有网页（通常是标准通用标记语言的应用超文本标记语言）由webkit内核处理，只有银行网站用IE内核。</p>
+<h2 id="form表单的属性"><a href="#form表单的属性" class="headerlink" title="form表单的属性"></a>form表单的属性</h2><p><a href="http://blog.csdn.net/rui_dlut/article/details/6822372" target="_blank" rel="external">blog</a></p>
+<p><code>name</code>: 控制表达与后台程序的关系</p>
+<p><code>method</code>: <code>GET</code>, <code>POST</code></p>
+<p><code>enctype</code>: <code>text/plain</code>, <code>application/x-www-form-urlencoded</code>, <code>multipart/form-data</code></p>
+<p><code>target</code>: <code>_blank</code>, <code>_self</code>, <code>_parent</code>, <code>_top</code></p>
+<h2 id="display-inline"><a href="#display-inline" class="headerlink" title="display: inline"></a><code>display: inline</code></h2><p>inline元素水平方向的<code>padding-left, padding-right, margin-left, margin-right</code>都产生边距效果；但竖直方向的<code>padding-top, padding-bottom, margin-top, margin-bottom</code>不会产生边距效果。</p>
+<h2 id="优雅降级和渐进增强"><a href="#优雅降级和渐进增强" class="headerlink" title="优雅降级和渐进增强"></a>优雅降级和渐进增强</h2><p>优雅降级：Web站点在所有新式浏览器中都能正常工作，如果用户使用的是老式浏览器，则代码会检查以确认它们是否能正常工作。为那些无法支持功能的浏览器增加候选方案(hack)，使之在旧式浏览器上以某种形式降级体验却不至于完全失效。</p>
+<p>渐进增强：从被所有浏览器支持的基本功能开始，逐步地添加那些只有新式浏览器才支持的功能,向页面增加无害于基础浏览器的额外样式和功能的。当浏览器支持时，它们会自动地呈现出来并发挥作用。</p>
+<h2 id="前端页面性能优化"><a href="#前端页面性能优化" class="headerlink" title="前端页面性能优化"></a>前端页面性能优化</h2><ul>
+<li>本质之一是要减少网页下载的内容：<br><img src="http://images.cnitblog.com/blog/275014/201308/17194803-cbaa54f624bb4d529ddddaba7f7cf3df.png" alt="image"></li>
+<li>yahoo团队34条准则 <a href="http://www.cnblogs.com/lei2007/archive/2013/08/16/3262897.html" target="_blank" rel="external">博客1</a></li>
+<li>减少http请求次数：CSS Sprites, JS、CSS源码压缩、图片大小控制合适；网页Gzip，CDN托管，data缓存 ，图片服务器。</li>
+<li>少用全局变量、缓存DOM节点查找的结果。减少IO读取操作。</li>
+<li>图片预加载，将样式表放在顶部，将脚本放在底部。</li>
+<li>当要创建大段HTML元素时，先使用<code>document.createFragment</code>创建页面片。</li>
+<li>减少cookie大小：因为每次cookie会随着HTTP请求发送出去。</li>
+</ul>
+<h2 id="em和rem"><a href="#em和rem" class="headerlink" title="em和rem"></a>em和rem</h2><p>em: 相对于当前对象内文本的字体尺寸。如当前对行内文本的字体尺寸未被人为设置，则相对于浏览器的默认字体尺寸。(相对父元素的字体大小倍数)</p>
+<p>rem: 相对于根元素(即<code>html</code>元素)<code>font-size</code>计算值的倍数（只相对于根元素的大小）。</p>
+<p>rem作用：利用rem可以实现简单的响应式布局，可以利用html元素中字体的大小与屏幕间的比值设置<code>font-size</code>的值实现当屏幕分辨率变化时让元素也变化。</p>
+<h2 id="ToBeContinued"><a href="#ToBeContinued" class="headerlink" title="ToBeContinued"></a>ToBeContinued</h2>
       
     </div>
 
@@ -881,7 +986,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#display-none-与-visibility-hidden-的区别"><span class="nav-text">display: none 与 visibility: hidden 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-中-link-和-import-的区别"><span class="nav-text">CSS 中 link 和 @import 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-的三种定位机制"><span class="nav-text">CSS 的三种定位机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#position属性"><span class="nav-text">position属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一、标准文档流"><span class="nav-text">一、标准文档流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、浮动"><span class="nav-text">二、浮动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#怎么清除浮动？对谁清除浮动？"><span class="nav-text">怎么清除浮动？对谁清除浮动？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、绝对定位"><span class="nav-text">三、绝对定位</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#盒模型"><span class="nav-text">盒模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-选择器及优先级，可继承样式，CSS3新增伪类"><span class="nav-text">CSS 选择器及优先级，可继承样式，CSS3新增伪类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS选择器"><span class="nav-text">CSS选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可继承的样式"><span class="nav-text">可继承的样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不可继承的样式"><span class="nav-text">不可继承的样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先级算法"><span class="nav-text">优先级算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS3新增伪类举例"><span class="nav-text">CSS3新增伪类举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML5-和-CSS3-新特性"><span class="nav-text">HTML5 和 CSS3 新特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML5"><span class="nav-text">HTML5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS3"><span class="nav-text">CSS3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFC"><span class="nav-text">BFC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-Sprites"><span class="nav-text">CSS Sprites</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解释"><span class="nav-text">解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有了HTTP2之后"><span class="nav-text">有了HTTP2之后</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对语义化的理解"><span class="nav-text">对语义化的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Doctype-与-浏览器渲染模式"><span class="nav-text">Doctype 与 浏览器渲染模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Doctype-是什么"><span class="nav-text">Doctype 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器渲染模式"><span class="nav-text">浏览器渲染模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的-DOCTYPE-声明"><span class="nav-text">常用的 DOCTYPE 声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-与-XHTML-的区别"><span class="nav-text">HTML 与 XHTML 的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML-兼容性问题"><span class="nav-text">HTML 兼容性问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对浏览器内核的理解"><span class="nav-text">对浏览器内核的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何居中div-如何居中一个浮动元素"><span class="nav-text">如何居中div, 如何居中一个浮动元素?</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML和CSS相关问题合集"><span class="nav-text">HTML和CSS相关问题合集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#display-none-与-visibility-hidden-的区别"><span class="nav-text">display: none 与 visibility: hidden 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-中-link-和-import-的区别"><span class="nav-text">CSS 中 link 和 @import 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-的三种定位机制"><span class="nav-text">CSS 的三种定位机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#position属性"><span class="nav-text">position属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一、标准文档流"><span class="nav-text">一、标准文档流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、浮动"><span class="nav-text">二、浮动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#怎么清除浮动？对谁清除浮动？"><span class="nav-text">怎么清除浮动？对谁清除浮动？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、绝对定位"><span class="nav-text">三、绝对定位</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#盒模型"><span class="nav-text">盒模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-选择器及优先级，可继承样式，CSS3新增伪类"><span class="nav-text">CSS 选择器及优先级，可继承样式，CSS3新增伪类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS选择器"><span class="nav-text">CSS选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可继承的样式"><span class="nav-text">可继承的样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不可继承的样式"><span class="nav-text">不可继承的样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先级算法"><span class="nav-text">优先级算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS3新增伪类举例"><span class="nav-text">CSS3新增伪类举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML5-和-CSS3-新特性"><span class="nav-text">HTML5 和 CSS3 新特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML5"><span class="nav-text">HTML5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS3"><span class="nav-text">CSS3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFC"><span class="nav-text">BFC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垂直方向外边距折叠计算"><span class="nav-text">垂直方向外边距折叠计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-Sprites"><span class="nav-text">CSS Sprites</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解释"><span class="nav-text">解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有了HTTP2之后"><span class="nav-text">有了HTTP2之后</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对语义化的理解"><span class="nav-text">对语义化的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Doctype-与-浏览器渲染模式"><span class="nav-text">Doctype 与 浏览器渲染模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Doctype-是什么"><span class="nav-text">Doctype 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器渲染模式"><span class="nav-text">浏览器渲染模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的-DOCTYPE-声明"><span class="nav-text">常用的 DOCTYPE 声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-与-XHTML-的区别"><span class="nav-text">HTML 与 XHTML 的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML-兼容性问题"><span class="nav-text">HTML 兼容性问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对浏览器内核的理解"><span class="nav-text">对浏览器内核的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用CSS画三角形、圆形"><span class="nav-text">利用CSS画三角形、圆形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#画三角形"><span class="nav-text">画三角形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#画圆"><span class="nav-text">画圆</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#水平居中-垂直居中"><span class="nav-text">水平居中 垂直居中</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#水平居中"><span class="nav-text">水平居中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直居中"><span class="nav-text">垂直居中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#品字形布局"><span class="nav-text">品字形布局</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#满屏自适应品字形"><span class="nav-text">满屏自适应品字形</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非满屏品字形"><span class="nav-text">非满屏品字形</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-overflow属性"><span class="nav-text">CSS overflow属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML-lt-a-gt-HTML-5-lt-form-gt-target属性"><span class="nav-text">(HTML <a> / HTML 5 <form>) target属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#alt与title的区别"><span class="nav-text">alt与title的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器内核"><span class="nav-text">浏览器内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#form表单的属性"><span class="nav-text">form表单的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#display-inline"><span class="nav-text">display: inline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优雅降级和渐进增强"><span class="nav-text">优雅降级和渐进增强</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端页面性能优化"><span class="nav-text">前端页面性能优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#em和rem"><span class="nav-text">em和rem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ToBeContinued"><span class="nav-text">ToBeContinued</span></a></li></ol></li></ol></div>
             
 
           </div>

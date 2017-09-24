@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/17/其他JavaScript问题/index.html">
 <meta property="og:site_name" content="长岛冰茶与火鸟">
 <meta property="og:description" content="JS原生操作DOM节点">
-<meta property="og:updated_time" content="2017-09-17T03:12:00.000Z">
+<meta property="og:updated_time" content="2017-09-24T06:04:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="其他JavaScript问题">
 <meta name="twitter:description" content="JS原生操作DOM节点">
@@ -332,8 +332,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-09-17T11:12:00+08:00">
-                2017-09-17
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-24T14:04:15+08:00">
+                2017-09-24
               </time>
             
           </span>
@@ -464,6 +464,68 @@
 <h3 id="方法四：先排序。检查原数组中的第i个元素-与-结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。"><a href="#方法四：先排序。检查原数组中的第i个元素-与-结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。" class="headerlink" title="方法四：先排序。检查原数组中的第i个元素 与 结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。"></a>方法四：先排序。检查原数组中的第i个元素 与 结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。</h3><p>结果是排序后的，会打乱数组的原有顺序，看清题目要求</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.prototype.unique2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.sort(); <span class="comment">//先排序</span></div><div class="line">    <span class="keyword">var</span> res = [<span class="keyword">this</span>[<span class="number">0</span>]];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>[i] !== res[res.length - <span class="number">1</span>]) &#123;</div><div class="line">            res.push(<span class="keyword">this</span>[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="方法五：利用Set"><a href="#方法五：利用Set" class="headerlink" title="方法五：利用Set"></a>方法五：利用Set</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">uniqArray</span>(<span class="params">arr</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(arr));</div><div class="line">    <span class="comment">//或</span></div><div class="line">    <span class="keyword">return</span> [... new <span class="built_in">Set</span>(arr)];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="函数节流throttle与函数防抖debounce"><a href="#函数节流throttle与函数防抖debounce" class="headerlink" title="函数节流throttle与函数防抖debounce"></a>函数节流<code>throttle</code>与函数防抖<code>debounce</code></h2><h3 id="函数节流"><a href="#函数节流" class="headerlink" title="函数节流"></a>函数节流</h3><p>《JavaScript高级程序设计》P614 Chap - 22.3.3：</p>
+<p>“某些代码不可以在没有间断的情况连续重复执行。”</p>
+<p>“只有在执行函数的请求停止了一段时间之后才执行。”</p>
+<h4 id="基本模式"><a href="#基本模式" class="headerlink" title="基本模式"></a>基本模式</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> processor = (</div><div class="line">    timeoutId = <span class="literal">null</span>;</div><div class="line"></div><div class="line">    <span class="comment">//实际进行处理的方法</span></div><div class="line">    performProcessing: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">//实际执行的代码</span></div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="comment">//初始处理调用的方法</span></div><div class="line">    process: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        clearTimeout(<span class="keyword">this</span>.timeoutId);</div><div class="line"></div><div class="line">        <span class="keyword">var</span> that = <span class="keyword">this</span>;</div><div class="line">        <span class="keyword">this</span>.timeoutId = setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            that.performProcessing();</div><div class="line">        &#125;, <span class="number">100</span>);</div><div class="line">    &#125;</div><div class="line">);</div><div class="line"></div><div class="line">processor.process(); <span class="comment">//如果连续调用了20次，只会在最后一次调用之后的100ms后执行一次performProcessing()函数</span></div></pre></td></tr></table></figure>
+<h4 id="throttle函数"><a href="#throttle函数" class="headerlink" title="throttle函数"></a><code>throttle</code>函数</h4><p>红宝书的实现（我这里把延迟执行的时间修改成参数了）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">delay, method, context</span>) </span>&#123;</div><div class="line">    clearTimeout(method.tId);</div><div class="line">    method.tId = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        method.call(context);</div><div class="line">    &#125;, delay);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">resizeDiv</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'myDiv'</span>);</div><div class="line">    div.style.height = div.offsetWidth + <span class="string">'px'</span>; <span class="comment">//会引起回流</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">window</span>.onresize = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">//页面宽度改变的事件，会多次触发</span></div><div class="line">    throttle(<span class="number">100</span>, resizeDiv);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其实还可以优化一下：实现可传参给实际执行的函数。</p>
+<h3 id="函数节流（throttle）与函数去抖（debounce）"><a href="#函数节流（throttle）与函数去抖（debounce）" class="headerlink" title="函数节流（throttle）与函数去抖（debounce）"></a>函数节流（throttle）与函数去抖（debounce）</h3><p><a href="http://www.cnblogs.com/ambar/archive/2011/10/08/throttle-and-debounce.html" target="_blank" rel="external">参考博客 1</a></p>
+<p><a href="http://blog.csdn.net/dyllove98/article/details/9281507" target="_blank" rel="external">参考博客 2</a></p>
+<p>这两个函数其实很类似，都是高阶函数，为了解决的问题也是一样的。</p>
+<p>注意代码的封装（头条面试时，二面面试官给我的建议~）。</p>
+<h2 id="字符串截取函数比较"><a href="#字符串截取函数比较" class="headerlink" title="字符串截取函数比较"></a>字符串截取函数比较</h2><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>start</th>
+<th>end</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>substring</td>
+<td>必需，较小</td>
+<td>较大，不包含，可选，若省略则到末尾</td>
+<td>不接受负参数</td>
+</tr>
+<tr>
+<td>slice</td>
+<td>必需，若负则倒数</td>
+<td>可选，若省略则到末尾，若负则倒数</td>
+</tr>
+<tr>
+<td>substr</td>
+<td>必需，若负则倒数</td>
+<td>可选，截取长度</td>
+<td>ECMAscript 没有对substr进行标准化，因此反对使用它。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="多个标签页的通信"><a href="#多个标签页的通信" class="headerlink" title="多个标签页的通信"></a>多个标签页的通信</h2><ul>
+<li>localStorage，绑定事件监听其变化。</li>
+<li>cookie + <code>setInterval</code>，定期查看cookies的值。</li>
+</ul>
+<h2 id="src和href的区别"><a href="#src和href的区别" class="headerlink" title="src和href的区别"></a><code>src</code>和<code>href</code>的区别</h2><ul>
+<li>可替换的元素上使用<code>src</code>，然而把href用于在涉及的文档和外部资源之间建立一个关系。 <code>href</code>(Hypertext Reference)指定网络资源的位置，从而在当前元素或者当前文档和由当前属性定义的需要的锚点或资源之间定义一个链接或者关系。 <code>src</code>(Source)属性仅仅 嵌入当前资源到当前文档元素定义的位置。指向的内容将会嵌入到文档中当前标签所在位置；在请求 <code>src</code> 资源时会将其指向的资源下载并应用到文档内，例如 js 脚本， <code>img</code> 图片和 <code>frame</code> 等元素。</li>
+<li><code>src</code>面对的是相对路径，<code>href</code>可以指向相对或者是绝对路径，url是服务器或者文件的路径，也有绝对和相对之分。</li>
+</ul>
+<h2 id="GET和POST的区别"><a href="#GET和POST的区别" class="headerlink" title="GET和POST的区别"></a><code>GET</code>和<code>POST</code>的区别</h2><h3 id="等幂性"><a href="#等幂性" class="headerlink" title="等幂性"></a>等幂性</h3><p><code>GET</code>幂等：多次请求返回的资源不会变化。这只是一种标准。更实际的区别在于净荷的大小：浏览器和服务器会限制URL的长度。</p>
+<p><code>POST</code>非幂等，每次调用都会产生新的资源。不会限制发送给服务器的净荷的大小。</p>
+<p>等幂性简单点说就是一次请求和多次请求，资源的状态是一样。比如<code>GET</code>和<code>HEAD</code>，不论你请求多少次，资源还是在那里。请注意，<code>DELETE</code>和<code>PUT</code>也是等幂的，以为对同一个资源删除一次或者多次，结果是一样的，就是资源被删除了，不存在了。</p>
+<p>为什么说<code>PUT</code>也是等幂的？当你<code>PUT</code>一个新资源的时候，资源被创建，再次<code>PUT</code>这个URI的时候，资源还是没变。当你<code>PUT</code>一个存在的资源时，更新了资源，再次<code>PUT</code>的时候，还是更新成这个样子。在<code>PUT</code>更新的时候，不能做相对的更新（依赖资源现在的状态），比如每次对一个数加1，这样资源状态就会变化。应该每次更新成某个数，比如把某个数变成4，则无论多少次<code>PUT</code>，值都是4，这样就是等幂了。</p>
+<p>我们设计Restful API的时候，<code>GET</code>，<code>HEAD</code>, <code>PUT</code>, <code>DELETE</code>一定要设计成等幂的。由于网络是不可靠的，安全性和等幂性就显得特别重要。如果一次请求，服务器收到处理以后，客户端没有收到相应，客户端会再次请求，如果没有等幂性保障，就会发生意想不到的问题。</p>
+<p><code>POST</code>是不安全也不等幂的，还是拿weblog的例子，如果两次<code>POST</code>相同的博文，则会产生两个资源，URI可能是这样<code>/weblogs/myweblog/entries/1和/weblogs/myweblog/entries/2</code>，尽管他们的内容是一样的。</p>
+<h3 id="其他方面"><a href="#其他方面" class="headerlink" title="其他方面"></a>其他方面</h3><ul>
+<li><code>GET</code>一般用于从服务端读取数据，<code>POST</code>一般用于发送数据到服务端。</li>
+<li><code>GET</code>传送的数据</li>
+<li><code>GET</code>比<code>POST</code>更安全。</li>
+<li><code>GET</code>发送的参数或数据直接放在URL中，<code>POST</code>将数据放在HTTP请求头header中传递。</li>
+<li><code>GET</code>有数据大小限制（因为URL有大小限制，一般2K），<code>POST</code>可传送更多的数据。</li>
+</ul>
+<h2 id="ToBeContinued"><a href="#ToBeContinued" class="headerlink" title="ToBeContinued"></a>ToBeContinued</h2>
       
     </div>
 
@@ -717,7 +779,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS原生操作DOM节点"><span class="nav-text">JS原生操作DOM节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建、添加新节点"><span class="nav-text">创建、添加新节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除、替换节点"><span class="nav-text">删除、替换节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找节点"><span class="nav-text">查找节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getElement-与-querySelector-的区别"><span class="nav-text">getElement 与 querySelector 的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NaN-null-undefined的区别"><span class="nav-text">NaN, null, undefined的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#document-write-和-innerHTML"><span class="nav-text">document.write 和 innerHTML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存泄漏"><span class="nav-text">内存泄漏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-属性的作用"><span class="nav-text">data-属性的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深拷贝"><span class="nav-text">深拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组去重"><span class="nav-text">数组去重</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一：for循环中每次从原数组中取出一个元素，看这个元素是否已出现在结果数组中，注意NaN和"><span class="nav-text">方法一：for循环中每次从原数组中取出一个元素，看这个元素是否已出现在结果数组中，注意NaN和{}</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：遍历数组，利用indexOf判断元素下标是否为第一次出现的位置"><span class="nav-text">方法二：遍历数组，利用indexOf判断元素下标是否为第一次出现的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法三：用另一个对象存储出现过的元素"><span class="nav-text">方法三：用另一个对象存储出现过的元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法四：先排序。检查原数组中的第i个元素-与-结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。"><span class="nav-text">方法四：先排序。检查原数组中的第i个元素 与 结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法五：利用Set"><span class="nav-text">方法五：利用Set</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS原生操作DOM节点"><span class="nav-text">JS原生操作DOM节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建、添加新节点"><span class="nav-text">创建、添加新节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除、替换节点"><span class="nav-text">删除、替换节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找节点"><span class="nav-text">查找节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getElement-与-querySelector-的区别"><span class="nav-text">getElement 与 querySelector 的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NaN-null-undefined的区别"><span class="nav-text">NaN, null, undefined的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#document-write-和-innerHTML"><span class="nav-text">document.write 和 innerHTML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存泄漏"><span class="nav-text">内存泄漏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-属性的作用"><span class="nav-text">data-属性的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深拷贝"><span class="nav-text">深拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组去重"><span class="nav-text">数组去重</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一：for循环中每次从原数组中取出一个元素，看这个元素是否已出现在结果数组中，注意NaN和"><span class="nav-text">方法一：for循环中每次从原数组中取出一个元素，看这个元素是否已出现在结果数组中，注意NaN和{}</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：遍历数组，利用indexOf判断元素下标是否为第一次出现的位置"><span class="nav-text">方法二：遍历数组，利用indexOf判断元素下标是否为第一次出现的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法三：用另一个对象存储出现过的元素"><span class="nav-text">方法三：用另一个对象存储出现过的元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法四：先排序。检查原数组中的第i个元素-与-结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。"><span class="nav-text">方法四：先排序。检查原数组中的第i个元素 与 结果数组中的当前最后一个元素是否相同，因为已经排序，所以重复元素会在相邻位置。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法五：利用Set"><span class="nav-text">方法五：利用Set</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数节流throttle与函数防抖debounce"><span class="nav-text">函数节流throttle与函数防抖debounce</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数节流"><span class="nav-text">函数节流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本模式"><span class="nav-text">基本模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#throttle函数"><span class="nav-text">throttle函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数节流（throttle）与函数去抖（debounce）"><span class="nav-text">函数节流（throttle）与函数去抖（debounce）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串截取函数比较"><span class="nav-text">字符串截取函数比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多个标签页的通信"><span class="nav-text">多个标签页的通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#src和href的区别"><span class="nav-text">src和href的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET和POST的区别"><span class="nav-text">GET和POST的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#等幂性"><span class="nav-text">等幂性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他方面"><span class="nav-text">其他方面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ToBeContinued"><span class="nav-text">ToBeContinued</span></a></li></ol></div>
             
 
           </div>

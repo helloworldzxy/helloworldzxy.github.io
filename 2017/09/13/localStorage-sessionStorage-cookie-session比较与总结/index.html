@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/13/localStorage-sessionStorage-cookie-session比较与总结/index.html">
 <meta property="og:site_name" content="长岛冰茶与火鸟">
 <meta property="og:description" content="cookie 在持久保存客户端数据提供了方便，分担了服务器存储的负担。">
-<meta property="og:updated_time" content="2017-09-13T07:11:24.000Z">
+<meta property="og:updated_time" content="2017-09-18T01:57:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="localStorage, sessionStorage, cookie, session比较与总结">
 <meta name="twitter:description" content="cookie 在持久保存客户端数据提供了方便，分担了服务器存储的负担。">
@@ -332,8 +332,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-09-13T15:11:24+08:00">
-                2017-09-13
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-18T09:57:34+08:00">
+                2017-09-18
               </time>
             
           </span>
@@ -437,7 +437,7 @@
 </ul>
 <h3 id="session-机制介绍"><a href="#session-机制介绍" class="headerlink" title="session 机制介绍"></a>session 机制介绍</h3><p>HTTP协议是无状态协议，服务端需要记录用户的状态时，会用到 session 机制。比如用户下单，服务端要为特定的用户创建特定的 session，用于标识这个用户，并且跟踪用户，这样才知道该用户的购物车里面有几本书。</p>
 <p>实际上大多数的应用都是用 cookie 来实现 session 跟踪的，第一次创建 session 的时候，服务端会在 HTTP 协议中告诉客户端，需要在 cookie 里面记录一个 session ID，以后每次请求把这个会话 ID 发送到服务器，我就知道你是谁了。如果客户端的浏览器禁用了 cookie，会使用<strong>URL重写</strong>或<strong>表单隐藏字段</strong>来进行会话跟踪，即每次 HTTP 交互，URL后面都会被附加上一个诸如<code>sid=xxxxx</code> 这样的参数，或服务器自动修改表单，添加一个隐藏字段，以便在表单提交时能够把 session id 传递回服务器服务端据此来识别用户。</p>
-<h2 id="cookie-与-localStorage-sessionStorage"><a href="#cookie-与-localStorage-sessionStorage" class="headerlink" title="cookie 与 localStorage, sessionStorage"></a>cookie 与 localStorage, sessionStorage</h2><h3 id="webStorage-localStorage-和-sessionStorage"><a href="#webStorage-localStorage-和-sessionStorage" class="headerlink" title="webStorage: localStorage 和 sessionStorage"></a>webStorage: localStorage 和 sessionStorage</h3><p>HTML5提供的两种在客户端存储数据的新方法。对于不同的网站，数据存储于不同的区域，并且一个网站只能访问其自身的数据。只能存储字符串类型的数据。</p>
+<h2 id="cookie-与-localStorage-sessionStorage"><a href="#cookie-与-localStorage-sessionStorage" class="headerlink" title="cookie 与 localStorage, sessionStorage"></a>cookie 与 localStorage, sessionStorage</h2><h3 id="webStorage-localStorage-和-sessionStorage"><a href="#webStorage-localStorage-和-sessionStorage" class="headerlink" title="webStorage: localStorage 和 sessionStorage"></a>webStorage: localStorage 和 sessionStorage</h3><p>HTML5提供的两种在客户端存储数据的新方法。对于不同的网站，数据存储于不同的区域，并且一个网站只能访问其自身的数据。只能存储字符串类型的数据。不能跨域。</p>
 <p>这两者的区别只有<strong>作用域</strong>和<strong>有效期</strong>不同。</p>
 <ul>
 <li>localStorage 没有时间限制的数据存储，除非主动删除数据，否则数据是不会过期的。</li>

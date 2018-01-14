@@ -1,0 +1,1080 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/upload/image/favicon48.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="promise解决了“回调地狱”的问题，使异步回调的代码书写由横向变为纵向，但是一堆then的语义性不够好。 协程yield命令。执行到该命令时该协程的执行权交给另一个协程，一段时间后执行权交回时才继续执行。 优点是写法很像同步操作的代码。">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS异步">
+<meta property="og:url" content="http://yoursite.com/2018/01/14/JS异步/index.html">
+<meta property="og:site_name" content="长岛冰茶与火鸟">
+<meta property="og:description" content="promise解决了“回调地狱”的问题，使异步回调的代码书写由横向变为纵向，但是一堆then的语义性不够好。 协程yield命令。执行到该命令时该协程的执行权交给另一个协程，一段时间后执行权交回时才继续执行。 优点是写法很像同步操作的代码。">
+<meta property="og:updated_time" content="2018-01-14T07:54:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS异步">
+<meta name="twitter:description" content="promise解决了“回调地狱”的问题，使异步回调的代码书写由横向变为纵向，但是一堆then的语义性不够好。 协程yield命令。执行到该命令时该协程的执行权交给另一个协程，一段时间后执行权交回时才继续执行。 优点是写法很像同步操作的代码。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/14/JS异步/"/>
+
+
+
+
+
+  <title> JS异步 | 长岛冰茶与火鸟 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7fe473d7596c476c8be1be7acfa6c517";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">长岛冰茶与火鸟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-commenting-o"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/14/JS异步/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="长岛冰茶与火鸟">
+      <meta itemprop="description" content="每天进步一点点的前端程序媛">
+      <meta itemprop="image" content="/upload/image/zxy.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="长岛冰茶与火鸟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                JS异步
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-14T15:29:52+08:00">
+                2018-01-14
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-01-14T15:54:44+08:00">
+                2018-01-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术学习/" itemprop="url" rel="index">
+                    <span itemprop="name">技术学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/14/JS异步/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/14/JS异步/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+             <span id="/2018/01/14/JS异步/" class="leancloud_visitors" data-flag-title="JS异步">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="promise"><a href="#promise" class="headerlink" title="promise"></a>promise</h2><p>解决了“回调地狱”的问题，使异步回调的代码书写由横向变为纵向，但是一堆<code>then</code>的语义性不够好。</p>
+<h2 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h2><p><code>yield</code>命令。执行到该命令时该协程的执行权交给另一个协程，一段时间后执行权交回时才继续执行。</p>
+<p>优点是写法很像同步操作的代码。</p>
+<a id="more"></a>
+<h2 id="Generator函数"><a href="#Generator函数" class="headerlink" title="Generator函数"></a>Generator函数</h2><p><a href="http://www.ruanyifeng.com/blog/2015/04/generator.html" target="_blank" rel="external">ruanyf - Generator函数</a></p>
+<p>协程在ES6中的实现就是<code>Generator</code>函数。</p>
+<p>不同于普通函数的地方：</p>
+<ul>
+<li>函数可以暂停执行，用<code>yield</code>命令。</li>
+<li>调用Generator函数会返回内部指针对象（遍历器），其具有的<code>next</code>方法可以控制Generator函数的继续执行。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">gen</span>(<span class="params">x</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> y = <span class="keyword">yield</span> x + <span class="number">2</span>;</div><div class="line">  <span class="keyword">return</span> y;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> g = gen(<span class="number">1</span>);</div><div class="line"><span class="built_in">console</span>.log(g);         <span class="comment">//&#123;&#125;</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> g1 = g.next();</div><div class="line"><span class="built_in">console</span>.log(g1);        <span class="comment">//&#123; value: 3, done: false &#125;</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> g2 = g.next();</div><div class="line"><span class="built_in">console</span>.log(g2);        <span class="comment">//&#123; value: undefined, done: true &#125;</span></div></pre></td></tr></table></figure>
+<p>这里有个小注意点，<code>value</code>为<code>undefined</code>的前一步<code>next</code>执行结果中，<code>done</code>一定为<code>false</code>吗？看下面这个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">helloWorldGenerator</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">yield</span> <span class="string">'hello'</span>;</div><div class="line">  <span class="keyword">yield</span> <span class="string">'world'</span>;</div><div class="line">  <span class="keyword">yield</span> <span class="string">'ending'</span>; <span class="comment">//这里使用yield</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> hw = helloWorldGenerator();</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(hw.next());</div><div class="line"><span class="comment">// &#123; value: 'hello', done: false &#125;</span></div><div class="line"><span class="built_in">console</span>.log(hw.next());</div><div class="line"><span class="comment">// &#123; value: 'world', done: false &#125;</span></div><div class="line"><span class="built_in">console</span>.log(hw.next());</div><div class="line"><span class="comment">// &#123; value: 'ending', done: false &#125; 注意这里是false</span></div><div class="line"><span class="built_in">console</span>.log(hw.next());</div><div class="line"><span class="comment">// &#123; value: undefined, done: true &#125;</span></div></pre></td></tr></table></figure>
+<p>如果把上例中的<code>yield &#39;ending&#39;</code>改成<code>return &#39;ending&#39;</code>，则下面第三个<code>next</code>方法执行后会返回<code>{ value: &#39;ending&#39;, done: true }</code>。</p>
+<p>也就是说，如果Generator函数最后是<code>return</code>语句，则执行完<code>return</code>语句后，遍历器的<code>done</code>就是<code>true</code>了；如果没有<code>return</code>语句，则执行完最后一步<code>yield</code>命令的表达式之后，遍历器的<code>done</code>会是<code>false</code>，需要再执行一次<code>next</code>才会变为<code>false</code>.</p>
+<p>给<code>next</code>方法传的参数，会作为上个阶段异步任务的返回结果，被函数体内<code>return</code>的变量接收。因此，传参执行<code>next</code>返回的遍历器的<code>value</code>就是这个返回的变量，也即传入的参数？那传参的意义是什么？</p>
+<p>Generator函数内部也可以用<code>try...catch</code>捕获函数体外抛出的错误，在函数体外抛出错误<code>g.throw(&#39;error occurred!&#39;)</code>，在函数体内捕获错误进行处理，实现异步编程中出错代码与处理错误的代码的时间、空间上的分离。</p>
+<h2 id="Generator函数的自动执行"><a href="#Generator函数的自动执行" class="headerlink" title="Generator函数的自动执行"></a>Generator函数的自动执行</h2><p>Generator 函数就是一个异步操作的容器。它的自动执行需要一种机制，当异步操作有了结果，能够自动交回执行权。两种方法可以做到这一点：</p>
+<p>（1）回调函数。将异步操作包装成 Thunk 函数，在回调函数里面交回执行权。</p>
+<p>（2）Promise 对象。将异步操作包装成 Promise 对象，用 then 方法交回执行权。</p>
+<h3 id="用Thunk函数实现Generator函数的自动执行"><a href="#用Thunk函数实现Generator函数的自动执行" class="headerlink" title="用Thunk函数实现Generator函数的自动执行"></a>用Thunk函数实现Generator函数的自动执行</h3><p><a href="http://www.ruanyifeng.com/blog/2015/04/generator.html" target="_blank" rel="external">ruanyf - Thunk函数</a></p>
+<p>传值调用：传入计算好的参数值</p>
+<p>传名调用：传入参数表达式，函数体内只在需要参数值的时候才计算该表达式。</p>
+<p>Thunk函数是传名调用的实现，将参数表达式放在临时函数中，将这个临时函数名传入。需要时执行这个临时函数。该临时函数就是Thunk函数。</p>
+<p>JavaScript中的Thunk函数：将多参数函数（参数中必须含有回调函数），替换成单参数版本，切只接受回调函数作为参数。</p>
+<p>生产环境使用Thunkify模块作为转换器。<a href="https://github.com/tj/node-thunkify" target="_blank" rel="external">Thunkify源码</a></p>
+<p>Thunk函数可用于Generator函数的自动流程管理：在回调函数中将执行权交还给Genenrator函数。</p>
+<p>手动执行：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> g = gen();</div><div class="line"></div><div class="line"><span class="keyword">var</span> r1 = g.next();</div><div class="line">r1.value(<span class="function"><span class="keyword">function</span>(<span class="params">err, data</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</div><div class="line">  <span class="keyword">var</span> r2 = g.next(data);</div><div class="line">  r2.value(<span class="function"><span class="keyword">function</span>(<span class="params">err, data</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</div><div class="line">    g.next(data);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>用Thunk函数自动执行：Generator函数中的yield命令后面必须是Thunk函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gen = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> f1 = <span class="keyword">yield</span> readFile(<span class="string">'fileA'</span>);  </div><div class="line">  <span class="keyword">var</span> f2 = <span class="keyword">yield</span> readFile(<span class="string">'fileB'</span>);</div><div class="line">  <span class="comment">// ...</span></div><div class="line">  <span class="keyword">var</span> fn = <span class="keyword">yield</span> readFile(<span class="string">'fileN'</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> gen = fn();</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">err, data</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> result = gen.next(data);</div><div class="line">    <span class="keyword">if</span> (result.done) <span class="keyword">return</span>;</div><div class="line">    result.value(next);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  next();</div><div class="line">&#125;</div><div class="line"></div><div class="line">run(gen);</div></pre></td></tr></table></figure>
+<h3 id="用Promise实现Generator函数的自动执行"><a href="#用Promise实现Generator函数的自动执行" class="headerlink" title="用Promise实现Generator函数的自动执行"></a>用Promise实现Generator函数的自动执行</h3><p><a href="http://www.ruanyifeng.com/blog/2015/05/co.html" target="_blank" rel="external">ruanyf - co</a></p>
+<p><code>co</code>函数库返回一个<code>Promise</code>对象。Generator 函数的 yield 命令后面，只能是 Thunk 函数或 Promise 对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gen = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> f1 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/fstab'</span>);</div><div class="line">  <span class="keyword">var</span> f2 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/shells'</span>);</div><div class="line">  <span class="built_in">console</span>.log(f1.toString());</div><div class="line">  <span class="built_in">console</span>.log(f2.toString());</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> co = <span class="built_in">require</span>(<span class="string">'co'</span>);</div><div class="line">co(gen);</div></pre></td></tr></table></figure>
+<p><a href="https://github.com/tj/co/blob/master/index.js" target="_blank" rel="external">co源码</a></p>
+<p>主要是递归执行<code>gen.next()</code>，每一步执行后返回的值的<code>value</code>(<code>ret.value</code>)都用一个promise包裹起来，然后在这个promise的<code>then</code>函数中的回调函数中继续执行<code>gen.next()</code></p>
+<p>co支持并发的异步操作，用数组或对象存储这些兵法操作，等它们全部完成之后才进行下一步。</p>
+<h2 id="async函数"><a href="#async函数" class="headerlink" title="async函数"></a>async函数</h2><p><a href="http://www.ruanyifeng.com/blog/2015/05/async.html" target="_blank" rel="external">async函数</a></p>
+<p>“异步编程的最高境界，就是根本不用关心它是不是异步。”</p>
+<p>async函数其实是Generator函数的语法糖。async 函数就是将 Generator 函数的星号（*）替换成 async，将 yield 替换成 await，仅此而已。</p>
+<p>与Generator函数相比，async函数有如下优点：</p>
+<ul>
+<li>内置执行器：Generator函数的执行必须依靠执行器。</li>
+<li>更好的语义：async - 函数内部有异步操作，await - 紧跟在后面的表达式需要等待结果。</li>
+<li>更广的适用性：Genertor函数使用自动执行器时，<code>yield</code>后面要跟Thunk函数或者Promise对象；<code>await</code>后面可以跟Promise对象（一般是个函数，执行该函数返回的Promise对象）或原始类型值（后者等于同步操作）。</li>
+</ul>
+<p><code>async</code>函数返回一个Promise对象。</p>
+<p>一般用<code>try...catch</code>将<code>await</code>包裹起来。</p>
+<p><code>await</code>命令只能用在<code>async</code>函数中。</p>
+<p>（1）多个请求并发执行：不能用<code>forEach</code>对每个请求<code>await</code>，而应使用<code>Promise.all</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">dbFuc</span>(<span class="params">db</span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> docs = [&#123;&#125;, &#123;&#125;, &#123;&#125;];</div><div class="line">  <span class="keyword">let</span> promises = docs.map(<span class="function">(<span class="params">doc</span>) =&gt;</span> db.post(doc));</div><div class="line"></div><div class="line">  <span class="keyword">let</span> results = <span class="keyword">await</span> <span class="built_in">Promise</span>.all(promises);</div><div class="line">  <span class="built_in">console</span>.log(results);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 或者使用下面的写法</span></div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">dbFuc</span>(<span class="params">db</span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> docs = [&#123;&#125;, &#123;&#125;, &#123;&#125;];</div><div class="line">  <span class="keyword">let</span> promises = docs.map(<span class="function">(<span class="params">doc</span>) =&gt;</span> db.post(doc));</div><div class="line"></div><div class="line">  <span class="keyword">let</span> results = [];</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> promise <span class="keyword">of</span> promises) &#123;</div><div class="line">    results.push(<span class="keyword">await</span> promise);</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">console</span>.log(results);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>（2）多个请求继发执行：用<code>for</code>循环：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">dbFuc</span>(<span class="params">db</span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> docs = [&#123;&#125;, &#123;&#125;, &#123;&#125;];</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> doc <span class="keyword">of</span> docs) &#123;</div><div class="line">    <span class="keyword">await</span> db.post(doc);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="补充Generator函数语法"><a href="#补充Generator函数语法" class="headerlink" title="补充Generator函数语法"></a>补充Generator函数语法</h2><p><code>next</code>方法的参数表示上一个<code>yield</code>表达式的值。也即：<code>next()</code>是将<code>yield</code>表达式替换成一个值。</p>
+<p>第一次调用<code>next</code>方法时不用传参。传了也会被V8引擎忽略。</p>
+<p>使用<code>for...of</code>语句时不需要<code>next</code>方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> *<span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</div><div class="line">  <span class="keyword">yield</span> <span class="number">2</span>;</div><div class="line">  <span class="keyword">yield</span> <span class="number">3</span>;</div><div class="line">  <span class="keyword">yield</span> <span class="number">4</span>;</div><div class="line">  <span class="keyword">yield</span> <span class="number">5</span>;</div><div class="line">  <span class="keyword">return</span> <span class="number">6</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> v <span class="keyword">of</span> foo()) &#123;</div><div class="line">  <span class="built_in">console</span>.log(v);</div><div class="line">&#125;</div><div class="line"><span class="comment">// 1 2 3 4 5</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fibonacci</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> [prev, curr] = [<span class="number">0</span>, <span class="number">1</span>];</div><div class="line">  <span class="keyword">for</span> (;;) &#123;</div><div class="line">    [prev, curr] = [curr, prev + curr];</div><div class="line">    <span class="keyword">yield</span> curr;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> n <span class="keyword">of</span> fibonacci()) &#123;</div><div class="line">  <span class="keyword">if</span> (n &gt; <span class="number">1000</span>) <span class="keyword">break</span>;</div><div class="line">  <span class="built_in">console</span>.log(n);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>next()</code>, <code>throw()</code>, <code>return()</code>都是对<code>yield</code>语句后面表达式的替换。</p>
+<h3 id="yield"><a href="#yield" class="headerlink" title="yield*"></a><code>yield*</code></h3><p><code>yield*</code>后面的 Generator 函数（没有<code>return</code>语句时），不过是<code>for...of</code>的一种简写形式，完全可以用后者替代前者。反之，在有<code>return</code>语句时，则需要用<code>var value = yield* iterator</code>的形式获取<code>return</code>语句的值。</p>
+<p>用<code>yield*</code>取出嵌套数组的所有成员：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">iterTree</span>(<span class="params">tree</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(tree)) &#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>; i &lt; tree.length; i++) &#123;</div><div class="line">      <span class="keyword">yield</span>* iterTree(tree[i]);</div><div class="line">    &#125;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">yield</span> tree;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> tree = [ <span class="string">'a'</span>, [<span class="string">'b'</span>, <span class="string">'c'</span>], [<span class="string">'d'</span>, <span class="string">'e'</span>] ];</div><div class="line"></div><div class="line"><span class="keyword">for</span>(<span class="keyword">let</span> x <span class="keyword">of</span> iterTree(tree)) &#123;</div><div class="line">  <span class="built_in">console</span>.log(x);</div><div class="line">&#125;</div><div class="line"><span class="comment">// a</span></div><div class="line"><span class="comment">// b</span></div><div class="line"><span class="comment">// c</span></div><div class="line"><span class="comment">// d</span></div><div class="line"><span class="comment">// e</span></div></pre></td></tr></table></figure>
+<h3 id="用yield-遍历完全二叉树："><a href="#用yield-遍历完全二叉树：" class="headerlink" title="用yield*遍历完全二叉树："></a>用<code>yield*</code>遍历完全二叉树：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 下面是二叉树的构造函数，</span></div><div class="line"><span class="comment">// 三个参数分别是左树、当前节点和右树</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Tree</span>(<span class="params">left, label, right</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.left = left;</div><div class="line">  <span class="keyword">this</span>.label = label;</div><div class="line">  <span class="keyword">this</span>.right = right;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 下面是中序（inorder）遍历函数。</span></div><div class="line"><span class="comment">// 由于返回的是一个遍历器，所以要用generator函数。</span></div><div class="line"><span class="comment">// 函数体内采用递归算法，所以左树和右树要用yield*遍历</span></div><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">inorder</span>(<span class="params">t</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (t) &#123;</div><div class="line">    <span class="keyword">yield</span>* inorder(t.left);</div><div class="line">    <span class="keyword">yield</span> t.label;</div><div class="line">    <span class="keyword">yield</span>* inorder(t.right);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 下面生成二叉树</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">make</span>(<span class="params">array</span>) </span>&#123;</div><div class="line">  <span class="comment">// 判断是否为叶节点</span></div><div class="line">  <span class="keyword">if</span> (array.length == <span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">new</span> Tree(<span class="literal">null</span>, array[<span class="number">0</span>], <span class="literal">null</span>);</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Tree(make(array[<span class="number">0</span>]), array[<span class="number">1</span>], make(array[<span class="number">2</span>]));</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> tree = make([[[<span class="string">'a'</span>], <span class="string">'b'</span>, [<span class="string">'c'</span>]], <span class="string">'d'</span>, [[<span class="string">'e'</span>], <span class="string">'f'</span>, [<span class="string">'g'</span>]]]);</div><div class="line"></div><div class="line"><span class="comment">// 遍历二叉树</span></div><div class="line"><span class="keyword">var</span> result = [];</div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> node <span class="keyword">of</span> inorder(tree)) &#123;</div><div class="line">  result.push(node);</div><div class="line">&#125;</div><div class="line"></div><div class="line">result</div><div class="line"><span class="comment">// ['a', 'b', 'c', 'd', 'e', 'f', 'g']</span></div></pre></td></tr></table></figure>
+<h3 id="Generator与状态机"><a href="#Generator与状态机" class="headerlink" title="Generator与状态机"></a><code>Generator</code>与状态机</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ticking = <span class="literal">true</span>;</div><div class="line"><span class="keyword">var</span> clock = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (ticking)</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Tick!'</span>);</div><div class="line">  <span class="keyword">else</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Tock!'</span>);</div><div class="line">  ticking = !ticking;</div><div class="line">&#125;</div><div class="line">clock(); <span class="comment">//Tick!</span></div><div class="line">clock(); <span class="comment">//Tock!</span></div><div class="line">clock(); <span class="comment">//Tick!</span></div><div class="line">clock(); <span class="comment">//Tock!</span></div></pre></td></tr></table></figure>
+<p>用Generator函数改写如下：不需要用外部变量来保存状态（因为），更安全。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> clock = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Tick!'</span>);</div><div class="line">    <span class="keyword">yield</span>;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Tock!'</span>);</div><div class="line">    <span class="keyword">yield</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> g = clock();</div><div class="line">g.next(); <span class="comment">//Tick!</span></div><div class="line">g.next(); <span class="comment">//Tock!</span></div><div class="line">g.next(); <span class="comment">//Tick!</span></div><div class="line">g.next(); <span class="comment">//Tock!</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/14/关于GTM-Google-Tag-Manager/" rel="next" title="关于GTM - Google Tag Manager">
+                <i class="fa fa-chevron-left"></i> 关于GTM - Google Tag Manager
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/17/其他JavaScript问题/" rel="prev" title="其他JavaScript和前端问题">
+                其他JavaScript和前端问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!--MOB SHARE BEGIN-->
+<div class="-mob-share-ui-button -mob-share-open">分享</div>
+<div class="-mob-share-ui -mob-share-ui-theme  -mob-share-ui-theme-slide-bottom" style="display: none">
+    <ul class="-mob-share-list">
+        <li class="-mob-share-weibo"><p>新浪微博</p></li>
+        <li class="-mob-share-weixin"><p>微信</p></li>
+        <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+        <li class="-mob-share-pocket"><p>Pocket</p></li>
+        <li class="-mob-share-facebook"><p>Facebook</p></li>
+        <li class="-mob-share-twitter"><p>Twitter</p></li>
+    </ul>
+    <div class="-mob-share-close">取消</div>
+</div>
+<div class="-mob-share-ui-bg"></div>
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=1e2b5a54b350d"></script>
+<!--MOB SHARE END-->
+
+
+      
+  </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/upload/image/zxy.jpeg"
+               alt="长岛冰茶与火鸟" />
+          <p class="site-author-name" itemprop="name">长岛冰茶与火鸟</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点点的前端程序媛</p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          
+            <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+            <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+            <div class="widget-wrap">
+                <h3 class="widget-title">标签云</h3>
+                <div id="myCanvasContainer" class="widget tagcloud">
+                    <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AngularJS/">AngularJS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OAuth2/">OAuth2</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li></ul>
+                    </canvas>
+                </div>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/helloworldzxy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/helloworldzxy" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://book.douban.com/people/64833519/" target="_blank" title="豆瓣书摘">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣书摘
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://zcfy.cc/@helloworldzxy/article" target="_blank" title="众成翻译">
+                  
+                    <i class="fa fa-fw fa-/upload/image/zcfy_favicon.png"></i>
+                  
+                  众成翻译
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+           <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=67528&auto=0&height=66"></iframe>
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#promise"><span class="nav-text">promise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协程"><span class="nav-text">协程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generator函数"><span class="nav-text">Generator函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generator函数的自动执行"><span class="nav-text">Generator函数的自动执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用Thunk函数实现Generator函数的自动执行"><span class="nav-text">用Thunk函数实现Generator函数的自动执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用Promise实现Generator函数的自动执行"><span class="nav-text">用Promise实现Generator函数的自动执行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async函数"><span class="nav-text">async函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充Generator函数语法"><span class="nav-text">补充Generator函数语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yield"><span class="nav-text">yield*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用yield-遍历完全二叉树："><span class="nav-text">用yield*遍历完全二叉树：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generator与状态机"><span class="nav-text">Generator与状态机</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">长岛冰茶与火鸟</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    访客量 <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    访问次数 <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 91511, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 91511, xid: "2018/01/14/JS异步/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/91511/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("f1ufW13qlGddew5inanKJ79a-gzGzoHsz", "dp1rMt2iMERlKRjnbPKoly3b");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
